@@ -110,6 +110,13 @@
 .mockup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .mockup-tile{aspect-ratio:1;background:rgba(255,255,255,0.05);border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
 .mockup-ribbon{margin-top:16px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--dorado-claro);letter-spacing:0.06em;text-transform:uppercase;}
+.mockup-chat{border:1px solid var(--line-strong);border-radius:20px;background:linear-gradient(160deg,var(--marino),var(--marino-med));padding:20px;max-width:280px;margin:0 auto;box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);}
+.mockup-chat-head{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.mockup-chat-head .avatar{width:28px;height:28px;border-radius:50%;background:var(--naranja);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.mockup-chat-head span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--paper);}
+.mockup-bubble{font-size:12px;line-height:1.4;padding:9px 12px;border-radius:12px;margin-bottom:8px;max-width:88%;}
+.mockup-bubble.in{background:rgba(255,255,255,0.07);color:var(--paper-dim);border-bottom-left-radius:3px;}
+.mockup-bubble.out{background:var(--naranja);color:#1A0D06;margin-left:auto;border-bottom-right-radius:3px;font-weight:600;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--marino-osc);color:var(--paper);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
@@ -289,8 +296,8 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
 <body>
 
 <div class="offer-bar" id="offerBar">
-  <p>🚀 Lanzamiento Omnia: activa tu primer módulo con 50% de descuento el primer mes — cupo limitado
-    <button class="btn-oferta" onclick="abrirModalDemo()">Quiero mi descuento</button>
+  <p>🍔 Nuevo: <strong>FastFood Omnia</strong> ya está aquí — el primer asistente con IA para restaurantes en Xalapa que toma pedidos solo
+    <button class="btn-oferta" onclick="abrirModalDemo('FastFood Omnia')">Quiero mi demo gratis</button>
   </p>
   <button class="offer-close" onclick="document.getElementById('offerBar').style.display='none'" aria-label="Cerrar aviso">✕</button>
 </div>
@@ -405,11 +412,11 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
         <a href="javascript:void(0)" onclick="abrirModalContratar('Omnia Store')" class="eco-link">Quiero que me avisen →</a>
       </div>
       <div class="eco-card eco-card--naranja">
-        <div class="eco-ico"><span class="badge-num" style="background:var(--naranja);">05</span>🤖</div>
-        <div class="eco-titulo">AtendIA</div>
-        <span class="eco-tag" style="color:var(--naranja);border-color:rgba(255,106,61,0.35);">○ Próximamente</span>
-        <div class="eco-desc">Agente de atención al cliente con inteligencia artificial: responde por WhatsApp y web las 24 horas, resuelve dudas frecuentes y toma pedidos sin perder el trato humano.</div>
-        <a href="javascript:void(0)" onclick="abrirModalContratar('AtendIA')" class="eco-link">Quiero que me avisen →</a>
+        <div class="eco-ico"><span class="badge-num" style="background:var(--naranja);">05</span>🍔</div>
+        <div class="eco-titulo">FastFood Omnia</div>
+        <span class="eco-tag" style="color:var(--naranja);border-color:rgba(255,106,61,0.35);">🆕 Nuevo · Disponible</span>
+        <div class="eco-desc">El primer asistente con IA para restaurantes en Xalapa: Sofía toma reservaciones y pedidos por chat las 24 horas, conectada en tiempo real con la tablet del mesero, la pantalla de cocina y el panel del dueño.</div>
+        <a href="fastfood-omnia.html" class="eco-link">Conocer FastFood Omnia →</a>
       </div>
     </div>
   </div>
@@ -616,6 +623,41 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
         <button class="btn btn-pri" onclick="abrirModalContratar('Omnia Store')" style="margin-top:6px;">Quiero que me avisen cuando esté lista</button>
       </div>
     </div>
+
+<!-- FASTFOOD OMNIA EN DETALLE -->
+    <div class="section-head" style="margin-top:8px;">
+      <span class="eyebrow" style="margin-bottom:16px;">🆕 Producto nuevo</span>
+      <h2>FastFood Omnia, el mesero que nunca duerme</h2>
+      <p>El primer asistente con IA para restaurantes en Xalapa: Sofía toma pedidos y reservaciones por chat, conectada en tiempo real con tu tablet de meseros, tu cocina y tu panel de dueño.</p>
+    </div>
+    <div class="showcase reverse">
+      <div class="showcase-media">
+        <div class="mockup-chat">
+          <div class="mockup-chat-head"><span class="avatar">🤖</span><span>SOFÍA · FASTFOOD OMNIA</span></div>
+          <div class="mockup-bubble in">Hola, quiero 2 tacos al pastor y un refresco para recoger 🌮</div>
+          <div class="mockup-bubble out">¡Claro! 2 tacos al pastor + refresco = $85. Listos en 15 min. ¿Confirmo tu pedido?</div>
+          <div class="mockup-bubble in">Sí, confirmado</div>
+          <div class="mockup-bubble out">✅ Pedido enviado a cocina. Te avisamos cuando esté listo.</div>
+        </div>
+        <div class="video-slot">
+          <div class="vs-ico">🎬</div>
+          <p>Espacio reservado para video demo de FastFood Omnia<br>(agrega aquí tu walkthrough grabado)</p>
+        </div>
+      </div>
+      <div class="showcase-text">
+        <span class="eyebrow">FastFood Omnia</span>
+        <h3>Toma pedidos solo, sin que nadie esté pegado al WhatsApp</h3>
+        <p class="lead-sm">Sofía conversa con tus clientes de forma natural — no son botones ni menús rígidos: toma reservaciones verificando disponibilidad real, recibe pedidos para recoger o a domicilio con menú y fotos, y deriva a un humano en cuanto hace falta. Todo conectado con la tablet del mesero, la pantalla de cocina y el panel del dueño.</p>
+        <ul class="showcase-features">
+          <li>Reservaciones y pedidos por chat, las 24 horas</li>
+          <li>Tablet de meseros con menú por categorías y fotos</li>
+          <li>Pantalla de cocina: nuevo → en preparación → listo</li>
+          <li>Panel del dueño con menú, historial y tickets a humano, protegido con PIN</li>
+          <li>Nunca inventa: siempre verifica contra tu información real</li>
+        </ul>
+        <button class="btn btn-pri" onclick="abrirModalDemo('FastFood Omnia')" style="margin-top:6px;">Solicitar demo gratuito →</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -701,7 +743,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
       <a href="funeral360.html">Funeral 360</a>
       <a href="#ecosistema">Farma POS</a>
       <a href="#ecosistema">NovaPOS Pro</a>
-      <a href="#ecosistema">AtendIA</a>
+      <a href="fastfood-omnia.html">FastFood Omnia</a>
     </div>
   </div>
   <div class="wrap"><p class="footer-copy">© 2026 Omnia Technology · Software por licencia mensual para negocios en crecimiento.</p></div>
@@ -726,7 +768,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
     <div class="modal-sub">Te enviamos tu acceso en menos de 24 horas.</div>
     <div class="campo-modal"><label>Nombre de tu negocio</label><input type="text" id="demoNombre" placeholder="Ej. Farmacia San José"></div>
     <div class="campo-modal"><label>Software de interés</label>
-      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>AtendIA</option><option>No estoy seguro / quiero asesoría</option></select>
+      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>FastFood Omnia</option><option>No estoy seguro / quiero asesoría</option></select>
     </div>
     <div class="campo-modal"><label>Tu nombre</label><input type="text" id="demoContacto" placeholder="¿Con quién hablamos?"></div>
     <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="demoWA" placeholder="2281234567"></div>
@@ -744,7 +786,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
     <div class="modal-sub">Completa tus datos y te contactamos para elegir el módulo correcto.</div>
     <div class="campo-modal"><label>Nombre de tu negocio</label><input type="text" id="contNombre" placeholder="Ej. Ferretería El Tornillo"></div>
     <div class="campo-modal"><label>Software de interés</label>
-      <select id="contSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>AtendIA</option><option>No estoy seguro / quiero asesoría</option></select>
+      <select id="contSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>FastFood Omnia</option><option>No estoy seguro / quiero asesoría</option></select>
     </div>
     <div class="campo-modal"><label>Tu nombre</label><input type="text" id="contContacto" placeholder="¿Con quién hablamos?"></div>
     <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="contWA" placeholder="2281234567"></div>
@@ -767,7 +809,7 @@ const PRODUCT_ID_MAP = {
   "Farma POS": "prod_farmapos",
   "NovaPOS Pro": "prod_novapos",
   "Omnia Store": null, // aún no disponible: siempre se trata como lead, nunca como demo
-  "AtendIA": null, // aún no disponible: siempre se trata como lead, nunca como demo
+  "FastFood Omnia": "prod_fastfood_omnia",
 };
 
 function getApiUrl(){ return localStorage.getItem('omnia_api_url') || ''; }
@@ -779,7 +821,10 @@ async function apiPost(body){
     return await r.json();
   }catch(e){ console.error('Error de conexión con Apps Script', e); return null; }
 }
-function abrirModalDemo(){document.getElementById('modalDemo').classList.add('abierto');document.body.style.overflow='hidden';}
+function abrirModalDemo(pre){
+  if(pre){document.getElementById('demoSoftware').value=pre;}
+  document.getElementById('modalDemo').classList.add('abierto');document.body.style.overflow='hidden';
+}
 function abrirModalContratar(pre){
   if(pre){document.getElementById('contSoftware').value=pre;}
   document.getElementById('modalContratar').classList.add('abierto');document.body.style.overflow='hidden';
