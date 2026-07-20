@@ -63,6 +63,13 @@
 .eco-card--cyan .badge-num{background:var(--cyan);color:#0A0E17;}
 .eco-card--cyan .eco-tag{color:var(--cyan);border-color:var(--cyan-dim);}
 
+/* NEGOCIOS 5a TARJETA (naranja) */
+.eco-card--naranja{border-top-color:var(--naranja);}
+.eco-card--naranja:hover{border-color:var(--naranja);}
+.eco-card--naranja .eco-ico{background:rgba(255,106,61,0.16);}
+.eco-card--naranja .badge-num{background:var(--naranja);}
+.eco-card--naranja .eco-tag{color:var(--naranja);border-color:rgba(255,106,61,0.35);}
+
 /* PRODUCT SHOWCASE (NovaPOS / Farma POS con imagen + video) */
 .showcase{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;margin-bottom:56px;}
 @media(min-width:900px){.showcase{grid-template-columns:0.85fr 1.15fr;}}
@@ -397,6 +404,13 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
         <div class="eco-desc">Tienda en línea multimodal que se conecta a WhatsApp Business, genera posts de tus productos automáticamente y deja que tus clientes compren directo desde el carrito.</div>
         <a href="javascript:void(0)" onclick="abrirModalContratar('Omnia Store')" class="eco-link">Quiero que me avisen →</a>
       </div>
+      <div class="eco-card eco-card--naranja">
+        <div class="eco-ico"><span class="badge-num" style="background:var(--naranja);">05</span>🤖</div>
+        <div class="eco-titulo">AtendIA</div>
+        <span class="eco-tag" style="color:var(--naranja);border-color:rgba(255,106,61,0.35);">○ Próximamente</span>
+        <div class="eco-desc">Agente de atención al cliente con inteligencia artificial: responde por WhatsApp y web las 24 horas, resuelve dudas frecuentes y toma pedidos sin perder el trato humano.</div>
+        <a href="javascript:void(0)" onclick="abrirModalContratar('AtendIA')" class="eco-link">Quiero que me avisen →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -687,6 +701,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
       <a href="funeral360.html">Funeral 360</a>
       <a href="#ecosistema">Farma POS</a>
       <a href="#ecosistema">NovaPOS Pro</a>
+      <a href="#ecosistema">AtendIA</a>
     </div>
   </div>
   <div class="wrap"><p class="footer-copy">© 2026 Omnia Technology · Software por licencia mensual para negocios en crecimiento.</p></div>
@@ -711,7 +726,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
     <div class="modal-sub">Te enviamos tu acceso en menos de 24 horas.</div>
     <div class="campo-modal"><label>Nombre de tu negocio</label><input type="text" id="demoNombre" placeholder="Ej. Farmacia San José"></div>
     <div class="campo-modal"><label>Software de interés</label>
-      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>No estoy seguro / quiero asesoría</option></select>
+      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>AtendIA</option><option>No estoy seguro / quiero asesoría</option></select>
     </div>
     <div class="campo-modal"><label>Tu nombre</label><input type="text" id="demoContacto" placeholder="¿Con quién hablamos?"></div>
     <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="demoWA" placeholder="2281234567"></div>
@@ -729,7 +744,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
     <div class="modal-sub">Completa tus datos y te contactamos para elegir el módulo correcto.</div>
     <div class="campo-modal"><label>Nombre de tu negocio</label><input type="text" id="contNombre" placeholder="Ej. Ferretería El Tornillo"></div>
     <div class="campo-modal"><label>Software de interés</label>
-      <select id="contSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>No estoy seguro / quiero asesoría</option></select>
+      <select id="contSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>AtendIA</option><option>No estoy seguro / quiero asesoría</option></select>
     </div>
     <div class="campo-modal"><label>Tu nombre</label><input type="text" id="contContacto" placeholder="¿Con quién hablamos?"></div>
     <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="contWA" placeholder="2281234567"></div>
@@ -752,6 +767,7 @@ const PRODUCT_ID_MAP = {
   "Farma POS": "prod_farmapos",
   "NovaPOS Pro": "prod_novapos",
   "Omnia Store": null, // aún no disponible: siempre se trata como lead, nunca como demo
+  "AtendIA": null, // aún no disponible: siempre se trata como lead, nunca como demo
 };
 
 function getApiUrl(){ return localStorage.getItem('omnia_api_url') || ''; }
