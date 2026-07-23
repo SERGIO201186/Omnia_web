@@ -29,7 +29,7 @@
   /* NAV */
   .nav{position:sticky; top:0; z-index:40; background:var(--navy); color:#fff;}
   .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:68px;}
-  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:19px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:19px; color:inherit; text-decoration:none;}
   .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--gold);}
   .nav-links{display:flex; align-items:center; gap:28px; font-size:14px;}
   .nav-links a{opacity:.82; text-decoration:none;}
@@ -116,7 +116,7 @@
 
 <nav class="nav">
   <div class="wrap">
-    <div class="brand"><span class="dot"></span>Omnia Technology</div>
+    <a class="brand" href="index.html"><span class="dot"></span>Omnia Technology</a>
     <div class="nav-links">
       <a href="#productos">Productos</a>
       <a href="#portal">Portal de cliente</a>
@@ -202,6 +202,12 @@
 <footer>
   <div class="wrap">
     <span>© 2026 Omnia Technology</span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="funeral360.html" style="color:#B9C0CE; text-decoration:none;">Funeral 360</a>
+      <a href="farmapos.html" style="color:#B9C0CE; text-decoration:none;">Farma POS</a>
+      <a href="novapos.html" style="color:#B9C0CE; text-decoration:none;">NovaPOS Pro</a>
+      <a href="fastfood-omnia.html" style="color:#B9C0CE; text-decoration:none;">FastFood Omnia</a>
+    </span>
     <span style="font-family:var(--mono); font-size:12px; color:#6C7690;">
       <span id="connStatus"></span> · <button onclick="abrirConfigConexion()" style="background:none; border:none; color:#8B93A1; text-decoration:underline; cursor:pointer; font-family:var(--mono); font-size:12px;">Conectar backend</button>
     </span>
@@ -213,8 +219,8 @@
   <div class="modal">
     <div class="modal-head"><h3>Solicitar demo</h3><button class="modal-close" onclick="closeModal('demoModal')">✕</button></div>
     <div id="demoFormWrap">
-      <div class="field"><label>Nombre</label><input id="demoName" /></div>
-      <div class="field"><label>Correo</label><input type="email" id="demoEmail" /></div>
+      <div class="field"><label>Nombre</label><input id="demoName" required /></div>
+      <div class="field"><label>Correo</label><input type="email" id="demoEmail" required /></div>
       <div class="field"><label>Empresa</label><input id="demoCompany" /></div>
       <button class="btn-submit" onclick="submitDemo()">Activar demo</button>
       <p class="note">La duración depende del producto elegido y se desactiva automáticamente al vencer.</p>
@@ -228,8 +234,8 @@
     <div class="modal-head"><h3>Comprar</h3><button class="modal-close" onclick="closeModal('buyModal')">✕</button></div>
     <div id="buyStep1">
       <p style="font-size:14px; color:var(--muted); line-height:1.6;">Serás redirigido a Stripe Checkout para completar el pago de forma segura.</p>
-      <div class="field" style="margin-top:16px;"><label>Correo de facturación</label><input type="email" id="buyEmail" /></div>
-      <div class="field"><label>Nombre / Empresa</label><input id="buyName" /></div>
+      <div class="field" style="margin-top:16px;"><label>Correo de facturación</label><input type="email" id="buyEmail" required /></div>
+      <div class="field"><label>Nombre / Empresa</label><input id="buyName" required /></div>
       <button class="btn-submit" onclick="goToStripe()">Continuar a Stripe</button>
       <p class="note">En producción este botón llama a <code>POST /api/checkout/create-session</code> y redirige a Stripe. Aquí simula el resultado del pago.</p>
     </div>
@@ -307,8 +313,13 @@ function requiereConexion(box){
   return true;
 }
 function guardarApiUrlRapido(){
-  const val = document.getElementById('quickApiUrl').value.trim();
-  if(!val.startsWith('http')) return;
+  const input = document.getElementById('quickApiUrl');
+  const val = input.value.trim();
+  if(!val.startsWith('http')){
+    input.style.borderColor = 'var(--red)';
+    input.placeholder = 'Ingresa una URL válida (https://...)';
+    return;
+  }
   setApiUrl(val);
   cargarProductos();
   location.reload();
@@ -330,7 +341,11 @@ async function submitDemo(){
   const email = document.getElementById('demoEmail').value.trim();
   const company = document.getElementById('demoCompany').value.trim();
   const box = document.getElementById('demoSuccess');
-  if(!name || !email || !activeProduct) return;
+  if(!name || !email || !activeProduct){
+    box.style.display='block';
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Ingresa tu nombre y correo para activar la demo.</p>`;
+    return;
+  }
   if(requiereConexion(box)){ box.style.display='block'; document.getElementById('demoFormWrap').style.display='none'; return; }
 
   document.getElementById('demoFormWrap').style.display='none';
@@ -339,7 +354,7 @@ async function submitDemo(){
 
   const res = await apiPost({ action:'demoRequest', productId: activeProduct.id, name, email, company });
   if(!res || res.error){
-    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo activar la demo${res && res.error ? ': ' + res.error : ''}. Intenta de nuevo o contacta a soporte.</p>`;
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo activar la demo${res && res.error ? ': ' + esc(res.error) : ''}. Intenta de nuevo o contacta a soporte.</p>`;
     return;
   }
   box.innerHTML = `
@@ -355,7 +370,11 @@ async function goToStripe(){
   const email = document.getElementById('buyEmail').value.trim();
   const name = document.getElementById('buyName').value.trim();
   const box = document.getElementById('buySuccess');
-  if(!email || !name || !activeProduct) return;
+  if(!email || !name || !activeProduct){
+    box.style.display='block';
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Ingresa tu correo y nombre para continuar a Stripe.</p>`;
+    return;
+  }
   if(requiereConexion(box)){ box.style.display='block'; document.getElementById('buyStep1').style.display='none'; return; }
 
   document.getElementById('buyStep1').style.display='none';
@@ -364,7 +383,7 @@ async function goToStripe(){
 
   const res = await apiPost({ action:'createCheckoutSession', productId: activeProduct.id, email, clientName:name });
   if(!res || res.error || !res.url){
-    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo iniciar el pago${res && res.error ? ': ' + res.error : ''}. Verifica que el producto tenga stripePriceId configurado.</p>`;
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo iniciar el pago${res && res.error ? ': ' + esc(res.error) : ''}. Verifica que el producto tenga stripePriceId configurado.</p>`;
     return;
   }
   window.location.href = res.url; // redirección real a Stripe Checkout
@@ -378,7 +397,7 @@ async function lookupAccount(){
 
   const res = await apiPost({ action:'createBillingPortalSession', email });
   if(!res || res.error || !res.url){
-    result.innerHTML = `<div class="account-card"><span style="font-size:13px; color:var(--muted);">${res && res.error ? res.error : 'No encontramos una cuenta con ese correo.'}</span></div>`;
+    result.innerHTML = `<div class="account-card"><span style="font-size:13px; color:var(--muted);">${res && res.error ? esc(res.error) : 'No encontramos una cuenta con ese correo.'}</span></div>`;
     return;
   }
   result.innerHTML = `<div class="account-card"><span style="font-size:13px; color:var(--green);">Cuenta encontrada. Abriendo el portal de pago de Stripe…</span></div>`;

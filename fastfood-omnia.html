@@ -268,14 +268,14 @@
             <img
               src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
               alt="Cocina en tiempo real"
-              className="w-full h-full object-cover"
+              class="w-full h-full object-cover"
             />
           </div>
           <div class="sm:w-[55%] aspect-[900/600] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
             <img
               src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
               alt="Atención rápida en restaurante"
-              className="w-full h-full object-cover"
+              class="w-full h-full object-cover"
             />
           </div>
         </div>
@@ -1099,6 +1099,45 @@
       <form onsubmit="handleModalFormSubmit(event)" class="space-y-4">
         <div>
           <label class="block text-[13px] font-semibold text-[#B8A890] mb-1">
+            Nombre Completo
+          </label>
+          <input
+            id="modalNombreInput"
+            type="text"
+            required
+            placeholder="Nombre y apellido"
+            class="w-full px-4 py-3 bg-[#1F1B16] border border-[#3D3225] rounded-xl text-[#F7F1E6] focus:outline-none focus:border-[#E8A33D]"
+          />
+        </div>
+
+        <div>
+          <label class="block text-[13px] font-semibold text-[#B8A890] mb-1">
+            Nombre del Restaurante
+          </label>
+          <input
+            id="modalRestauranteInput"
+            type="text"
+            required
+            placeholder="Tacos El Buen Sabor"
+            class="w-full px-4 py-3 bg-[#1F1B16] border border-[#3D3225] rounded-xl text-[#F7F1E6] focus:outline-none focus:border-[#E8A33D]"
+          />
+        </div>
+
+        <div>
+          <label class="block text-[13px] font-semibold text-[#B8A890] mb-1">
+            Teléfono o WhatsApp
+          </label>
+          <input
+            id="modalWAInput"
+            type="tel"
+            required
+            placeholder="+52 55 1234 5678"
+            class="w-full px-4 py-3 bg-[#1F1B16] border border-[#3D3225] rounded-xl text-[#F7F1E6] focus:outline-none focus:border-[#E8A33D]"
+          />
+        </div>
+
+        <div>
+          <label class="block text-[13px] font-semibold text-[#B8A890] mb-1">
             Correo Electrónico
           </label>
           <input
@@ -1158,39 +1197,82 @@
     }
 
     // 3. Modal Open/Close Controls
+
+    /* Conexión con el mismo backend (Google Apps Script) que usa index.html.
+       Si 'omnia_api_url' está configurado en localStorage (comparte origen con
+       index.html y con el Control Maestro), el lead se registra ahí. Si no,
+       o si falla, se abre WhatsApp y correo como respaldo garantizado. */
+    const TU_WA = "525547894225";
+    const TU_EMAIL = "huertafune@gmail.com";
+    const PRODUCT_NAME = "FastFood Omnia";
+    const PRODUCT_ID = "prod_fastfood_omnia";
+
+    function getApiUrl(){ return localStorage.getItem('omnia_api_url') || ''; }
+    async function apiPost(body){
+      const url = getApiUrl(); if(!url) return null;
+      try{
+        const r = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(body) });
+        return await r.json();
+      }catch(e){ console.error('Error de conexión con Apps Script', e); return null; }
+    }
+
+    let demoCloseTimer = null;
+
     function openDemoModal() {
+      if (demoCloseTimer) { clearTimeout(demoCloseTimer); demoCloseTimer = null; }
       document.getElementById('demoModal').classList.remove('hidden');
     }
 
     function closeDemoModal() {
+      if (demoCloseTimer) { clearTimeout(demoCloseTimer); demoCloseTimer = null; }
       document.getElementById('demoModal').classList.add('hidden');
       document.getElementById('modalSuccessMsg').classList.add('hidden');
     }
 
-    function handleModalFormSubmit(event) {
+    async function handleModalFormSubmit(event) {
       event.preventDefault();
-      const email = document.getElementById('modalEmailInput').value;
-      if (email) {
-        document.getElementById('modalSuccessMsg').classList.remove('hidden');
-        setTimeout(() => {
-          closeDemoModal();
-          document.getElementById('modalEmailInput').value = '';
-        }, 3000);
+      const nombre = document.getElementById('modalNombreInput').value.trim();
+      const restaurante = document.getElementById('modalRestauranteInput').value.trim();
+      const wa = document.getElementById('modalWAInput').value.trim();
+      const email = document.getElementById('modalEmailInput').value.trim();
+
+      const msg = '🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+restaurante+'\n🖥️ Software: '+PRODUCT_NAME+'\n👤 Contacto: '+nombre+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+
+      const successMsg = document.getElementById('modalSuccessMsg');
+      let sentOk = false;
+
+      if (getApiUrl()) {
+        const res = await apiPost({ action:'demoRequest', productId: PRODUCT_ID, name: nombre, email, company: restaurante });
+        if (res && !res.error) {
+          successMsg.textContent = '✓ Demo activada. Revisa tu correo ('+email+') para tu clave de acceso.';
+          sentOk = true;
+        }
       }
+
+      if (!sentOk) {
+        successMsg.textContent = '¡Solicitud recibida con éxito! Te contactaremos a la brevedad.';
+        setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'), 500);
+        setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de demo - '+restaurante)+'&body='+encodeURIComponent(msg)), 900);
+      }
+
+      successMsg.classList.remove('hidden');
+      demoCloseTimer = setTimeout(() => {
+        closeDemoModal();
+        event.target.reset();
+      }, 4000);
     }
 
     function handleCtaSubmit() {
       const emailInput = document.getElementById('ctaEmailInput');
-      const successMsg = document.getElementById('ctaSuccessMsg');
-      if (emailInput.value) {
-        successMsg.classList.remove('hidden');
-        setTimeout(() => {
-          successMsg.classList.add('hidden');
-          emailInput.value = '';
-        }, 4000);
-      } else {
-        openDemoModal();
+      const email = emailInput.value.trim();
+      if (email && !emailInput.checkValidity()) {
+        emailInput.focus();
+        return;
       }
+      if (email) {
+        document.getElementById('modalEmailInput').value = email;
+      }
+      openDemoModal();
     }
 
     // 4. WebGL Shader Canvas Animation Loop
@@ -1273,15 +1355,26 @@
         const shader = gl.createShader(type);
         gl.shaderSource(shader, source);
         gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error('Error al compilar shader:', gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
         return shader;
       }
 
       const vertShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
       const fragShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+      if (!vertShader || !fragShader) return;
+
       const program = gl.createProgram();
       gl.attachShader(program, vertShader);
       gl.attachShader(program, fragShader);
       gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Error al enlazar programa WebGL:', gl.getProgramInfoLog(program));
+        return;
+      }
 
       const positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
