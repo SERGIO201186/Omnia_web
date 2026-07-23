@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviso de Privacidad · Omnia Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Urbanist:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0E17;--marino-osc:#0D1420;--marino:#161D30;--marino-med:#202B45;
+  --paper:#EDEFF5;--paper-dim:rgba(237,239,245,0.66);--paper-dimmer:rgba(237,239,245,0.42);
+  --dorado:#6C5CE7;--dorado-claro:#8F7FFF;--dorado-osc:#4A3AC9;
+  --cyan:#00D4FF;--verde:#2ED9A3;--azul:#3B82F6;--naranja:#FF6A3D;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--paper);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:var(--dorado-claro);}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+nav.legal-nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(10,14,23,0.9);backdrop-filter:blur(10px);border-bottom:1px solid rgba(237,239,245,0.08);}
+.legal-nav .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Urbanist',sans-serif;font-weight:700;font-size:18px;color:var(--paper);}
+.legal-nav .brand span.sub{display:block;font-size:8px;letter-spacing:2px;color:var(--paper-dimmer);text-transform:uppercase;font-weight:500;}
+.legal-nav a.back{font-size:13px;color:var(--paper-dim);text-decoration:none;display:flex;align-items:center;gap:6px;}
+.legal-nav a.back:hover{color:var(--paper);}
+.legal-wrap{max-width:760px;margin:0 auto;padding:56px 24px 100px;}
+.legal-eyebrow{font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dorado-claro);margin-bottom:14px;}
+.legal-wrap h1{font-family:'Urbanist',sans-serif;font-size:clamp(28px,4vw,38px);font-weight:700;letter-spacing:-0.5px;margin-bottom:10px;}
+.legal-updated{font-size:13px;color:var(--paper-dimmer);margin-bottom:8px;}
+.legal-disclaimer{margin:24px 0 40px;padding:18px 20px;border-radius:12px;background:rgba(255,106,61,0.08);border:1px solid rgba(255,106,61,0.35);font-size:13.5px;color:var(--paper-dim);line-height:1.65;}
+.legal-disclaimer strong{color:var(--naranja);}
+.legal-toc{margin:32px 0 44px;padding:20px 22px;border-radius:12px;background:rgba(237,239,245,0.03);border:1px solid rgba(237,239,245,0.08);}
+.legal-toc h2{font-family:'Urbanist',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--paper-dim);margin-bottom:12px;}
+.legal-toc ol{list-style:none;counter-reset:toc;display:grid;gap:7px;}
+.legal-toc li{counter-increment:toc;font-size:13.5px;}
+.legal-toc li::before{content:counter(toc)". ";color:var(--dorado-claro);font-weight:600;}
+.legal-toc a{text-decoration:none;color:var(--paper-dim);}
+.legal-toc a:hover{color:var(--paper);}
+.legal-wrap section{margin-top:40px;scroll-margin-top:80px;}
+.legal-wrap h2{font-family:'Urbanist',sans-serif;font-size:20px;font-weight:700;color:var(--paper);margin-bottom:14px;letter-spacing:-0.2px;}
+.legal-wrap h2 .num{color:var(--dorado-claro);margin-right:8px;}
+.legal-wrap h3{font-family:'Urbanist',sans-serif;font-size:15px;font-weight:600;color:var(--paper);margin:20px 0 8px;}
+.legal-wrap p{font-size:14.5px;color:var(--paper-dim);margin-bottom:12px;max-width:68ch;}
+.legal-wrap ul, .legal-wrap ol.plain{margin:0 0 14px 0;padding-left:20px;}
+.legal-wrap li{font-size:14.5px;color:var(--paper-dim);margin-bottom:7px;max-width:64ch;}
+.legal-wrap strong{color:var(--paper);font-weight:600;}
+.legal-wrap .placeholder{color:var(--naranja);font-weight:600;background:rgba(255,106,61,0.1);padding:1px 6px;border-radius:4px;font-size:0.92em;}
+table.legal-table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:13.5px;}
+table.legal-table th{text-align:left;color:var(--paper);font-family:'Urbanist',sans-serif;font-weight:600;padding:9px 12px;border-bottom:1px solid rgba(237,239,245,0.15);}
+table.legal-table td{padding:9px 12px;color:var(--paper-dim);border-bottom:1px solid rgba(237,239,245,0.06);vertical-align:top;}
+.legal-table-wrap{overflow-x:auto;margin-bottom:16px;}
+.legal-contact-box{margin-top:14px;padding:18px 20px;border-radius:12px;background:rgba(108,92,231,0.08);border:1px solid rgba(108,92,231,0.3);}
+.legal-contact-box a{font-weight:600;}
+.legal-crosslinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(237,239,245,0.08);}
+.legal-crosslinks a{font-size:13px;color:var(--paper-dim);text-decoration:none;padding:8px 14px;border:1px solid rgba(237,239,245,0.15);border-radius:30px;}
+.legal-crosslinks a:hover{border-color:var(--dorado);color:var(--paper);}
+footer.legal-footer{text-align:center;padding:28px 24px;color:var(--paper-dimmer);font-size:12px;border-top:1px solid rgba(237,239,245,0.08);}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<nav class="legal-nav">
+  <a class="brand" href="landingomnia.html"><span>omnia</span><span class="sub">technology</span></a>
+  <a class="back" href="landingomnia.html">← Volver al sitio</a>
+</nav>
+
+<div class="legal-wrap">
+  <span class="legal-eyebrow">Documento legal</span>
+  <h1>Aviso de Privacidad</h1>
+  <p class="legal-updated">Última actualización: <span class="placeholder">[FECHA]</span> · Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) y su Reglamento.</p>
+
+  <div class="legal-disclaimer">
+    <strong>Aviso importante:</strong> este es un documento modelo elaborado con base en el formato de aviso de privacidad recomendado por el INAI, con fines informativos. No constituye asesoría legal. Antes de publicarlo, se recomienda que un abogado especializado en protección de datos personales complete los campos marcados como <span class="placeholder">[PLACEHOLDER]</span>, confirme las finalidades reales del tratamiento de datos y verifique el cumplimiento con la LFPDPPP y demás normativa aplicable.
+  </div>
+
+  <div class="legal-toc">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#responsable">Identidad y domicilio del responsable</a></li>
+      <li><a href="#datos">Datos personales que recabamos</a></li>
+      <li><a href="#finalidades">Finalidades del tratamiento</a></li>
+      <li><a href="#menores">Datos de menores de edad</a></li>
+      <li><a href="#limitar">Opción para limitar el uso de sus datos</a></li>
+      <li><a href="#arco">Derechos ARCO</a></li>
+      <li><a href="#transferencias">Transferencia de datos</a></li>
+      <li><a href="#cookies">Uso de cookies y tecnologías similares</a></li>
+      <li><a href="#seguridad">Medidas de seguridad</a></li>
+      <li><a href="#cambios">Cambios a este aviso de privacidad</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ol>
+  </div>
+
+  <section id="responsable">
+    <h2><span class="num">1.</span>Identidad y domicilio del responsable</h2>
+    <p><span class="placeholder">[RAZÓN SOCIAL / NOMBRE DEL TITULAR]</span> (en adelante, "Omnia Technology" o "el Responsable"), con domicilio en <span class="placeholder">[DOMICILIO FISCAL COMPLETO]</span>, es responsable del tratamiento de los datos personales que usted nos proporcione, conforme a lo dispuesto en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+  </section>
+
+  <section id="datos">
+    <h2><span class="num">2.</span>Datos personales que recabamos</h2>
+    <p>Para las finalidades señaladas en este aviso, podemos recabar las siguientes categorías de datos personales cuando usted solicita una demostración, contrata un servicio, o se comunica con nosotros:</p>
+    <div class="legal-table-wrap">
+      <table class="legal-table">
+        <tr><th>Dato</th><th>¿Para qué lo usamos?</th></tr>
+        <tr><td>Nombre completo</td><td>Identificarlo y personalizar la atención</td></tr>
+        <tr><td>Nombre de la empresa o negocio</td><td>Configurar y facturar el Servicio contratado</td></tr>
+        <tr><td>Teléfono / WhatsApp</td><td>Contactarlo, dar soporte y enviar accesos</td></tr>
+        <tr><td>Correo electrónico</td><td>Enviar accesos, facturas, avisos y soporte</td></tr>
+        <tr><td>Ciudad / estado</td><td>Adaptar la atención y, en su caso, la logística del servicio</td></tr>
+      </table>
+    </div>
+    <p>No recabamos datos personales sensibles (por ejemplo, datos de salud, origen étnico o creencias religiosas) a través de estos formularios. Si algún módulo específico de un Servicio llegara a requerir datos sensibles del propio negocio del Cliente (por ejemplo, expedientes en el módulo de previsión funeraria), su tratamiento se rige por acuerdos adicionales y por las obligaciones regulatorias propias del giro del Cliente, quien actúa como responsable de esos datos frente a sus propios clientes finales.</p>
+  </section>
+
+  <section id="finalidades">
+    <h2><span class="num">3.</span>Finalidades del tratamiento</h2>
+    <h3>Finalidades primarias (necesarias para el servicio)</h3>
+    <ul>
+      <li>Contactarlo para agendar o activar una demostración gratuita.</li>
+      <li>Procesar la contratación, activación, configuración y facturación de los Servicios.</li>
+      <li>Brindar soporte técnico y atención a solicitudes o quejas.</li>
+      <li>Cumplir con obligaciones fiscales y legales derivadas de la relación comercial.</li>
+    </ul>
+    <h3>Finalidades secundarias (opcionales)</h3>
+    <ul>
+      <li>Enviarle información promocional, novedades o encuestas de satisfacción sobre nuestros productos.</li>
+    </ul>
+    <p>Usted puede negarse al tratamiento de sus datos para las finalidades secundarias sin que ello afecte la prestación del Servicio contratado, siguiendo el procedimiento de la sección 5.</p>
+  </section>
+
+  <section id="menores">
+    <h2><span class="num">4.</span>Datos de menores de edad</h2>
+    <p>Nuestros Servicios están dirigidos a empresas y personas mayores de edad. No recabamos intencionalmente datos personales de menores de edad a través de nuestros formularios de contacto o contratación.</p>
+  </section>
+
+  <section id="limitar">
+    <h2><span class="num">5.</span>Opción para limitar el uso o divulgación de sus datos</h2>
+    <p>Si desea dejar de recibir comunicaciones promocionales, puede solicitarlo enviando un correo a <a href="mailto:huertafune@gmail.com">huertafune@gmail.com</a> con el asunto "Baja de comunicaciones", o respondiendo "BAJA" a cualquier mensaje de WhatsApp promocional que reciba.</p>
+  </section>
+
+  <section id="arco">
+    <h2><span class="num">6.</span>Derechos ARCO</h2>
+    <p>Usted tiene derecho a Acceder a sus datos personales, Rectificarlos cuando sean inexactos, Cancelarlos cuando considere que no se requieren para alguna de las finalidades señaladas, u Oponerse al tratamiento de los mismos para fines específicos (derechos "ARCO").</p>
+    <p>Para ejercer cualquiera de estos derechos, envíe una solicitud a <a href="mailto:huertafune@gmail.com">huertafune@gmail.com</a> indicando: (i) su nombre y datos de contacto; (ii) el derecho que desea ejercer; (iii) una descripción clara de los datos personales respecto de los cuales busca ejercerlo; y (iv) cualquier documento que facilite la localización de sus datos. Responderemos su solicitud en un plazo máximo de <span class="placeholder">[20]</span> días hábiles conforme a lo previsto por la ley.</p>
+  </section>
+
+  <section id="transferencias">
+    <h2><span class="num">7.</span>Transferencia de datos</h2>
+    <p>Sus datos personales podrán ser compartidos con proveedores de servicios que Omnia utiliza para operar la Plataforma (por ejemplo, proveedores de hospedaje en la nube, pasarelas de pago y proveedores de mensajería), únicamente en la medida necesaria para prestar el Servicio y bajo obligaciones de confidencialidad. No vendemos, rentamos ni compartimos sus datos personales con terceros para fines distintos a los aquí señalados, salvo requerimiento de autoridad competente.</p>
+  </section>
+
+  <section id="cookies">
+    <h2><span class="num">8.</span>Uso de cookies y tecnologías similares</h2>
+    <p>Nuestro sitio utiliza cookies y tecnologías de almacenamiento local para mejorar su experiencia. Puede consultar el detalle en nuestra <a href="politica-de-cookies.html">Política de Cookies</a>.</p>
+  </section>
+
+  <section id="seguridad">
+    <h2><span class="num">9.</span>Medidas de seguridad</h2>
+    <p>Omnia implementa medidas administrativas y técnicas razonables para proteger sus datos personales contra daño, pérdida, alteración, acceso o tratamiento no autorizado, conforme a los estándares comercialmente razonables de la industria del software.</p>
+  </section>
+
+  <section id="cambios">
+    <h2><span class="num">10.</span>Cambios a este aviso de privacidad</h2>
+    <p>Este aviso de privacidad puede sufrir modificaciones derivadas de nuevos requerimientos legales, de nuestras propias necesidades por los productos o servicios que ofrecemos, o de otras causas. Publicaremos cualquier cambio en esta misma página, indicando la fecha de la última actualización.</p>
+  </section>
+
+  <section id="contacto">
+    <h2><span class="num">11.</span>Contacto</h2>
+    <p>Para dudas relacionadas con el tratamiento de sus datos personales o para ejercer sus derechos ARCO:</p>
+    <div class="legal-contact-box">
+      <p style="margin-bottom:6px;">✉️ Correo: <a href="mailto:huertafune@gmail.com">huertafune@gmail.com</a></p>
+      <p style="margin-bottom:0;">💬 WhatsApp: <a href="https://wa.me/525547894225">+52 55 4789 4225</a></p>
+    </div>
+  </section>
+
+  <div class="legal-crosslinks">
+    <a href="terminos-y-condiciones.html">Términos y condiciones →</a>
+    <a href="politica-de-cookies.html">Política de cookies →</a>
+    <a href="landingomnia.html">← Volver al sitio</a>
+  </div>
+</div>
+
+<footer class="legal-footer">© <span id="y"></span> Omnia Technology · Todos los derechos reservados.</footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
