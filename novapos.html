@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaPOS PRO - Punto de Venta y Caja Registradora Digital</title>
+
+  <!-- FUENTES OFICIALES OPEN SAUCE ONE -->
+  <link href="https://db.onlinewebfonts.com/c/1cd1e7d71e048159076fd90b39846902?family=Open+Sauce+One" rel="stylesheet">
+  <link href="https://db.onlinewebfonts.com/c/42acf9aa4a6dc2f2886a3f682e337ead?family=Open+Sauce+One+Bold" rel="stylesheet">
+
+  <!-- TAILWIND CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- REACT 18 & BABEL CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html, body, #root {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Open Sauce One', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+    .animate-glow {
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // Imágenes estáticas del sitio (reemplazan la generación por IA en vivo:
+    // exponer una API key en el cliente nunca es seguro y cualquiera podría
+    // copiarla del código fuente y generar cargos a la cuenta). Estos archivos
+    // se generan aparte con la herramienta de imagen y se suben junto al HTML.
+    const HERO_IMAGE = "novapos-hero.jpg";
+    const FARMACIA_IMAGE = "novapos-farmacia.jpg";
+    const INVENTARIO_IMAGE = "novapos-inventario.jpg";
+    const CAJA_IMAGE = "novapos-caja.jpg";
+    const GIROS_IMAGE = "novapos-giros.jpg";
+    const SOPORTE_IMAGE = "novapos-soporte.jpg";
+    const SECTION3_IMG1 = "novapos-ferreteria.jpg";
+    const SECTION3_IMG2 = "novapos-ropa.jpg";
+
+    const featureBars = ['Abarrotes y Minisúpers', 'Farmacias y Ferreterías', 'Tiendas de Ropa y Papelerías'];
+
+    const services = [
+      { name: 'Tienda de\nAbarrotes', num: '01', active: true },
+      { name: 'Farmacias &\nSalud', num: '02', active: false },
+      { name: 'Ferreterías &\nHerramientas', num: '03', active: false },
+      { name: 'Tiendas de\nRopa y Moda', num: '04', active: false },
+      { name: 'Papelerías &\nÚtiles Escolares', num: null, active: false },
+    ];
+
+    /* ==========================================================================
+       HOOKS TÉCNICOS
+       ========================================================================== */
+    const useStaggeredReveal = (count, threshold = 0.15) => {
+      const containerRef = useRef(null);
+      const [visible, setVisible] = useState(false);
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setVisible(true);
+              observer.disconnect();
+            }
+          },
+          { threshold }
+        );
+
+        if (containerRef.current) {
+          observer.observe(containerRef.current);
+        }
+
+        return () => observer.disconnect();
+      }, [threshold]);
+
+      const getAnimStyle = (index) => ({
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(24px)',
+        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${index * 120}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${index * 120}ms`
+      });
+
+      return { containerRef, getAnimStyle };
+    };
+
+    /* ==========================================================================
+       PANTALLA DE INICIO (SPLASH SCREEN CON IMAGEN IA Y CONTADOR)
+       ========================================================================== */
+    const SplashScreen = ({ bgImage, onComplete }) => {
+      const [count, setCount] = useState(0);
+      const [exiting, setExiting] = useState(false);
+
+      useEffect(() => {
+        const timer = setInterval(() => {
+          setCount((prev) => {
+            if (prev >= 100) {
+              clearInterval(timer);
+              return 100;
+            }
+            return prev + 1;
+          });
+        }, 20);
+
+        return () => clearInterval(timer);
+      }, []);
+
+      useEffect(() => {
+        if (count === 100) {
+          const timeout1 = setTimeout(() => {
+            setExiting(true);
+          }, 200);
+
+          const timeout2 = setTimeout(() => {
+            onComplete();
+          }, 900);
+
+          return () => {
+            clearTimeout(timeout1);
+            clearTimeout(timeout2);
+          };
+        }
+      }, [count, onComplete]);
+
+      return (
+        <div className={`fixed inset-0 z-[100] bg-white flex flex-col justify-between transition-opacity duration-700 overflow-hidden ${exiting ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          {/* Imagen de Fondo de Pantalla Inicial */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={bgImage} 
+              alt="[Imagen de tienda con persona cobrando feliz en computadora usando NovaPOS]" 
+              className="w-full h-full object-cover filter brightness-[0.8] contrast-[1.1]" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 pointer-events-none" />
+          </div>
+
+          {/* Encabezado Superior del Splash */}
+          <div className="relative z-10 p-6 md:p-10 flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-white leading-none">Nova</span>
+              <span className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-white leading-none -mt-1">POS</span>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-white/80 mt-1">by Omnia Technology</span>
+            </div>
+
+            <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-black shadow-lg flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+              <span>Caja Registradora NovaPOS</span>
+            </div>
+          </div>
+
+          {/* Contador Numérico de 0 a 100 */}
+          <div className="relative z-10 text-7xl md:text-9xl font-bold tabular-nums p-6 md:p-10 leading-none text-white select-none drop-shadow-2xl">
+            {count}
+          </div>
+        </div>
+      );
+    };
+
+    /* ==========================================================================
+       NAVBAR
+       ========================================================================== */
+    const Navbar = ({ onOpenModal }) => {
+      const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+      useEffect(() => {
+        if (isMobileOpen) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+      }, [isMobileOpen]);
+
+      const navLinks = ['Abarrotes', 'Farmacias', 'Ferreterías', 'Tiendas de Ropa', 'Papelerías', 'Contacto'];
+
+      return (
+        <>
+          <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-6 py-2 md:py-3 bg-white/80 backdrop-blur-md border-b border-black/5">
+            {/* Logo */}
+            <div className="flex flex-col cursor-pointer" onClick={() => window.location.href = 'index.html'}>
+              <span className="text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-none text-black">
+                Nova
+              </span>
+              <span className="text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-none text-black -mt-1.5 md:-mt-2">
+                POS
+              </span>
+              <span className="text-[8px] md:text-[9px] font-medium leading-none mt-1.5 md:mt-2 text-neutral-500 uppercase tracking-wider">
+                Caja Registradora Digital
+              </span>
+              <span className="text-[8px] md:text-[9px] font-bold leading-none mt-1 text-emerald-600 uppercase tracking-wider">
+                by Omnia Technology
+              </span>
+            </div>
+
+            {/* Menú Escritorio */}
+            <div className="hidden md:flex items-center gap-6">
+              <span className="text-sm font-semibold text-black">
+                Soporte NovaPOS 24/7
+              </span>
+              <button
+                onClick={() => onOpenModal('Solicitar Demo')}
+                className="px-6 py-3 bg-white rounded-full border border-black text-sm font-semibold text-black hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer shadow-sm"
+              >
+                Solicitar Demo
+              </button>
+            </div>
+
+            {/* Botón Menú Móvil */}
+            <button 
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              className="md:hidden w-10 h-10 flex items-center justify-center relative cursor-pointer focus:outline-none"
+              aria-label="Abrir Menú"
+            >
+              <span className={`absolute h-0.5 w-6 bg-black rounded-full transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMobileOpen ? 'rotate-45 translate-y-0' : '-translate-y-2'}`} />
+              <span className={`absolute h-0.5 w-6 bg-black rounded-full transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMobileOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}`} />
+              <span className={`absolute h-0.5 w-6 bg-black rounded-full transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMobileOpen ? '-rotate-45 translate-y-0' : 'translate-y-2'}`} />
+            </button>
+          </nav>
+
+          {/* Menú Desplegable Móvil */}
+          <div className={`md:hidden fixed inset-0 z-40 ${isMobileOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+            <div 
+              className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${isMobileOpen ? 'opacity-100' : 'opacity-0'}`}
+              onClick={() => setIsMobileOpen(false)}
+            />
+
+            <div className={`absolute top-0 right-0 h-full w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              <div className="flex flex-col justify-center h-full px-8 gap-1">
+                {navLinks.map((link, i) => (
+                  <button
+                    key={link}
+                    onClick={() => {
+                      setIsMobileOpen(false);
+                      onOpenModal(link);
+                    }}
+                    className={`text-3xl font-bold text-left text-black hover:text-neutral-500 transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMobileOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
+                    style={{ transitionDelay: `${100 + i * 60}ms` }}
+                  >
+                    {link}
+                  </button>
+                ))}
+
+                <div 
+                  className={`mt-8 pt-8 border-t border-neutral-200 transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${isMobileOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
+                  style={{ transitionDelay: '450ms' }}
+                >
+                  <p className="text-sm font-semibold text-black mb-4">
+                    Soporte NovaPOS 24/7
+                  </p>
+                  <button 
+                    onClick={() => {
+                      setIsMobileOpen(false);
+                      onOpenModal('Agendar Demostración');
+                    }}
+                    className="w-full px-6 py-4 bg-black rounded-full text-white text-sm font-semibold hover:bg-neutral-800 transition-colors duration-200"
+                  >
+                    Agendar Demo
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    };
+
+    /* ==========================================================================
+       SECTION 1 - HERO CON LA IMAGEN IA DE LA TIENDA Y CAJERO FELIZ
+       ========================================================================== */
+    const Section1 = ({ bgImage, onOpenModal }) => {
+      const s1Reveal = useStaggeredReveal(4);
+
+      return (
+        <section
+          ref={s1Reveal.containerRef}
+          className="h-screen w-full overflow-hidden flex flex-col pt-24 md:pt-24 px-3 md:px-5 pb-1.5 md:pb-2 gap-1.5 md:gap-2 relative"
+        >
+          {/* 3 Barras (misma imagen, distinto recorte vía background-position) */}
+          {featureBars.map((text, i) => (
+            <div
+              key={text}
+              className="w-full h-14 md:h-20 shrink-0 rounded-xl md:rounded-2xl overflow-hidden relative bg-cover bg-center"
+              style={{ ...s1Reveal.getAnimStyle(i), backgroundImage: `url("${bgImage}")` }}
+            >
+              <div className="flex items-center justify-center h-full relative z-10 bg-black/20 backdrop-blur-[2px]">
+                <span className="text-white md:text-black text-base md:text-3xl font-extrabold text-center px-4 bg-white/80 md:bg-white/90 py-1 px-4 rounded-full backdrop-blur-md">
+                  {text}
+                </span>
+              </div>
+            </div>
+          ))}
+
+          {/* Tarjeta Principal Hero */}
+          <div
+            className="w-full flex-1 min-h-0 rounded-xl md:rounded-2xl overflow-hidden relative bg-cover bg-[center_right]"
+            style={{ ...s1Reveal.getAnimStyle(3), backgroundImage: `url("${bgImage}")` }}
+          >
+            {/* Fila Superior: texto informativo + botón, en flex para que nunca se encimen (si no caben, el botón baja de línea) */}
+            <div className="absolute top-4 left-4 right-4 md:top-7 md:left-7 md:right-7 z-10 flex flex-wrap items-start justify-between gap-3">
+              <div className="text-black text-xs md:text-sm font-semibold leading-4 md:leading-5 max-w-[200px] md:max-w-[320px] bg-white/85 p-3 rounded-xl backdrop-blur-md border border-black/10 shadow-md">
+                Encargado cobrando feliz y con facilidad usando NovaPOS en su computadora.
+              </div>
+
+              <div
+                onClick={() => onOpenModal('Demostración Gratuita')}
+                className="shrink-0 text-white bg-black hover:bg-neutral-800 px-6 py-3 rounded-full text-xs md:text-sm font-bold cursor-pointer shadow-xl hover:scale-105 transition-transform"
+              >
+                Demostración Gratuita
+              </div>
+            </div>
+
+            {/* Bloque Inferior Izquierdo */}
+            <div className="absolute bottom-5 left-3 md:bottom-8 md:left-4 z-10">
+              <span className="block text-black text-xs md:text-sm font-semibold mb-1 md:mb-2 bg-white/85 px-3 py-1 rounded-full backdrop-blur-md inline-block border border-black/10">
+                Punto de Venta e Inventario en México
+              </span>
+              <h1 className="text-black text-[clamp(2.5rem,9vw,9rem)] font-bold leading-[0.79] tracking-tight">
+                Nova<br />POS
+              </h1>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    /* ==========================================================================
+       SECTION 2 - MÓDULOS NOVAPOS
+       ========================================================================== */
+    const Section2 = ({ onOpenModal }) => {
+      const s2Reveal = useStaggeredReveal(4);
+
+      return (
+        <section
+          ref={s2Reveal.containerRef}
+          className="min-h-screen md:h-screen w-full overflow-hidden flex flex-col pt-1.5 md:pt-2 px-3 md:px-5 pb-1.5 md:pb-2 gap-1.5 md:gap-2"
+        >
+          <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto_auto_auto] md:grid-rows-[1fr_1fr_0.8fr] gap-1.5 md:gap-2">
+
+            <div
+              className="rounded-xl md:rounded-2xl overflow-hidden relative min-h-[160px] md:min-h-0 bg-cover bg-center"
+              style={{ ...s2Reveal.getAnimStyle(0), backgroundImage: `url("${FARMACIA_IMAGE}")` }}
+            >
+              <h2 className="absolute top-4 left-5 md:top-6 md:left-7 text-white md:text-black text-2xl md:text-3xl font-bold z-10 bg-black/60 md:bg-white/80 p-2 rounded-xl backdrop-blur-md">
+                Farmacias y Salud
+              </h2>
+              <p className="absolute bottom-4 left-5 md:bottom-6 md:left-7 text-white md:text-black text-xs md:text-sm font-semibold z-10 bg-black/60 md:bg-white/80 p-1 px-2.5 rounded-lg">
+                Control de lotes y caducidades
+              </p>
+            </div>
+
+            <div
+              className="md:row-span-2 rounded-xl md:rounded-2xl overflow-hidden relative min-h-[200px] md:min-h-0"
+              style={s2Reveal.getAnimStyle(1)}
+            >
+              <video
+                src="novapos-inventario.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              ></video>
+              <div className="absolute bottom-16 left-5 md:bottom-20 md:left-7 text-white text-xs md:text-sm font-semibold leading-4 md:leading-5 z-10 bg-black/75 p-3.5 rounded-xl backdrop-blur-md border border-white/20">
+                Controla entradas, salidas, ventas de mostrador e inventario<br />
+                de medicamentos y productos en tiempo real.
+              </div>
+              <button
+                onClick={() => onOpenModal('Demostración para Farmacias')}
+                className="absolute bottom-4 right-4 md:bottom-6 md:right-6 px-5 py-3 md:px-8 md:py-5 bg-white rounded-full text-black text-base md:text-xl font-bold z-10 hover:scale-105 transition-transform shadow-xl cursor-pointer"
+              >
+                Ver Demo
+              </button>
+            </div>
+
+            <div
+              className="rounded-xl md:rounded-2xl overflow-hidden relative min-h-[160px] md:min-h-0 bg-cover bg-center"
+              style={{ ...s2Reveal.getAnimStyle(2), backgroundImage: `url("${CAJA_IMAGE}")` }}
+            >
+              <h2 className="absolute top-4 left-5 md:top-6 md:left-7 text-white md:text-black text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.9] z-10 drop-shadow-md">
+                Caja<br />Digital
+              </h2>
+            </div>
+
+            <div
+              className="col-span-1 md:col-span-2 rounded-xl md:rounded-2xl overflow-hidden relative min-h-[200px] md:min-h-0 bg-cover bg-center"
+              style={{ ...s2Reveal.getAnimStyle(3), backgroundImage: `url("${GIROS_IMAGE}")` }}
+            >
+              <div className="absolute inset-0 z-10 flex flex-wrap md:flex-nowrap gap-1.5 md:gap-2 p-2 md:p-3">
+                {services.map((svc) => (
+                  <div
+                    key={svc.name}
+                    onClick={() => onOpenModal(`Giro: ${svc.name.replace('\n', ' ')}`)}
+                    className={`flex-1 min-w-[calc(50%-4px)] md:min-w-0 rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-col justify-between cursor-pointer transition-transform hover:scale-[1.02] ${
+                      svc.active ? 'bg-white/95 backdrop-blur-md border border-black/10' : 'bg-black/75 backdrop-blur-xl border border-white/20'
+                    }`}
+                  >
+                    <h3 className={`text-lg md:text-3xl font-bold leading-[1.05] whitespace-pre-line ${svc.active ? 'text-black' : 'text-white'}`}>
+                      {svc.name}
+                    </h3>
+                    {svc.num && (
+                      <div className={`self-end w-8 h-8 md:w-12 md:h-12 rounded-full border flex items-center justify-center text-xs md:text-sm font-semibold ${
+                        svc.active ? 'border-black text-black' : 'border-white text-white'
+                      }`}>
+                        {svc.num}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </section>
+      );
+    };
+
+    /* ==========================================================================
+       SECTION 3 - FERRETERÍA, TIENDA DE ROPA Y IMAGEN IA EN EL CARD DERECHO
+       ========================================================================== */
+    const Section3 = ({ onOpenModal }) => {
+      const s3Reveal = useStaggeredReveal(4);
+
+      return (
+        <section 
+          ref={s3Reveal.containerRef}
+          className="min-h-screen md:h-screen w-full overflow-hidden flex flex-col pt-1.5 md:pt-2 px-3 md:px-5 pb-1.5 md:pb-2 gap-1.5 md:gap-2"
+        >
+          <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-2">
+            
+            <div className="flex flex-col gap-1.5 md:gap-2">
+              
+              <div 
+                className="rounded-xl md:rounded-2xl bg-stone-50 p-5 md:p-7 flex flex-col justify-between flex-[1.2] min-h-[180px] md:min-h-0 border border-stone-200"
+                style={s3Reveal.getAnimStyle(0)}
+              >
+                <h2 className="text-[clamp(3rem,7vw,6.5rem)] font-bold leading-[0.95] text-black">
+                  Sistema<br />POS
+                </h2>
+                <p className="text-xs md:text-sm font-semibold text-black">
+                  Adaptado a Ferreterías y Tiendas de Ropa
+                </p>
+              </div>
+
+              <div 
+                className="flex gap-1.5 md:gap-2 flex-1 min-h-[140px] md:min-h-0"
+                style={s3Reveal.getAnimStyle(1)}
+              >
+                <div className="flex-1 rounded-xl md:rounded-2xl overflow-hidden shadow-inner border border-black/5 bg-neutral-100 relative group">
+                  <img src={SECTION3_IMG1} alt="[Ferretería y estantes de herramientas]" className="w-full h-full object-cover" />
+                  <span className="absolute bottom-2 left-2 bg-black/80 text-white text-[9px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">
+                    Ferreterías
+                  </span>
+                </div>
+                <div className="flex-1 rounded-xl md:rounded-2xl overflow-hidden shadow-inner border border-black/5 bg-neutral-100 relative group">
+                  <img src={SECTION3_IMG2} alt="[Tienda de ropa y accesorios]" className="w-full h-full object-cover" />
+                  <span className="absolute bottom-2 left-2 bg-black/80 text-white text-[9px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">
+                    Tiendas de Ropa
+                  </span>
+                </div>
+              </div>
+
+              <div 
+                className="rounded-xl md:rounded-2xl bg-zinc-200 p-5 md:p-7 flex items-end justify-between flex-[0.8] min-h-[160px] md:min-h-0 border border-zinc-300"
+                style={s3Reveal.getAnimStyle(2)}
+              >
+                <div>
+                  <p className="text-xs md:text-sm font-semibold text-black mb-2 md:mb-3">
+                    Atención Directa
+                  </p>
+                  <h3 className="text-xl md:text-3xl font-bold text-black leading-6 md:leading-8">
+                    Caja<br />Registradora<br />Digital
+                  </h3>
+                </div>
+                <button 
+                  onClick={() => onOpenModal('Solicitar Demostración POS')}
+                  className="px-5 py-3 md:px-8 md:py-5 bg-white rounded-full text-black text-base md:text-xl font-bold hover:scale-105 transition-transform shadow-lg cursor-pointer shrink-0"
+                >
+                  Agendar Demo
+                </button>
+              </div>
+
+            </div>
+
+            {/* Columna Derecha: instalación y soporte técnico */}
+            <div
+              className="rounded-xl md:rounded-2xl overflow-hidden relative min-h-[350px] md:min-h-0 shadow-xl"
+              style={s3Reveal.getAnimStyle(3)}
+            >
+              <video
+                src="novapos-soporte.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              ></video>
+
+              <div className="absolute bottom-3 left-3 right-3 md:bottom-5 md:left-5 md:right-5 flex gap-1.5 md:gap-2">
+                
+                <div 
+                  onClick={() => onOpenModal('Proceso de Instalación')}
+                  className="flex-1 bg-white/95 rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-col justify-between h-36 md:h-52 cursor-pointer hover:scale-[1.02] transition-transform shadow-lg border border-black/10 backdrop-blur-md"
+                >
+                  <h4 className="text-lg md:text-2xl font-bold text-black leading-5 md:leading-7">
+                    El Proceso<br />de Instalación<br />en tu Local
+                  </h4>
+                  <div className="self-end w-9 h-9 md:w-12 md:h-12 rounded-full border border-black flex items-center justify-center">
+                    <svg className="rotate-[-45deg]" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div 
+                  onClick={() => onOpenModal('Soporte Técnico 24/7')}
+                  className="flex-1 bg-black/75 backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-5 flex flex-col justify-between h-36 md:h-52 cursor-pointer hover:scale-[1.02] transition-transform border border-white/20 shadow-xl"
+                >
+                  <h4 className="text-lg md:text-2xl font-bold text-white leading-5 md:leading-7">
+                    Soporte<br />Técnico 24/7<br />NovaPOS
+                  </h4>
+                  <div className="self-end w-9 h-9 md:w-12 md:h-12 rounded-full border border-white flex items-center justify-center text-white">
+                    <svg className="rotate-[-45deg]" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+      );
+    };
+
+    /* ==========================================================================
+       PIE DE PÁGINA (LEGAL, CONTACTO Y MARCA OMNIA TECHNOLOGY)
+       ========================================================================== */
+    const Footer = ({ onOpenModal }) => {
+      return (
+        <footer className="bg-black text-white pt-16 pb-10 px-5 md:px-8 lg:px-12">
+          <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+            {/* Columna 1: Marca */}
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col leading-none">
+                <span className="text-xl font-extrabold uppercase tracking-tight">Nova</span>
+                <span className="text-xl font-extrabold uppercase tracking-tight -mt-1">POS</span>
+              </div>
+              <p className="text-white/60 text-sm leading-relaxed">
+                Caja registradora digital y punto de venta para abarrotes, farmacias, ferreterías, tiendas de ropa y papelerías.
+              </p>
+              <p className="text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                Software by Omnia Technology
+              </p>
+            </div>
+
+            {/* Columna 2: Navegación */}
+            <div className="flex flex-col gap-3">
+              <h4 className="font-semibold text-sm uppercase tracking-wider text-white/90">Negocios</h4>
+              <ul className="flex flex-col gap-2 text-sm text-white/60">
+                <li><span className="cursor-default">Abarrotes y Minisúpers</span></li>
+                <li><span className="cursor-default">Farmacias y Salud</span></li>
+                <li><span className="cursor-default">Ferreterías y Herramientas</span></li>
+                <li><span className="cursor-default">Tiendas de Ropa y Papelerías</span></li>
+              </ul>
+            </div>
+
+            {/* Columna 3: Legal */}
+            <div className="flex flex-col gap-3">
+              <h4 className="font-semibold text-sm uppercase tracking-wider text-white/90">Legal</h4>
+              <ul className="flex flex-col gap-2 text-sm text-white/60">
+                <li><a href="aviso-de-privacidad.html" className="hover:text-white transition-colors">Aviso de Privacidad</a></li>
+                <li><a href="terminos-y-condiciones.html" className="hover:text-white transition-colors">Términos y Condiciones</a></li>
+                <li><a href="politica-de-cookies.html" className="hover:text-white transition-colors">Política de Cookies</a></li>
+              </ul>
+            </div>
+
+            {/* Columna 4: Contacto */}
+            <div className="flex flex-col gap-3">
+              <h4 className="font-semibold text-sm uppercase tracking-wider text-white/90">Contacto</h4>
+              <p className="text-sm text-white/60 leading-relaxed">
+                ¿Dudas sobre cómo migrar tu negocio a NovaPOS?<br />
+                <strong className="text-white">ventas@omniatechnology.com</strong>
+              </p>
+              <button
+                onClick={() => onOpenModal('Hablar con un asesor')}
+                className="mt-2 bg-white text-black font-semibold text-xs px-4 py-2.5 rounded-full hover:bg-neutral-200 transition-colors w-full sm:w-auto cursor-pointer"
+              >
+                Hablar con un asesor
+              </button>
+            </div>
+
+          </div>
+
+          {/* Barra inferior */}
+          <div className="max-w-[1440px] mx-auto pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
+            <p>© 2026 NovaPOS PRO by Omnia Technology. Todos los derechos reservados.</p>
+            <div className="flex gap-6">
+              <a href="aviso-de-privacidad.html" className="hover:text-white transition-colors">Privacidad</a>
+              <a href="terminos-y-condiciones.html" className="hover:text-white transition-colors">Términos</a>
+              <span>Soporte NovaPOS 24/7</span>
+            </div>
+          </div>
+        </footer>
+      );
+    };
+
+    /* ==========================================================================
+       DEMO MODAL
+       ========================================================================== */
+    const DemoModal = ({ activeModal, onClose }) => {
+      if (!activeModal) return null;
+
+      return (
+        <div className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative border border-neutral-200">
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black font-bold hover:bg-neutral-200 cursor-pointer"
+            >
+              ✕
+            </button>
+
+            <div className="mb-4">
+              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                NovaPOS PRO
+              </span>
+              <h3 className="text-xl md:text-2xl font-extrabold text-black mt-2">
+                {activeModal}
+              </h3>
+              <p className="text-xs text-neutral-500 mt-1">
+                Ingresa tus datos para agendar una demostración adaptada a tu negocio.
+              </p>
+            </div>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              alert(`¡Gracias! Solicitud recibida para: ${activeModal}`);
+              onClose();
+            }} className="space-y-3">
+              <input type="text" placeholder="Nombre completo" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+              <input type="text" placeholder="Nombre de tu negocio o tienda" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+              
+              <select required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black bg-white">
+                <option value="">Giro de tu negocio...</option>
+                <option value="abarrotes">Tienda de Abarrotes / Minisúper</option>
+                <option value="farmacia">Farmacia</option>
+                <option value="ferreteria">Ferretería</option>
+                <option value="ropa">Tienda de Ropa / Boutique</option>
+                <option value="papeleria">Papelería / Útiles Escolares</option>
+                <option value="otro">Otro tipo de negocio</option>
+              </select>
+
+              <input type="tel" placeholder="Teléfono / WhatsApp" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+              <input type="email" placeholder="Correo electrónico" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+
+              <button type="submit" className="w-full py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-colors cursor-pointer shadow-lg mt-2">
+                Confirmar Solicitud
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    };
+
+    /* ==========================================================================
+       OUTER WRAPPER CON LÓGICA DE GENERACIÓN DE IMAGEN CON IMAGEN 4.0
+       ========================================================================== */
+    function App() {
+      const [showSplash, setShowSplash] = useState(true);
+      const [activeModal, setActiveModal] = useState(null);
+
+      return (
+        <div className="bg-white min-h-screen">
+          {showSplash && (
+            <SplashScreen
+              bgImage={HERO_IMAGE}
+              onComplete={() => setShowSplash(false)}
+            />
+          )}
+
+          <Navbar onOpenModal={(title) => setActiveModal(title)} />
+
+          <Section1
+            bgImage={HERO_IMAGE}
+            onOpenModal={(title) => setActiveModal(title)}
+          />
+
+          <Section2 onOpenModal={(title) => setActiveModal(title)} />
+
+          <Section3
+            onOpenModal={(title) => setActiveModal(title)}
+          />
+
+          <Footer onOpenModal={(title) => setActiveModal(title)} />
+
+          <DemoModal activeModal={activeModal} onClose={() => setActiveModal(null)} />
+        </div>
+      );
+    }
+
+    // Renderizar Aplicación React
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

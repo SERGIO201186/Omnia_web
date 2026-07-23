@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmaPos PRO by Omnia Technology — El Sistema Inteligente para Farmacias</title>
+  
+  <!-- Fuentes de Omnia Technology: Space Grotesk (display) + Inter (body) + IBM Plex Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+          colors: {
+            /* Paleta oficial de Omnia Technology -- Farma POS usa "verde" como color de catálogo */
+            omnia: {
+              50: '#EAFBF4', 100: '#CFF5E6', 200: '#9FE8CC', 300: '#6BD9B1',
+              400: '#3EE0A8', 500: '#2ED9A3', 600: '#22B98A', 700: '#1A9270',
+              800: '#17563F', 900: '#123D2E', 950: '#0A2A20',
+            },
+            ink: '#0A0E17', marinoOsc: '#0D1420', marino: '#161D30', marinoMed: '#202B45',
+            paper: '#EDEFF5',
+          },
+          keyframes: {
+            'fade-in-down': {
+              '0%': { opacity: '0', transform: 'translateY(-8px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          },
+          animation: {
+            'fade-in-down': 'fade-in-down 0.25s ease-out forwards',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0A0E17;
+      color: #EDEFF5;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: clip;
+    }
+
+    .font-serif-italic {
+      font-family: 'Space Grotesk', sans-serif;
+      font-style: normal;
+    }
+
+    .line-top.active {
+      transform: rotate(45deg) translateY(9px);
+    }
+    .line-bottom.active {
+      transform: rotate(-45deg) translateY(-9px);
+    }
+
+    .feature-card {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .feature-card.revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+  </style>
+</head>
+<body class="relative min-h-screen">
+
+  <!-- NAVBAR FLOTANTE -->
+  <header class="absolute top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
+    <div class="bg-white rounded-full shadow-lg px-6 py-3 flex items-center justify-between w-[310px] sm:w-[380px] border border-black/5">
+      <a href="index.html" class="font-bold text-lg tracking-tight text-black font-sans flex items-center gap-2">
+        <span>FarmaPos<span class="text-omnia-600">.</span></span>
+        <span class="text-[10px] bg-omnia-100 text-omnia-800 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">PRO</span>
+      </a>
+
+      <button 
+        id="menu-btn"
+        class="relative w-6 h-5 flex flex-col justify-between items-center group focus:outline-none"
+        aria-label="Menú de navegación"
+      >
+        <span id="line-top" class="line-top w-full h-[2px] bg-black rounded-full transition-all duration-300"></span>
+        <span id="line-bottom" class="line-bottom w-full h-[2px] bg-black rounded-full transition-all duration-300"></span>
+      </button>
+    </div>
+
+    <!-- Menú Desplegable -->
+    <div 
+      id="dropdown-menu" 
+      class="hidden mt-2 w-[280px] sm:w-[360px] bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl text-black animate-fade-in-down"
+    >
+      <nav class="flex flex-col gap-2 font-sans text-sm font-medium text-center">
+        <a href="#features" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Módulos PRO</a>
+        <a href="#about" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Omnia Technology</a>
+        <a href="#contacto" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Soporte y Contacto</a>
+        <button 
+          onclick="openDemoModal()"
+          class="mt-1 py-2.5 px-4 rounded-xl bg-omnia-700 text-white hover:bg-omnia-800 transition-colors font-medium text-sm"
+        >
+          Solicitar Demostración
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SECCIÓN 1: HERO (FARMACÉUTICA FELIZ CON FARMAPOS) -->
+  <section class="h-screen overflow-hidden relative mb-[-25px]">
+    <!-- Video: farmacéutica atendiendo mostrador y escaneando medicamento (sin texto quemado) -->
+    <video
+      src="farmapos-hero.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85]"
+    ></video>
+
+    <!-- Superposición elegante con tinte esmeralda corporativo -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40"></div>
+
+    <!-- Contenido Hero -->
+    <div class="relative z-10 h-full flex flex-col justify-end pb-12 md:pb-16 px-6 max-w-[1440px] mx-auto text-center">
+      
+      <div class="inline-flex items-center gap-2 bg-omnia-900/80 border border-omnia-500/40 text-omnia-200 px-4 py-1.5 rounded-full text-xs font-medium mx-auto mb-4 backdrop-blur-md">
+        <span>💊 Desarrollado por Omnia Technology</span>
+      </div>
+
+      <h1 class="font-normal text-white text-4xl sm:text-6xl md:text-7xl lg:text-[88px] leading-[1.1] tracking-tight mb-4">
+        Vende con orgullo, opera <br />
+        sin <span class="font-serif-italic text-omnia-400">el estrés</span> de inventario
+      </h1>
+
+      <p class="text-white/85 text-sm md:text-base font-medium max-w-[480px] mx-auto mb-8 leading-relaxed">
+        Únete a las farmacias donde las encargadas atienden sonrientes, con control absoluto de recetas, lotes y cobros rápidos gracias a FarmaPos PRO.
+      </p>
+
+      <div class="inline-flex justify-center">
+        <div class="bg-black/40 backdrop-blur-md rounded-xl flex items-center pl-6 pr-1 py-1 gap-4 border border-white/15 shadow-2xl">
+          <span class="text-white text-sm font-medium hidden sm:inline">
+            Optimiza tu farmacia hoy mismo con tecnología de punta.
+          </span>
+          <span class="text-white text-sm font-medium sm:hidden">
+            Optimiza tu farmacia al instante.
+          </span>
+          
+          <button 
+            onclick="openDemoModal()"
+            class="bg-omnia-600 text-white text-sm font-medium px-6 py-2.5 rounded-xl hover:bg-omnia-500 transition-all transform hover:scale-105 active:scale-95 whitespace-nowrap shadow-lg"
+          >
+            Ver Demostración
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2: ABOUT SECTION (Omnia Technology & Filosofía Farmacéutica) -->
+  <section id="about" class="bg-omnia-50 rounded-t-[25px] relative z-10 py-20 md:py-32 px-6 text-omnia-900">
+    <div class="max-w-3xl mx-auto flex flex-col items-center gap-8">
+      <span class="text-xs uppercase tracking-widest bg-omnia-200 text-omnia-900 px-3.5 py-1.5 rounded-full font-bold">
+        Omnia Technology Standards
+      </span>
+      
+      <p class="text-base md:text-lg text-center leading-relaxed max-w-xl font-normal">
+        En <strong class="text-omnia-900">Omnia Technology</strong> diseñamos software especializado que respeta y valora el esfuerzo diario de quienes atienden el mostrador farmacéutico. Cero pantallas lentas, máxima seguridad.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        <button 
+          onclick="openDemoModal()"
+          class="bg-omnia-900 text-paper hover:bg-omnia-950 rounded-full pl-2 pr-6 py-2 flex items-center gap-3 transition-colors text-xs uppercase tracking-wide font-medium shadow-sm"
+        >
+          <div class="w-8 h-8 rounded-full bg-white text-omnia-900 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          </div>
+          <span>Agendar Asesoría</span>
+        </button>
+
+        <a 
+          href="#features"
+          class="bg-omnia-200 text-omnia-900 hover:bg-omnia-300 rounded-full pl-2 pr-6 py-2 flex items-center gap-3 transition-colors text-xs uppercase tracking-wide font-medium"
+        >
+          <div class="w-8 h-8 rounded-full bg-white text-omnia-900 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+          </div>
+          <span>Ver Módulos</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="my-16 md:my-24 max-w-6xl mx-auto flex items-center gap-2">
+      <div class="w-2 h-2 rounded-full bg-omnia-200"></div>
+      <div class="flex-1 h-[2px] bg-omnia-200"></div>
+      <div class="w-2 h-2 rounded-full bg-omnia-200"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-between gap-8 md:gap-16">
+      <div class="flex items-center gap-4">
+        <svg width="40" height="40" viewBox="0 0 256 256" fill="none">
+          <path d="M 256 256 L 178 256 C 150.386 256 128 233.614 128 206 L 128 256 L 0 256 L 0 192 C 0 156.654 28.654 128 64 128 C 99.346 128 128 156.654 128 192 L 128 128 L 256 128 Z M 78 0 C 105.614 0 128 22.386 128 50 L 128 0 L 256 0 L 256 64 C 256 99.346 227.346 128 192 128 C 156.654 128 128 99.346 128 64 L 128 128 L 0 128 L 0 0 Z" fill="#123D2E" />
+        </svg>
+        <span class="text-xs uppercase tracking-widest font-semibold leading-tight text-omnia-900">
+          FarmaPos PRO<br />by Omnia Technology
+        </span>
+      </div>
+
+      <p class="max-w-3xl text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-[1.3] font-normal text-omnia-900">
+        Transformamos la administración farmacéutica en una experiencia fluida. Olvídese de las mermas por caducidad y los errores en caja; entregamos control total con respaldo tecnológico robusto.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: FEATURES (BANNERS RELACIONADOS CON IMÁGENES/VIDEOS ESPECÍFICOS DE FARMACIA) -->
+  <section id="features" class="relative px-5 md:px-10 lg:px-16 py-20 md:py-40 lg:py-48">
+    <div 
+      class="fixed inset-0 -z-10 bg-cover bg-center pointer-events-none filter brightness-50"
+      style="background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260709_082449_46df5cc4-ad98-4541-9236-a2659c1478a4.png&w=1920&q=85');"
+    ></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[400px_1fr] xl:grid-cols-[460px_1fr] gap-12 lg:gap-24 xl:gap-48 max-w-[1440px] mx-auto">
+      
+      <!-- Columna Izquierda Fija -->
+      <div class="lg:sticky lg:top-0 lg:h-screen lg:flex lg:flex-col lg:justify-between lg:py-32">
+        <div>
+          <span class="text-xs font-bold text-omnia-400 uppercase tracking-widest mb-3 block">Módulos Especializados</span>
+          <h2 class="text-white text-2xl sm:text-3xl lg:text-[46px] leading-[1.2] font-normal mb-8">
+            Diseñado específicamente para el ritmo y exigencias de una farmacia moderna
+          </h2>
+
+          <div class="hidden lg:flex flex-col gap-3" id="nav-buttons-container">
+            <button 
+              onclick="scrollToFeature('feature-1')" 
+              data-id="feature-1"
+              class="feature-nav-btn text-left px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium text-sm border bg-black/40 text-white border-white/20 backdrop-blur-md"
+            >
+              1. Dispensación y Ventas en Mostrador
+            </button>
+            <button 
+              onclick="scrollToFeature('feature-2')" 
+              data-id="feature-2"
+              class="feature-nav-btn text-left px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium text-sm border bg-black/10 text-white/40 border-transparent hover:text-white/70"
+            >
+              2. Control Estricto de Caducidades y Lotes
+            </button>
+            <button 
+              onclick="scrollToFeature('feature-3')" 
+              data-id="feature-3"
+              class="feature-nav-btn text-left px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium text-sm border bg-black/10 text-white/40 border-transparent hover:text-white/70"
+            >
+              3. Cortes de Caja y Reportes Financieros
+            </button>
+          </div>
+        </div>
+
+        <div class="hidden lg:flex flex-col items-start gap-4 pt-8">
+          <p class="text-white/80 text-sm font-medium">
+            Implementación rápida con soporte técnico especializado de Omnia Technology.
+          </p>
+          <button 
+            onclick="openDemoModal()"
+            class="bg-omnia-600 text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-omnia-500 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+          >
+            Solicitar Demo en Vivo
+          </button>
+        </div>
+      </div>
+
+      <!-- Columna Derecha con las 3 Tarjetas Actualizadas -->
+      <div class="flex flex-col gap-12 lg:gap-24">
+        
+        <!-- Tarjeta 1: Mostrador y Felicidad en Ventas -->
+        <div id="feature-1" class="feature-card bg-black/30 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl">
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase tracking-widest text-omnia-400 font-bold bg-omnia-950/80 px-3 py-1 rounded-full">Mostrador Ágil</span>
+              <svg width="32" height="32" viewBox="0 0 256 256" fill="none">
+                <path d="M 256 256 L 178 256 C 150.386 256 128 233.614 128 206 L 128 256 L 0 256 L 0 192 C 0 156.654 28.654 128 64 128 C 99.346 128 128 156.654 128 192 L 128 128 L 256 128 Z M 78 0 C 105.614 0 128 22.386 128 50 L 128 0 L 256 0 L 256 64 C 256 99.346 227.346 128 192 128 C 156.654 128 128 99.346 128 64 L 128 128 L 0 128 L 0 0 Z" fill="rgba(255,255,255,0.85)" />
+              </svg>
+            </div>
+            <h3 class="text-white text-xl md:text-2xl font-medium">Atención sonriente y cobros en segundos</h3>
+            
+            <!-- Video: cobro veloz en mostrador (sin texto quemado) -->
+            <div class="aspect-video rounded-2xl overflow-hidden bg-black/40 relative border border-white/15 shadow-2xl">
+              <video src="farmapos-banner1.mp4" autoplay muted loop playsinline class="w-full h-full object-cover"></video>
+            </div>
+
+            <p class="text-white/80 font-medium text-sm md:text-base leading-relaxed">
+              Equipos de farmacia más felices y eficientes. El cajero encuentra medicamentos por marca o sustancia activa de inmediato, agiliza recetas y evita errores en la entrega al paciente.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2: Caducidades y Lotes -->
+        <div id="feature-2" class="feature-card bg-black/30 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl">
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase tracking-widest text-omnia-400 font-bold bg-omnia-950/80 px-3 py-1 rounded-full">Cero Mermas</span>
+              <svg width="32" height="32" viewBox="0 0 256 256" fill="none">
+                <path d="M 256 256 L 178 256 C 150.386 256 128 233.614 128 206 L 128 256 L 0 256 L 0 192 C 0 156.654 28.654 128 64 128 C 99.346 128 128 156.654 128 192 L 128 128 L 256 128 Z M 78 0 C 105.614 0 128 22.386 128 50 L 128 0 L 256 0 L 256 64 C 256 99.346 227.346 128 192 128 C 156.654 128 128 99.346 128 64 L 128 128 L 0 128 L 0 0 Z" fill="rgba(255,255,255,0.85)" />
+              </svg>
+            </div>
+            <h3 class="text-white text-xl md:text-2xl font-medium">Control riguroso de lotes y fechas de caducidad</h3>
+            
+            <!-- Video: control de lotes y caducidades (sin texto quemado) -->
+            <div class="aspect-video rounded-2xl overflow-hidden bg-black/40 relative border border-white/15 shadow-2xl">
+              <video src="farmapos-banner2.mp4" autoplay muted loop playsinline class="w-full h-full object-cover"></video>
+            </div>
+
+            <p class="text-white/80 font-medium text-sm md:text-base leading-relaxed">
+              Protege la inversión de tu farmacia. FarmaPos PRO emite alertas automáticas de caducidades próximas y sugerencias inteligentes de rotación de inventario para eliminar por completo las pérdidas financieras.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3: Cortes de Caja y Finanzas -->
+        <div id="feature-3" class="feature-card bg-black/30 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl">
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase tracking-widest text-omnia-400 font-bold bg-omnia-950/80 px-3 py-1 rounded-full">Finanzas Claras</span>
+              <svg width="32" height="32" viewBox="0 0 256 256" fill="none">
+                <path d="M 256 256 L 178 256 C 150.386 256 128 233.614 128 206 L 128 256 L 0 256 L 0 192 C 0 156.654 28.654 128 64 128 C 99.346 128 128 156.654 128 192 L 128 128 L 256 128 Z M 78 0 C 105.614 0 128 22.386 128 50 L 128 0 L 256 0 L 256 64 C 256 99.346 227.346 128 192 128 C 156.654 128 128 99.346 128 64 L 128 128 L 0 128 L 0 0 Z" fill="rgba(255,255,255,0.85)" />
+              </svg>
+            </div>
+            <h3 class="text-white text-xl md:text-2xl font-medium">Cortes de caja exactos y reportes en tiempo real</h3>
+            
+            <!-- Video: corte de caja y reportes en tiempo real (sin texto quemado; recortado para excluir un póster de marca ajena de fondo) -->
+            <div class="aspect-video rounded-2xl overflow-hidden bg-black/40 relative border border-white/15 shadow-2xl">
+              <video src="farmapos-banner3.mp4" autoplay muted loop playsinline class="w-full h-full object-cover"></video>
+            </div>
+
+            <p class="text-white/80 font-medium text-sm md:text-base leading-relaxed">
+              Tranquilidad total para el administrador o dueño. Cierres de turno transparentes, facturación electrónica automatizada (CFDI) y tableros de ventas accesibles desde cualquier lugar.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PIE DE PÁGINA (FOOTER COMPLETO CON MENCIÓN OMNIA TECHNOLOGY) -->
+  <footer id="contacto" class="bg-ink border-t border-white/10 pt-16 pb-12 px-6 relative z-10 text-white">
+    <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      
+      <!-- Columna 1: Marca -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-xl tracking-tight text-white font-sans">
+            FarmaPos<span class="text-omnia-500">.</span>
+          </span>
+          <span class="text-[10px] bg-omnia-950 text-omnia-400 border border-omnia-800 px-2 py-0.5 rounded-full font-semibold uppercase">PRO</span>
+        </div>
+        <p class="text-white/60 text-sm leading-relaxed">
+          El sistema inteligente de punto de venta e inventario para farmacias modernas e independientes.
+        </p>
+        <p class="text-omnia-400 text-xs font-semibold uppercase tracking-wider">
+          Powered by Omnia Technology
+        </p>
+      </div>
+
+      <!-- Columna 2: Enlaces rápidos -->
+      <div class="flex flex-col gap-3">
+        <h4 class="font-semibold text-sm uppercase tracking-wider text-white/90">Navegación</h4>
+        <ul class="flex flex-col gap-2 text-sm text-white/60">
+          <li><a href="#about" class="hover:text-white transition-colors">Acerca de Omnia Technology</a></li>
+          <li><a href="#features" class="hover:text-white transition-colors">Características Principales</a></li>
+          <li><a href="#" onclick="openDemoModal(); return false;" class="hover:text-white transition-colors">Solicitar Demostración</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Centro de Ayuda</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Legal y Privacidad -->
+      <div class="flex flex-col gap-3">
+        <h4 class="font-semibold text-sm uppercase tracking-wider text-white/90">Legal y Seguridad</h4>
+        <ul class="flex flex-col gap-2 text-sm text-white/60">
+          <li><a href="aviso-de-privacidad.html" class="hover:text-white transition-colors">Política de Privacidad</a></li>
+          <li><a href="terminos-y-condiciones.html" class="hover:text-white transition-colors">Términos y Condiciones del Servicio</a></li>
+          <li><a href="politica-de-cookies.html" class="hover:text-white transition-colors">Cookies</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 4: Contacto directo -->
+      <div class="flex flex-col gap-3">
+        <h4 class="font-semibold text-sm uppercase tracking-wider text-white/90">Contacto Directo</h4>
+        <p class="text-sm text-white/60 leading-relaxed">
+          ¿Tienes dudas sobre cómo migrar tu farmacia actual?<br>
+          <strong class="text-white">ventas@omniatechnology.com</strong>
+        </p>
+        <div class="mt-2">
+          <button 
+            onclick="openDemoModal()"
+            class="bg-omnia-600 hover:bg-omnia-500 text-white font-medium text-xs px-4 py-2.5 rounded-lg transition-colors shadow-md w-full sm:w-auto"
+          >
+            Hablar con un asesor
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Barra inferior con derechos reservados -->
+    <div class="max-w-[1440px] mx-auto pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
+      <p>© 2026 FarmaPos PRO by Omnia Technology. Todos los derechos reservados.</p>
+      <div class="flex gap-6">
+        <a href="aviso-de-privacidad.html" class="hover:text-white transition-colors">Privacidad</a>
+        <a href="terminos-y-condiciones.html" class="hover:text-white transition-colors">Términos</a>
+        <a href="#contacto" class="hover:text-white transition-colors">Soporte Técnico</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL DE DEMOSTRACIÓN -->
+  <div id="demo-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-omnia-900 border border-omnia-500/30 w-full max-w-md rounded-3xl p-6 sm:p-8 text-white relative shadow-2xl">
+      <button onclick="closeDemoModal()" class="absolute top-5 right-5 text-white/60 hover:text-white p-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div id="modal-form-container">
+        <div class="mb-3">
+          <span class="text-[10px] bg-omnia-900 text-omnia-300 px-2.5 py-1 rounded-full uppercase font-semibold">Omnia Technology</span>
+        </div>
+        <h3 class="font-bold text-2xl mb-1 text-white">Solicitar Demostración</h3>
+        <p class="text-sm text-white/70 mb-6">Prueba FarmaPos PRO en vivo y comprueba la tranquilidad operativa que tu farmacia merece.</p>
+
+        <form onsubmit="handleFormSubmit(event)" class="space-y-4 text-sm font-medium">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-white/60 mb-1">Nombre Completo</label>
+            <input type="text" required placeholder="Q.F.B. Laura Martínez" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-omnia-400">
+          </div>
+
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-white/60 mb-1">Nombre de la Farmacia</label>
+            <input type="text" required placeholder="Farmacias del Centro" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-omnia-400">
+          </div>
+
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-white/60 mb-1">Teléfono o WhatsApp</label>
+            <input type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-omnia-400">
+          </div>
+
+          <button type="submit" class="w-full bg-omnia-600 hover:bg-omnia-500 text-white font-semibold py-3.5 rounded-xl transition-colors mt-2 text-base shadow-lg">
+            Agendar Prueba Gratis
+          </button>
+        </form>
+      </div>
+
+      <div id="modal-success" class="hidden py-8 text-center flex flex-col items-center gap-4">
+        <div class="w-12 h-12 bg-omnia-500/20 text-omnia-400 rounded-full flex items-center justify-center">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h4 class="text-xl font-bold">¡Solicitud recibida!</h4>
+        <p class="text-sm text-white/80">Un asesor especialista de Omnia Technology te contactará en breve.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT DE INTERACTIVIDAD -->
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const lineTop = document.getElementById('line-top');
+    const lineBottom = document.getElementById('line-bottom');
+
+    menuBtn.addEventListener('click', () => {
+      const isHidden = dropdownMenu.classList.contains('hidden');
+      if (isHidden) {
+        dropdownMenu.classList.remove('hidden');
+        lineTop.classList.add('active');
+        lineBottom.classList.add('active');
+      } else {
+        dropdownMenu.classList.add('hidden');
+        lineTop.classList.remove('active');
+        lineBottom.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        dropdownMenu.classList.add('hidden');
+        lineTop.classList.remove('active');
+        lineBottom.classList.remove('active');
+      });
+    });
+
+    function scrollToFeature(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function openDemoModal() {
+      document.getElementById('demo-modal').classList.remove('hidden');
+      document.getElementById('modal-form-container').classList.remove('hidden');
+      document.getElementById('modal-success').classList.add('hidden');
+    }
+
+    function closeDemoModal() {
+      document.getElementById('demo-modal').classList.add('hidden');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      document.getElementById('modal-form-container').classList.add('hidden');
+      document.getElementById('modal-success').classList.remove('hidden');
+      setTimeout(() => {
+        closeDemoModal();
+      }, 2800);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.feature-card');
+      const navBtns = document.querySelectorAll('.feature-nav-btn');
+
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            
+            const id = entry.target.id;
+            navBtns.forEach(btn => {
+              if (btn.getAttribute('data-id') === id) {
+                btn.className = "feature-nav-btn text-left px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium text-sm border bg-black/40 text-white border-white/20 backdrop-blur-md";
+              } else {
+                btn.className = "feature-nav-btn text-left px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium text-sm border bg-black/10 text-white/40 border-transparent hover:text-white/70";
+              }
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      cards.forEach(card => cardObserver.observe(card));
+    });
+  </script>
+</body>
+</html>

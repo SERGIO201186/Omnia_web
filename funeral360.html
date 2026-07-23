@@ -1,560 +1,815 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Funeral 360 · Software para funerarias inteligentes · Omnia Technology</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#0B1220;--marino-osc:#111E35;--marino:#1B2A4A;--marino-med:#243760;
-  --line:rgba(237,239,245,0.10);--line-strong:rgba(237,239,245,0.20);
-  --paper:#EDEFF5;--paper-dim:rgba(237,239,245,0.66);--paper-dimmer:rgba(237,239,245,0.42);
-  --dorado:#B8964E;--dorado-claro:#D4B06A;--dorado-osc:#9A7A3A;
-  --cyan:#22C7D9;--cyan-dim:rgba(34,199,217,0.35);
-  --verde:#3FBE6E;--verde-dim:rgba(63,190,110,0.32);
-  --azul:#3D8BFF;--azul-dim:rgba(61,139,255,0.32);
-  --claro:#F4F6FA;--texto-osc:#16223A;--texto-osc-dim:rgba(22,34,58,0.66);--texto-osc-dimmer:rgba(22,34,58,0.44);
-  --radius:14px;
-}
-@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-.ico-move{animation:floaty 3.2s ease-in-out infinite;}
-/* ===== ZONA CLARA ===== */
-.zone-light{background:var(--claro);}
-.zone-light .eyebrow{color:var(--dorado-osc)!important;border-color:rgba(22,34,58,0.16)!important;}
-.zone-light h1,.zone-light h2,.zone-light h3,.zone-light h4,.zone-light .section-head h2{color:var(--texto-osc)!important;}
-.zone-light p,.zone-light .section-head p{color:var(--texto-osc-dim)!important;}
-.zone-light .hero p{color:var(--texto-osc-dim)!important;}
-.zone-light h1 em{color:var(--dorado-osc)!important;}
-.zone-light .btn-ghost{color:var(--texto-osc)!important;border-color:rgba(22,34,58,0.22)!important;}
-.zone-light .btn-ghost:hover{border-color:var(--dorado)!important;color:var(--dorado-osc)!important;}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--marino-osc);color:var(--paper);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
-@media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms!important;animation-iteration-count:1!important;transition-duration:0.001ms!important;scroll-behavior:auto!important;}}
-a{color:inherit;text-decoration:none;}
-img{max-width:100%;display:block;}
-h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;}
-.mono{font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em;}
-.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funeral360 by Omnia Technology | Software para Funerarias Inteligentes</title>
+    <!-- Google Fonts Requeridas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN para estilos responsivos dinámicos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        schibsted: ['"Schibsted Grotesk"', 'sans-serif'],
+                        inter: ['"Inter"', 'sans-serif'],
+                        noto: ['"Noto Sans"', 'sans-serif'],
+                        fustat: ['"Fustat"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBadge: '#0e1311',
+                        upgradeGreen: 'rgba(90,225,76,0.89)',
+                        grayText: '#505050',
+                        lightGrayBg: '#f8f8f8',
+                        goldAccent: '#C2A379',
+                        navyDark: '#0A1F44',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f17;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:rgba(17,30,53,0.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:80;}
-.nav-logo{display:flex;align-items:center;gap:10px;}
-.nav-logo img{height:36px;}
-.nav-center{display:none;gap:28px;font-size:14px;font-weight:500;color:var(--paper-dim);}
-.nav-center a:hover{color:var(--cyan);}
-@media(min-width:920px){.nav-center{display:flex;}}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-size:13.5px;font-weight:600;border:1px solid var(--line-strong);cursor:pointer;transition:all .2s ease;white-space:nowrap;}
-.btn-pri{background:var(--dorado);color:#171008;border-color:var(--dorado);}
-.btn-pri:hover{background:var(--dorado-claro);transform:translateY(-1px);}
-.btn-ghost{color:var(--paper);}
-.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+        /* Estructura del Contenedor del Video de Fondo */
+        .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 115%;
+            height: 115%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-/* HERO */
-.hero{padding:80px 0 60px;position:relative;overflow:hidden;border-top:none;text-align:center;}
-.hero::before{content:"";position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:520px;height:420px;background:radial-gradient(circle,var(--cyan-dim) 0%,transparent 70%);pointer-events:none;}
-.hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--line-strong);padding:6px 12px;border-radius:999px;margin-bottom:22px;}
-.led-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px var(--cyan-dim);animation:pulse 2.2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
-.hero h1{font-size:clamp(30px,6vw,50px);line-height:1.1;color:var(--paper);margin-bottom:18px;}
-.hero h1 em{font-style:normal;color:var(--dorado-claro);}
-.hero p{font-size:16px;color:var(--paper-dim);max-width:480px;margin:0 auto 30px;}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            opacity: 0; /* Controlado exclusivamente vía JS RAF */
+        }
 
-/* SECTION SHARED */
-section{padding:80px 0;border-top:1px solid var(--line);}
-.section-head{max-width:620px;margin:0 auto 44px;text-align:center;}
-.section-head h2{font-size:clamp(24px,3.2vw,34px);color:var(--paper);margin-bottom:10px;}
-.section-head p{color:var(--paper-dim);font-size:14.5px;}
+        /* Capa de contraste sobre el video */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(11, 15, 23, 0.3) 0%, rgba(11, 15, 23, 0.85) 100%);
+            z-index: 1;
+        }
 
-/* MODULOS */
-.modulos-grid{display:grid;grid-template-columns:1fr;gap:14px;max-width:760px;margin:0 auto;}
-.modulo-card{background:rgba(255,255,255,0.035);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;gap:16px;align-items:flex-start;transition:border-color .2s ease;}
-.modulo-card:hover{border-color:var(--cyan-dim);}
-.modulo-ico{width:46px;height:46px;border-radius:10px;background:var(--marino-med);border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-.modulo-titulo{font-size:15.5px;font-weight:600;color:var(--paper);margin-bottom:4px;}
-.modulo-desc{font-size:13px;color:var(--paper-dim);line-height:1.55;}
-.modulo-tag{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:3px 9px;border-radius:20px;margin-top:8px;}
-.tag-activo{color:var(--cyan);border:1px solid var(--cyan-dim);}
-.tag-proximo{color:var(--paper-dimmer);border:1px solid var(--line-strong);}
+        /* Caja de Búsqueda / Asistente AI con Glassmorphism */
+        .glass-search-box {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
 
-/* FEATURES */
-.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;max-width:760px;margin:0 auto;}
-@media(min-width:640px){.features-grid{grid-template-columns:repeat(3,1fr);}}
-.feat{background:var(--marino);padding:22px 18px;}
-.feat-ico{font-size:22px;margin-bottom:8px;}
-.feat-titulo{font-size:13px;font-weight:600;color:var(--paper);margin-bottom:4px;}
-.feat-desc{font-size:12px;color:var(--paper-dim);line-height:1.5;}
-
-/* PRECIOS */
-.planes{display:grid;grid-template-columns:1fr;gap:16px;max-width:1040px;margin:0 auto;}
-@media(min-width:700px){.planes{grid-template-columns:repeat(2,1fr);}}
-@media(min-width:1000px){.planes{grid-template-columns:repeat(3,1fr);}}
-.plan-bundle{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;border:1.5px solid var(--dorado);background:linear-gradient(160deg,rgba(184,150,78,0.1),rgba(255,255,255,0.02));border-radius:var(--radius);padding:22px 26px;}
-.plan-bundle .bundle-text h4{font-size:15.5px;color:var(--paper);margin-bottom:4px;}
-.plan-bundle .bundle-text p{font-size:12.5px;color:var(--paper-dim);}
-.plan{border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;background:rgba(255,255,255,0.03);}
-.plan.destacado{border-color:var(--dorado);background:linear-gradient(160deg,rgba(184,150,78,0.08),rgba(255,255,255,0.02));}
-.plan-badge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--dorado-claro);margin-bottom:10px;}
-.plan-nombre{font-size:19px;color:var(--paper);margin-bottom:6px;font-weight:600;}
-.plan-precio{font-size:28px;font-weight:700;color:var(--paper);margin-bottom:4px;font-family:'Space Grotesk',sans-serif;}
-.plan-precio span{font-size:12.5px;font-weight:400;color:var(--paper-dim);}
-.plan-desc{font-size:13px;color:var(--paper-dim);margin-bottom:16px;line-height:1.55;}
-.plan-items{list-style:none;margin-bottom:20px;}
-.plan-items li{font-size:12.5px;color:var(--paper-dim);padding:6px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;}
-.plan-items li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0;}
-.btn-plan{width:100%;padding:13px;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;font-family:'Inter',sans-serif;}
-.btn-plan:hover{opacity:0.88;}
-.btn-plan-pri{background:var(--dorado);color:#171008;}
-.btn-plan-sec{background:var(--marino-med);color:var(--paper);}
-.precios-nota{text-align:center;font-size:12.5px;color:var(--paper-dimmer);margin-top:20px;}
-.precios-nota a{color:var(--cyan);font-weight:600;}
-
-/* CTA FINAL */
-.cta-final{background:linear-gradient(180deg,var(--marino),var(--ink));text-align:center;}
-.cta-final h2{font-size:clamp(24px,3.4vw,34px);color:var(--paper);max-width:560px;margin:0 auto 12px;}
-.cta-final p{font-size:14px;color:var(--paper-dim);margin-bottom:26px;}
-
-/* FOOTER */
-footer{border-top:1px solid var(--line);padding:36px 0 110px;text-align:center;}
-footer img{height:30px;margin:0 auto 14px;}
-footer p{font-size:12px;color:var(--paper-dimmer);font-family:'IBM Plex Mono',monospace;}
-footer a{color:var(--paper-dim);}
-footer a:hover{color:var(--cyan);}
-
-/* CONTACTO — dock lateral */
-.contact-dock{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;align-items:flex-end;}
-.contact-tab{writing-mode:vertical-rl;text-orientation:mixed;background:var(--dorado);color:#171008;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:16px 9px;border-radius:10px 0 0 10px;cursor:pointer;box-shadow:-4px 4px 16px rgba(0,0,0,0.3);transition:padding .2s ease, background .2s ease;border:none;}
-.contact-tab:hover{background:var(--dorado-claro);padding-left:13px;}
-.contact-panel{position:absolute;right:100%;top:50%;transform:translateY(-50%) translateX(12px);margin-right:6px;background:var(--marino);border:1px solid var(--line-strong);border-radius:14px;padding:18px;width:220px;box-shadow:0 20px 44px -14px rgba(0,0,0,0.5);display:none;}
-.contact-dock.abierto .contact-panel{display:block;}
-.contact-panel a{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--paper);padding:9px 4px;border-radius:8px;}
-.contact-panel a:hover{background:rgba(255,255,255,0.05);color:var(--cyan);}
-.contact-panel .cp-title{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--paper-dimmer);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;padding:0 4px;}
-@media(max-width:600px){.contact-tab{padding:13px 7px;font-size:10.5px;}.contact-panel{width:190px;}}
-
-/* MODALES */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,18,32,0.88);z-index:200;align-items:flex-end;justify-content:center;}
-.modal-overlay.abierto{display:flex;}
-.modal-box{background:var(--marino);border:1px solid var(--line-strong);border-radius:18px 18px 0 0;padding:28px 22px 40px;width:100%;max-width:480px;animation:slideUp .3s ease;}
-@keyframes slideUp{from{transform:translateY(60px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.modal-titulo{font-family:'Space Grotesk',sans-serif;font-size:21px;color:var(--paper);margin-bottom:4px;font-weight:600;}
-.modal-sub{font-size:13.5px;color:var(--paper-dim);margin-bottom:20px;}
-.campo-modal{margin-bottom:13px;}
-.campo-modal label{display:block;font-size:10.5px;font-weight:600;color:var(--paper-dimmer);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;}
-.campo-modal input{width:100%;padding:12px 14px;border:1.5px solid var(--line-strong);border-radius:8px;font-family:'Inter',sans-serif;font-size:15px;color:var(--paper);background:var(--ink);}
-.campo-modal input:focus{outline:2px solid var(--cyan);outline-offset:1px;}
-.btn-modal-pri{width:100%;padding:14px;background:var(--dorado);color:#171008;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:'Inter',sans-serif;}
-.btn-modal-sec{width:100%;padding:12px;background:transparent;color:var(--paper-dim);border:1px solid var(--line-strong);border-radius:8px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;}
-.aviso-modal{margin-top:10px;font-size:13px;padding:10px 12px;border-radius:7px;display:none;}
-.aviso-exito{display:block!important;background:rgba(34,199,217,0.14);color:#8FE3EC;}
-.aviso-error{display:block!important;background:rgba(217,90,90,0.14);color:#F0A3A3;}
-.campo-check{display:flex;flex-direction:column;gap:9px;margin-bottom:4px;}
-.campo-check label{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--paper);font-weight:500;text-transform:none;letter-spacing:0;cursor:pointer;}
-.campo-check input[type="checkbox"]{width:17px;height:17px;accent-color:var(--dorado);flex-shrink:0;}
-.campo-nota{font-size:11.5px;color:var(--paper-dimmer);margin-top:6px;}
-:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
-</style>
+        .dropdown-menu {
+            display: none;
+        }
+        .group:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased selection:bg-goldAccent selection:text-black">
 
-<nav>
-  <a href="index.html" class="nav-logo"><svg width="34" height="34" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path d="M 70.4 15.5 A 50 50 0 1 1 15.5 70.4" fill="none" stroke="#0A1F44" stroke-width="15" stroke-linecap="round"/>
-  <path d="M 16.3 65.7 A 50 50 0 0 1 65.2 15.2" fill="none" stroke="#C2A379" stroke-width="15" stroke-linecap="round"/>
-</svg>
-<span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.01em;"><span style="color:#0A1F44;">FUNERAL</span><span style="color:#C2A379;">360</span></span></a>
-  <div class="nav-center">
-    <a href="index.html">← Omnia Technology</a>
-    <a href="#modulos">Módulos</a>
-    <a href="#precios">Precios</a>
-  </div>
-  <button class="btn btn-pri" onclick="abrirModalContratar()">Contratar</button>
-</nav>
-
-<!-- HERO -->
-<section class="hero zone-light">
-  <div class="wrap hero-inner">
-    <span class="eyebrow"><span class="led-dot"></span>Software para funerarias inteligentes</span>
-    <h1>Vende más rápido, cobra sin fugas y deja un recuerdo que <em>la familia nunca olvida</em></h1>
-    <p>Tres módulos que resuelven lo urgente, lo que vendes a futuro y el recuerdo que tu funeraria le regala a cada familia — cada uno con resultados medibles desde el primer servicio.</p>
-    <div class="hero-ctas">
-      <button class="btn btn-pri" onclick="abrirModalDemo()">Solicitar demo gratuito →</button>
-      <a href="#modulos" class="btn btn-ghost">Ver módulos</a>
-    </div>
-  </div>
-</section>
-
-<!-- MÓDULOS -->
-<section id="modulos">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow" style="margin-bottom:16px;">Una suite completa</span>
-      <h2>Todos los módulos integrados en una sola plataforma</h2>
-    </div>
-    <div class="modulos-grid">
-
-      <div class="modulo-card">
-        <div class="modulo-ico ico-move" style="background:rgba(184,150,78,0.16);animation-delay:0s;">🕊</div>
-        <div>
-          <div class="modulo-titulo">Páginas Conmemorativas</div>
-          <div class="modulo-desc">Un espacio digital que la familia recuerda: logística del velatorio en tiempo real con mapa, muro de recuerdos con fotos y reacciones, veladoras virtuales, videollamada para quien no puede asistir y tienda de gestos con ingresos compartidos. Cumple con aviso de privacidad y términos de uso desde el primer acceso.</div>
-          <span class="modulo-tag tag-activo">● Disponible</span>
+    <!-- HERO SECTION CON VIDEO DE FONDO Y FADE SYSTEM -->
+    <header class="relative min-h-screen flex flex-col justify-between overflow-hidden pb-12">
+        <!-- Video Background Structure -->
+        <div class="hero-video-container">
+            <video id="bgVideo" class="hero-video" playsinline autoplay muted>
+                <source src="funeral360-hero.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
         </div>
-      </div>
 
-      <div class="modulo-card">
-        <div class="modulo-ico ico-move" style="background:rgba(63,190,110,0.16);animation-delay:0.3s;">📋</div>
-        <div>
-          <div class="modulo-titulo">Gestión de Servicios (ODS)</div>
-          <div class="modulo-desc">Cierra el contrato en minutos: firma digital, folio y cálculo de ruta y traslado automáticos. Cada abono se aprueba antes de aplicarse, y el inventario de urnas y equipo se reserva por servicio para que nunca falte lo que ya vendiste.</div>
-          <span class="modulo-tag tag-activo">● Disponible</span>
+        <!-- NAVBAR -->
+        <nav class="relative z-20 w-full px-6 md:px-12 lg:px-[120px] py-4 flex items-center justify-between border-b border-white/10 bg-black/20 backdrop-blur-md">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-3">
+                <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8">
+                    <path d="M 70.4 15.5 A 50 50 0 1 1 15.5 70.4" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+                    <path d="M 16.3 65.7 A 50 50 0 0 1 65.2 15.2" fill="none" stroke="#C2A379" stroke-width="14" stroke-linecap="round"/>
+                </svg>
+                <span class="font-schibsted font-semibold text-[22px] md:text-[24px] tracking-[-1.44px] text-white">
+                    Funeral360 <span class="text-xs font-normal text-gray-300 tracking-normal block md:inline font-inter">by Omnia Tech</span>
+                </span>
+            </a>
+
+            <!-- Menu Navigation Links -->
+            <div class="hidden lg:flex items-center gap-8 font-schibsted font-medium text-[16px] tracking-[-0.2px] text-gray-200">
+                <a href="#plataforma" class="hover:text-goldAccent transition-colors">Plataforma</a>
+                <div class="relative group cursor-pointer flex items-center gap-1.5 hover:text-goldAccent transition-colors py-2">
+                    <span>Productos (4 Apps)</span>
+                    <svg class="w-4 h-4 fill-current transition-transform group-hover:rotate-180" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    <!-- Dropdown de las 4 Apps -->
+                    <div class="dropdown-menu absolute top-full left-0 w-64 bg-[#0e1311]/95 border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-xl mt-1">
+                        <a href="#ods" class="block p-2.5 rounded-lg hover:bg-white/10 text-sm font-inter">⚡ Ventas Inmediatas (ODS)</a>
+                        <a href="#prevision" class="block p-2.5 rounded-lg hover:bg-white/10 text-sm font-inter">🛡️ Previsión Funeraria</a>
+                        <a href="#tienda" class="block p-2.5 rounded-lg hover:bg-white/10 text-sm font-inter">🛒 Tienda Virtual</a>
+                        <a href="#conmemorativas" class="block p-2.5 rounded-lg hover:bg-white/10 text-sm font-inter">🕊️ Páginas Conmemorativas</a>
+                    </div>
+                </div>
+                <a href="#comunidad" class="hover:text-goldAccent transition-colors">Red Funeraria</a>
+                <a href="#contacto" class="hover:text-goldAccent transition-colors">Contacto</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <button onclick="openDemoModal()" class="font-schibsted font-medium text-sm text-white hover:text-goldAccent w-[82px] py-2 text-center transition-colors cursor-pointer">
+                    Demo
+                </button>
+                <a href="omnia-portal.html" class="font-schibsted font-semibold text-sm bg-white text-black hover:bg-goldAccent hover:text-black w-[101px] py-2.5 rounded-full text-center transition-all duration-300 shadow-lg">
+                    Ingresar
+                </a>
+            </div>
+        </nav>
+
+        <!-- MAIN HERO CONTENT CONTAINER -->
+        <div class="relative z-10 max-w-[1280px] mx-auto px-6 md:px-12 lg:px-[120px] pt-12 lg:pt-16 flex flex-col items-center text-center -mt-[20px] lg:-mt-[50px]">
+            
+            <!-- Badge Component -->
+            <div class="inline-flex items-center gap-2 p-1 pl-1.5 pr-4 bg-white/10 border border-white/15 rounded-full backdrop-blur-md mb-8 shadow-xl hover:border-goldAccent/50 transition-all cursor-pointer">
+                <div class="bg-darkBadge text-white px-2.5 py-1 rounded-full text-xs font-inter font-medium flex items-center gap-1">
+                    <!-- Star Icon -->
+                    <svg class="w-3.5 h-3.5 fill-goldAccent" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span>Nuevo v2.5</span>
+                </div>
+                <span class="text-white text-xs md:text-sm font-inter font-medium tracking-tight">
+                    Descubre el ecosistema completo de Funeral360
+                </span>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="font-fustat font-extrabold text-[40px] sm:text-[60px] md:text-[72px] lg:text-[80px] leading-[0.95] tracking-[-2px] sm:tracking-[-3.5px] md:tracking-[-4.8px] text-white max-w-[980px] mb-6 drop-shadow-2xl">
+                Transforma tu Funeraria Rápidamente
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="font-fustat font-medium text-[16px] sm:text-[18px] md:text-[20px] leading-relaxed tracking-[-0.4px] text-gray-200 max-w-[736px] w-full mb-[34px]">
+                Controla ventas de uso inmediato, planes de previsión, tu tienda virtual y homenajea a la familia con páginas conmemorativas en un solo software inteligente.
+            </p>
+
+            <!-- Panel de Acceso Rápido a las 4 Apps -->
+            <div class="w-full max-w-[728px] glass-search-box rounded-[18px] p-4 text-left border border-white/20 shadow-2xl">
+
+                <!-- Top Row: Info -->
+                <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 font-schibsted text-[12px] text-white">
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium text-gray-300">4 Apps Integradas:</span>
+                        <span class="bg-upgradeGreen text-black px-2 py-0.5 rounded font-bold text-[11px] uppercase tracking-wide">
+                            En Vivo
+                        </span>
+                    </div>
+                    <span class="text-gray-300 font-medium hidden sm:inline">Accede directo al módulo que necesitas</span>
+                </div>
+
+                <!-- Grid de Acceso Directo a cada App -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <a href="#ods" class="bg-white/10 hover:bg-white/20 rounded-[12px] p-3 flex items-center gap-3 transition-colors">
+                        <span class="w-9 h-9 bg-goldAccent/20 rounded-lg flex items-center justify-center text-lg shrink-0">⚡</span>
+                        <div>
+                            <p class="text-white text-sm font-semibold font-schibsted leading-tight">Ventas Inmediatas</p>
+                            <p class="text-gray-400 text-xs font-inter">Contratos ODS en minutos</p>
+                        </div>
+                    </a>
+                    <a href="#prevision" class="bg-white/10 hover:bg-white/20 rounded-[12px] p-3 flex items-center gap-3 transition-colors">
+                        <span class="w-9 h-9 bg-blue-400/20 rounded-lg flex items-center justify-center text-lg shrink-0">🛡️</span>
+                        <div>
+                            <p class="text-white text-sm font-semibold font-schibsted leading-tight">Previsión Funeraria</p>
+                            <p class="text-gray-400 text-xs font-inter">Planes y cobros automáticos</p>
+                        </div>
+                    </a>
+                    <a href="#tienda" class="bg-white/10 hover:bg-white/20 rounded-[12px] p-3 flex items-center gap-3 transition-colors">
+                        <span class="w-9 h-9 bg-teal-400/20 rounded-lg flex items-center justify-center text-lg shrink-0">🛒</span>
+                        <div>
+                            <p class="text-white text-sm font-semibold font-schibsted leading-tight">Tienda Virtual</p>
+                            <p class="text-gray-400 text-xs font-inter">Ventas en línea 24/7</p>
+                        </div>
+                    </a>
+                    <a href="#conmemorativas" class="bg-white/10 hover:bg-white/20 rounded-[12px] p-3 flex items-center gap-3 transition-colors">
+                        <span class="w-9 h-9 bg-purple-400/20 rounded-lg flex items-center justify-center text-lg shrink-0">🕊️</span>
+                        <div>
+                            <p class="text-white text-sm font-semibold font-schibsted leading-tight">Páginas Conmemorativas</p>
+                            <p class="text-gray-400 text-xs font-inter">Homenaje digital a la familia</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="flex items-center justify-center pt-3 mt-3 border-t border-white/10">
+                    <button onclick="openDemoModal()" class="text-xs font-inter font-semibold text-white hover:text-goldAccent transition-colors cursor-pointer">
+                        ¿No sabes por dónde empezar? Solicita una demo guiada →
+                    </button>
+                </div>
+
+            </div>
         </div>
-      </div>
+    </header>
 
-      <div class="modulo-card">
-        <div class="modulo-ico ico-move" style="background:rgba(61,139,255,0.16);animation-delay:0.6s;">📊</div>
-        <div>
-          <div class="modulo-titulo">Previsión Funeraria</div>
-          <div class="modulo-desc">Vende tranquilidad a futuro con respaldo legal completo: contratos con beneficiarios designados, firma digital, cobro por tarjeta, SPEI o depósito, y metas de venta visibles por asesor.</div>
-          <span class="modulo-tag tag-activo">● Disponible</span>
+    <!-- SECTION: LAS 4 APPS DE FUNERAL360 -->
+    <section id="plataforma" class="py-20 px-6 md:px-12 lg:px-[120px] bg-[#0c121d] border-t border-white/10">
+        <div class="max-w-[1180px] mx-auto">
+            <div class="text-center max-w-[700px] mx-auto mb-16">
+                <span class="text-goldAccent font-schibsted uppercase tracking-widest text-xs font-semibold">Ecosistema Omnia Technology</span>
+                <h2 class="font-fustat font-bold text-3xl sm:text-4xl text-white mt-2">Las 4 Aplicaciones Integradas en Funeral360</h2>
+                <p class="text-gray-400 text-sm sm:text-base mt-3">Diseñadas específicamente para la operación completa de la empresa funeraria moderna.</p>
+            </div>
+
+            <!-- Grid de las 4 Apps -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- App 1: Uso Inmediato (ODS) -->
+                <div id="ods" class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-goldAccent/20 rounded-xl flex items-center justify-center text-goldAccent text-2xl mb-6">
+                        ⚡
+                    </div>
+                    <span class="text-xs font-bold text-goldAccent uppercase tracking-wider">App 1 · Operaciones</span>
+                    <h3 class="font-fustat font-bold text-2xl text-white mt-1 mb-3">Ventas de Servicios Inmediatos (ODS)</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        Cierra servicios urgentes en minutos desde la app móvil. Firma digital de contratos, cálculo automático de rutas y traslados, control estricto de abonos y apartado de urnas/equipo para evitar fugas.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2 font-inter border-t border-white/10 pt-4 mb-6">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Contrato con firma en pantalla y asignación de folio digital.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Aprobación previa de pagos para caja limpia sin descuadres.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Asignación automática de la unidad y capillas disponibles más cercanas.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Historial completo del servicio disponible para toda la operación.</li>
+                    </ul>
+                    <!-- Carrusel de Imágenes: ODS -->
+                    <div class="carousel relative rounded-xl overflow-hidden aspect-video bg-black/40" data-carousel>
+                        <div class="carousel-track flex h-full transition-transform duration-500 ease-out">
+                            <img src="ods-1.jpg" alt="Firma digital de contrato ODS en tablet" class="w-full h-full object-cover shrink-0">
+                            <img src="ods-2.jpg" alt="Coordinación de traslado y unidad funeraria" class="w-full h-full object-cover shrink-0">
+                            <img src="ods-3.jpg" alt="Asesor confirmando apartado de urna en mostrador" class="w-full h-full object-cover shrink-0">
+                        </div>
+                        <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Anterior">‹</button>
+                        <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Siguiente">›</button>
+                        <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+                    </div>
+                </div>
+
+                <!-- App 2: Previsiones -->
+                <div id="prevision" class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 text-2xl mb-6">
+                        🛡️
+                    </div>
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">App 2 · Ventas Futuras</span>
+                    <h3 class="font-fustat font-bold text-2xl text-white mt-1 mb-3">Previsión Funeraria</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        Comercializa tranquilidad a futuro con respaldo legal. Gestión de asesores, contratos con beneficiarios designados, cobro automatizado por tarjeta, SPEI o depósito, y metas por fuerza de venta.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2 font-inter border-t border-white/10 pt-4 mb-6">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Recibos digitales automáticos y certificado de liquidación.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Dashboard en tiempo real de metas por asesor de ventas.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Portabilidad del plan a cualquier funeraria afiliada a la Red Funeraria.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Recordatorios automáticos de pago por WhatsApp y correo.</li>
+                    </ul>
+                    <!-- Carrusel de Imágenes: Previsión -->
+                    <div class="carousel relative rounded-xl overflow-hidden aspect-video bg-black/40" data-carousel>
+                        <div class="carousel-track flex h-full transition-transform duration-500 ease-out">
+                            <img src="prevision-1.jpg" alt="Asesor explicando un plan de previsión a una pareja" class="w-full h-full object-cover shrink-0">
+                            <img src="prevision-2.jpg" alt="Firma de contrato de previsión con beneficiarios" class="w-full h-full object-cover shrink-0">
+                            <img src="prevision-3.jpg" alt="Panel de metas de ventas por asesor en tablet" class="w-full h-full object-cover shrink-0">
+                        </div>
+                        <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Anterior">‹</button>
+                        <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Siguiente">›</button>
+                        <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+                    </div>
+                </div>
+
+                <!-- App 3: Tienda Virtual -->
+                <div id="tienda" class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-teal-500/20 rounded-xl flex items-center justify-center text-teal-400 text-2xl mb-6">
+                        🛒
+                    </div>
+                    <span class="text-xs font-bold text-teal-400 uppercase tracking-wider">App 3 · E-Commerce</span>
+                    <h3 class="font-fustat font-bold text-2xl text-white mt-1 mb-3">Tienda Virtual Integrada</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        Vende artículos funerarios, urnas de catálogo, arreglos florales y servicios adicionales 24/7 en línea con pasarela de pagos segura tipo Stripe directamente a las familias.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2 font-inter border-t border-white/10 pt-4 mb-6">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Notificaciones inmediatas por WhatsApp para cada pedido recibido.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Cobro directo a cuenta bancaria de la funeraria.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Catálogo administrable con fotos, precios y disponibilidad en tiempo real.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Envío coordinado con floristerías y proveedores aliados por código postal.</li>
+                    </ul>
+                    <!-- Carrusel de Imágenes: Tienda Virtual -->
+                    <div class="carousel relative rounded-xl overflow-hidden aspect-video bg-black/40" data-carousel>
+                        <div class="carousel-track flex h-full transition-transform duration-500 ease-out">
+                            <img src="tienda-1.jpg" alt="Catálogo de arreglos florales en la tienda virtual" class="w-full h-full object-cover shrink-0">
+                            <img src="tienda-2.jpg" alt="Vitrina de urnas disponible en línea" class="w-full h-full object-cover shrink-0">
+                            <img src="tienda-3.jpg" alt="Confirmación de pedido y pago en línea desde el celular" class="w-full h-full object-cover shrink-0">
+                        </div>
+                        <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Anterior">‹</button>
+                        <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Siguiente">›</button>
+                        <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+                    </div>
+                </div>
+
+                <!-- App 4: Páginas Conmemorativas -->
+                <div id="conmemorativas" class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 text-2xl mb-6">
+                        🕊️
+                    </div>
+                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">App 4 · Valor Agregado</span>
+                    <h3 class="font-fustat font-bold text-2xl text-white mt-1 mb-3">Páginas Conmemorativas</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        Regala un homenaje digital inolvidable a la familia: mapa de ubicación del velatorio, muro de recuerdos con fotos, encendido de veladoras virtuales, videollamadas y monetización con flores/gestos.
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2 font-inter border-t border-white/10 pt-4 mb-6">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 25% de bonificación sobre ingresos generados por gestos virtuales.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Transferencia de propiedad digital de la página a la familia.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Enlace compartible por WhatsApp para avisar a familiares y amigos.</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> La página permanece disponible como recuerdo permanente, sin costo para la familia.</li>
+                    </ul>
+                    <!-- Carrusel de Imágenes: Páginas Conmemorativas -->
+                    <div class="carousel relative rounded-xl overflow-hidden aspect-video bg-black/40" data-carousel>
+                        <div class="carousel-track flex h-full transition-transform duration-500 ease-out">
+                            <img src="conmemorativas-1.jpg" alt="Página conmemorativa digital con foto y mensaje" class="w-full h-full object-cover shrink-0">
+                            <img src="conmemorativas-2.jpg" alt="Muro de recuerdos con fotos de familiares y amigos" class="w-full h-full object-cover shrink-0">
+                            <img src="conmemorativas-3.jpg" alt="Veladora virtual encendida en la página conmemorativa" class="w-full h-full object-cover shrink-0">
+                        </div>
+                        <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Anterior">‹</button>
+                        <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white cursor-pointer" aria-label="Siguiente">›</button>
+                        <div class="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
+    </section>
 
-      <div class="modulo-card">
-        <div class="modulo-ico ico-move" style="background:rgba(34,199,217,0.16);animation-delay:0.9s;">🛒</div>
-        <div>
-          <div class="modulo-titulo">Tienda Virtual</div>
-          <div class="modulo-desc">Vende artículos funerarios, urnas, flores y servicios adicionales en línea directamente a tus clientes.</div>
-          <span class="modulo-tag tag-proximo">○ Próximamente</span>
+    <!-- SECTION: RED FUNERARIA — BANNER DE AFILIACIÓN -->
+    <section id="comunidad" class="py-20 px-6 md:px-12 lg:px-[120px] bg-[#0b0f17] border-t border-white/10">
+        <div class="max-w-[1180px] mx-auto">
+
+            <!-- Encabezado del banner -->
+            <div class="text-center max-w-[820px] mx-auto mb-14">
+                <span class="inline-block text-goldAccent font-schibsted uppercase tracking-widest text-xs font-semibold border border-goldAccent/30 bg-goldAccent/10 rounded-full px-4 py-1.5">
+                    Membresía · Red Funeraria Omnia
+                </span>
+                <h2 class="font-fustat font-bold text-3xl sm:text-4xl md:text-[44px] text-white mt-5 leading-[1.1]">
+                    No es un grupo de WhatsApp.<br class="hidden sm:block">
+                    Es una red respaldada legalmente.
+                </h2>
+                <p class="text-gray-400 text-sm sm:text-base mt-5 leading-relaxed">
+                    Nada de cadenas de referidos informales ni acuerdos de palabra que se rompen cuando más se necesitan. La Red Funeraria Omnia es una membresía formal entre funerarias certificadas en Funeral360, con un convenio de afiliación real, reglas claras y un mismo estándar de servicio en todo el país.
+                    <span class="text-white font-medium"> Únete y crezcamos juntos.</span>
+                </p>
+            </div>
+
+            <!-- Barra de confianza -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-14">
+                <span class="flex items-center gap-2 text-xs font-inter font-medium text-gray-300 bg-white/5 border border-white/10 rounded-full px-4 py-2">⚖️ Convenio de afiliación formal</span>
+                <span class="flex items-center gap-2 text-xs font-inter font-medium text-gray-300 bg-white/5 border border-white/10 rounded-full px-4 py-2">🔍 Admisión con requisitos verificados</span>
+                <span class="flex items-center gap-2 text-xs font-inter font-medium text-gray-300 bg-white/5 border border-white/10 rounded-full px-4 py-2">📋 Estándares de servicio compartidos</span>
+                <span class="flex items-center gap-2 text-xs font-inter font-medium text-gray-300 bg-white/5 border border-white/10 rounded-full px-4 py-2">🚪 Sin permanencia forzosa</span>
+            </div>
+
+            <!-- Beneficios -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-11 h-11 bg-goldAccent/20 rounded-xl flex items-center justify-center text-goldAccent text-xl mb-4">🤝</div>
+                    <h3 class="font-fustat font-bold text-lg text-white mb-2">Referencia entre funerarias</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Si una familia necesita un servicio fuera de tu cobertura, la refieres a otra funeraria afiliada de confianza en vez de perder al cliente.</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-11 h-11 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 text-xl mb-4">🛡️</div>
+                    <h3 class="font-fustat font-bold text-lg text-white mb-2">Previsión portable</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Un plan de previsión contratado en una ciudad puede hacerse válido en cualquier funeraria afiliada a nivel nacional.</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-11 h-11 bg-teal-500/20 rounded-xl flex items-center justify-center text-teal-400 text-xl mb-4">📦</div>
+                    <h3 class="font-fustat font-bold text-lg text-white mb-2">Compra consolidada</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Mejores precios en urnas, ataúdes, flores e insumos al negociar como red en vez de como funeraria individual.</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-goldAccent/50 transition-all duration-300">
+                    <div class="w-11 h-11 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 text-xl mb-4">✅</div>
+                    <h3 class="font-fustat font-bold text-lg text-white mb-2">Directorio de confianza</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Las familias pueden encontrar una funeraria certificada Funeral360 cerca de ellas, con el mismo estándar de servicio en cualquier lugar.</p>
+                </div>
+            </div>
+
+            <!-- Respaldo legal de la membresía -->
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 mb-16">
+                <div class="flex flex-col md:flex-row md:items-start justify-between gap-8">
+                    <div class="md:max-w-[380px]">
+                        <span class="text-goldAccent font-schibsted uppercase tracking-widest text-xs font-semibold">Respaldo legal</span>
+                        <h3 class="font-fustat font-bold text-2xl text-white mt-2 mb-3">¿Qué firmas al unirte?</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            La afiliación se formaliza mediante un <strong class="text-white">Convenio de Afiliación a la Red Funeraria Omnia</strong>, no con una simple invitación a un chat. Este documento define derechos y obligaciones de ambas partes desde el inicio.
+                        </p>
+                    </div>
+                    <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-300 font-inter">
+                        <li class="flex items-start gap-2"><span class="text-goldAccent mt-0.5">•</span> Requisitos de admisión y verificación de la funeraria solicitante.</li>
+                        <li class="flex items-start gap-2"><span class="text-goldAccent mt-0.5">•</span> Estándares mínimos de servicio y código de conducta entre miembros.</li>
+                        <li class="flex items-start gap-2"><span class="text-goldAccent mt-0.5">•</span> Protocolo de referencia entre funerarias afiliadas y manejo de comisiones, si aplican.</li>
+                        <li class="flex items-start gap-2"><span class="text-goldAccent mt-0.5">•</span> Vigencia, renovación y causales de baja de la membresía.</li>
+                        <li class="flex items-start gap-2"><span class="text-goldAccent mt-0.5">•</span> Mecanismo de resolución de conflictos entre miembros de la red.</li>
+                        <li class="flex items-start gap-2"><span class="text-goldAccent mt-0.5">•</span> Costos de membresía claramente establecidos, sin cuotas ocultas.</li>
+                    </ul>
+                </div>
+                <p class="text-gray-500 text-xs leading-relaxed mt-6 pt-6 border-t border-white/10">
+                    El convenio completo se entrega y revisa durante el proceso de afiliación, antes de firmar. Este resumen tiene fines informativos y no sustituye el documento legal ni asesoría jurídica.
+                </p>
+            </div>
+
+            <!-- Pasos para unirse -->
+            <div class="mb-16">
+                <h3 class="font-fustat font-bold text-2xl text-white text-center mb-10">Cómo unirte a la red</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-goldAccent/20 text-goldAccent rounded-full flex items-center justify-center font-fustat font-bold mx-auto mb-3">1</div>
+                        <h4 class="font-fustat font-semibold text-white text-sm mb-1">Solicita información</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">Completa el formulario de afiliación con los datos de tu funeraria.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-goldAccent/20 text-goldAccent rounded-full flex items-center justify-center font-fustat font-bold mx-auto mb-3">2</div>
+                        <h4 class="font-fustat font-semibold text-white text-sm mb-1">Validamos tu funeraria</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">Revisamos que cumpla los requisitos mínimos de admisión a la red.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-goldAccent/20 text-goldAccent rounded-full flex items-center justify-center font-fustat font-bold mx-auto mb-3">3</div>
+                        <h4 class="font-fustat font-semibold text-white text-sm mb-1">Firman el convenio</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">Revisas y firmas el Convenio de Afiliación con las reglas de la red.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-goldAccent/20 text-goldAccent rounded-full flex items-center justify-center font-fustat font-bold mx-auto mb-3">4</div>
+                        <h4 class="font-fustat font-semibold text-white text-sm mb-1">Activación en la red</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">Apareces en el directorio y empiezas a referir y recibir con la red.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA final -->
+            <div class="text-center bg-gradient-to-b from-goldAccent/10 to-transparent border border-goldAccent/20 rounded-3xl py-12 px-6">
+                <h3 class="font-fustat font-bold text-2xl sm:text-3xl text-white mb-3">Únete y crezcamos juntos</h3>
+                <p class="text-gray-400 text-sm max-w-[520px] mx-auto mb-8">
+                    Sé parte de la primera red de funerarias con respaldo legal y tecnología compartida en México.
+                </p>
+                <button onclick="openJoinModal()" class="font-schibsted font-semibold text-sm bg-goldAccent text-black hover:bg-white px-8 py-3.5 rounded-full transition-all duration-300 shadow-lg cursor-pointer">
+                    Solicitar afiliación a la Red Funeraria
+                </button>
+            </div>
         </div>
-      </div>
+    </section>
 
-    </div>
-  </div>
-</section>
+    <!-- FOOTER -->
+    <footer id="contacto" class="pt-16 pb-10 px-6 md:px-12 lg:px-[120px] bg-[#080c14] border-t border-white/10 text-gray-400 font-inter">
+        <div class="max-w-[1180px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
 
-<!-- FEATURES -->
-<section class="zone-light">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Todo lo que necesitas, sin complicaciones</h2>
-    </div>
-    <div class="features-grid">
-      <div class="feat"><div class="feat-ico">📱</div><div class="feat-titulo">100% desde el celular</div><div class="feat-desc">Sin instalaciones. Funciona en cualquier smartphone.</div></div>
-      <div class="feat"><div class="feat-ico">☁️</div><div class="feat-titulo">En la nube</div><div class="feat-desc">Tus datos siempre seguros y disponibles.</div></div>
-      <div class="feat"><div class="feat-ico">📄</div><div class="feat-titulo">Documentos digitales</div><div class="feat-desc">Contratos, expedientes y pagarés en segundos.</div></div>
-      <div class="feat"><div class="feat-ico">💳</div><div class="feat-titulo">Cobros en línea</div><div class="feat-desc">Stripe integrado. Cobra con tarjeta fácilmente.</div></div>
-      <div class="feat"><div class="feat-ico">🔔</div><div class="feat-titulo">Alertas WhatsApp</div><div class="feat-desc">Notificaciones en tiempo real de pedidos y pagos.</div></div>
-      <div class="feat"><div class="feat-ico">📍</div><div class="feat-titulo">Mapas integrados</div><div class="feat-desc">Ubicación del servicio en Google Maps automáticamente.</div></div>
-    </div>
-  </div>
-</section>
+            <!-- Columna 1: Marca -->
+            <div class="flex flex-col gap-4">
+                <span class="font-schibsted font-semibold text-xl tracking-tight text-white">Funeral360</span>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Software integral para funerarias modernas: ventas inmediatas, previsión, tienda virtual y páginas conmemorativas.
+                </p>
+                <p class="text-goldAccent text-xs font-semibold uppercase tracking-wider">by Omnia Technology</p>
+            </div>
 
-<!-- PRECIOS -->
-<section id="precios">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Planes transparentes</h2>
-      <p>Cada módulo se contrata por separado. Adquiere 1, 2 o los 3 — al contratar los 3 juntos obtienes un precio preferencial.</p>
-    </div>
-    <div class="planes">
+            <!-- Columna 2: Plataforma -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-schibsted font-semibold text-sm uppercase tracking-wider text-white/90">Plataforma</h4>
+                <ul class="flex flex-col gap-2 text-sm">
+                    <li><a href="#ods" class="hover:text-white transition-colors">Ventas Inmediatas (ODS)</a></li>
+                    <li><a href="#prevision" class="hover:text-white transition-colors">Previsión Funeraria</a></li>
+                    <li><a href="#tienda" class="hover:text-white transition-colors">Tienda Virtual</a></li>
+                    <li><a href="#conmemorativas" class="hover:text-white transition-colors">Páginas Conmemorativas</a></li>
+                    <li><a href="#comunidad" class="hover:text-white transition-colors">Red Funeraria</a></li>
+                </ul>
+            </div>
 
-      <div class="plan">
-        <div class="plan-badge">🎯 Demo gratuito</div>
-        <div class="plan-nombre">Prueba el sistema</div>
-        <div class="plan-precio">Gratis <span>· sin tarjeta</span></div>
-        <div class="plan-desc">Conoce cualquiera de nuestros 3 módulos antes de contratar.</div>
-        <ul class="plan-items">
-          <li>Demo de App ODS, Previsión o Páginas conmemorativas</li>
-          <li>Elige uno, dos o los tres módulos a probar</li>
-          <li>Soporte por WhatsApp</li>
-        </ul>
-        <button class="btn-plan btn-plan-sec" onclick="abrirModalDemo()">Solicitar demo gratis</button>
-      </div>
+            <!-- Columna 3: Legal -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-schibsted font-semibold text-sm uppercase tracking-wider text-white/90">Legal</h4>
+                <ul class="flex flex-col gap-2 text-sm">
+                    <li><a href="aviso-de-privacidad.html" class="hover:text-white transition-colors">Aviso de Privacidad</a></li>
+                    <li><a href="terminos-y-condiciones.html" class="hover:text-white transition-colors">Términos y Condiciones</a></li>
+                    <li><a href="politica-de-cookies.html" class="hover:text-white transition-colors">Política de Cookies</a></li>
+                </ul>
+            </div>
 
-      <div class="plan">
-        <div class="plan-badge">📋 Módulo independiente</div>
-        <div class="plan-nombre">App ODS</div>
-        <div class="plan-precio">$2,000 <span>MXN setup único</span></div>
-        <div class="plan-desc">$799/mes + $200/mes por asesor adicional</div>
-        <ul class="plan-items">
-          <li>Contrato y folio digital en minutos, con firma incluida</li>
-          <li>Ruta y costo de traslado calculados automáticamente</li>
-          <li>Abonos aprobados antes de aplicarse — cero pagos perdidos</li>
-          <li>Reserva de urnas y equipo por servicio</li>
-        </ul>
-        <button class="btn-plan btn-plan-sec" onclick="abrirModalContratar('App ODS')">Solicitar información</button>
-      </div>
-
-      <div class="plan">
-        <div class="plan-badge">📊 Módulo independiente</div>
-        <div class="plan-nombre">Previsión Funeraria</div>
-        <div class="plan-precio">$2,000 <span>MXN setup único</span></div>
-        <div class="plan-desc">$799/mes + $200/mes por asesor adicional</div>
-        <ul class="plan-items">
-          <li>Contratos con beneficiarios designados y firma digital</li>
-          <li>Cobro por tarjeta, SPEI o depósito, con recibo automático</li>
-          <li>Metas de venta por asesor, visibles en tiempo real</li>
-          <li>Certificado de liquidación total sin trámites manuales</li>
-        </ul>
-        <button class="btn-plan btn-plan-sec" onclick="abrirModalContratar('Previsión Funeraria')">Solicitar información</button>
-      </div>
-
-      <div class="plan destacado">
-        <div class="plan-badge">⭐ Más popular</div>
-        <div class="plan-nombre">Páginas Conmemorativas</div>
-        <div class="plan-precio">$500 <span>MXN setup único</span></div>
-        <div class="plan-desc">$99/mes de mantenimiento + $149 por página activa</div>
-        <ul class="plan-items">
-          <li>Logística del velatorio en tiempo real, con mapa incluido</li>
-          <li>Muro de recuerdos con fotos, mensajes y reacciones</li>
-          <li>Veladoras virtuales y tienda de gestos con FuneralCredits</li>
-          <li>25% de bonificación (después de impuestos) sobre ingresos de gestos</li>
-          <li>Videollamada conmemorativa $299 por servicio</li>
-          <li>Cumple aviso de privacidad y términos de uso desde el primer acceso</li>
-          <li>Transferencia de la página a la familia al final del servicio</li>
-        </ul>
-        <button class="btn-plan btn-plan-pri" onclick="abrirModalContratar('Páginas Conmemorativas')">Contratar ahora →</button>
-      </div>
-
-      <div class="plan-bundle">
-        <div class="bundle-text">
-          <h4>🎁 Paquete completo — los 3 módulos</h4>
-          <p>Contrata App ODS + Previsión Funeraria + Páginas Conmemorativas juntos y obtén 25% de descuento sobre el setup y la mensualidad de mantenimiento combinados.</p>
+            <!-- Columna 4: Contacto -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-schibsted font-semibold text-sm uppercase tracking-wider text-white/90">Contacto</h4>
+                <p class="text-sm leading-relaxed">
+                    ¿Dudas sobre cómo digitalizar tu funeraria?<br>
+                    <strong class="text-white">ventas@omniatechnology.com</strong>
+                </p>
+                <button onclick="openDemoModal()" class="mt-2 bg-white text-black font-schibsted font-semibold text-xs px-4 py-2.5 rounded-full hover:bg-goldAccent transition-colors w-full sm:w-auto cursor-pointer">
+                    Hablar con un asesor
+                </button>
+            </div>
         </div>
-        <button class="btn-plan btn-plan-pri" style="width:auto;padding:13px 26px;" onclick="abrirModalContratar('Paquete completo (3 módulos)')">Cotizar paquete →</button>
-      </div>
 
+        <div class="max-w-[1180px] mx-auto pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-600 gap-4">
+            <p>© 2026 Funeral360 by Omnia Technology. Todos los derechos reservados.</p>
+            <div class="flex gap-6">
+                <a href="aviso-de-privacidad.html" class="hover:text-white transition-colors">Privacidad</a>
+                <a href="terminos-y-condiciones.html" class="hover:text-white transition-colors">Términos</a>
+                <a href="politica-de-cookies.html" class="hover:text-white transition-colors">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DEMOSTRACIÓN -->
+    <div id="demo-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#0e1311] border border-white/10 w-full max-w-md rounded-3xl p-6 sm:p-8 text-white relative shadow-2xl">
+            <button onclick="closeDemoModal()" class="absolute top-5 right-5 text-white/60 hover:text-white p-2 cursor-pointer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div id="modal-form-container">
+                <div class="mb-3">
+                    <span class="text-[10px] bg-white/10 text-goldAccent px-2.5 py-1 rounded-full uppercase font-semibold font-schibsted">Omnia Technology</span>
+                </div>
+                <h3 class="font-fustat font-bold text-2xl mb-1 text-white">Solicitar Demostración</h3>
+                <p class="text-sm text-gray-400 mb-6 font-inter">Conoce Funeral360 en vivo y descubre cómo digitalizar tu funeraria.</p>
+
+                <form onsubmit="handleFormSubmit(event)" class="space-y-4 text-sm font-inter">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre Completo</label>
+                        <input type="text" required placeholder="Nombre y apellido" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre de la Funeraria</label>
+                        <input type="text" required placeholder="Funeraria San Rafael" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Teléfono o WhatsApp</label>
+                        <input type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <button type="submit" class="w-full bg-goldAccent hover:bg-white text-black font-schibsted font-semibold py-3.5 rounded-xl transition-colors mt-2 text-base shadow-lg cursor-pointer">
+                        Agendar Demo Gratis
+                    </button>
+                </form>
+            </div>
+
+            <div id="modal-success" class="hidden py-8 text-center flex flex-col items-center gap-4">
+                <div class="w-12 h-12 bg-upgradeGreen/20 text-upgradeGreen rounded-full flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h4 class="text-xl font-fustat font-bold">¡Solicitud recibida!</h4>
+                <p class="text-sm text-gray-400 font-inter">Un asesor de Omnia Technology te contactará en breve.</p>
+            </div>
+        </div>
     </div>
-    <p class="precios-nota">¿Tienes más de 10 servicios al mes? <a href="https://wa.me/525547894225">Contáctanos para un plan personalizado</a></p>
-  </div>
-</section>
 
-<!-- CTA FINAL -->
-<section class="cta-final">
-  <div class="wrap">
-    <h2>¿Listo para modernizar tu funeraria?</h2>
-    <p>Más de 10 módulos integrados. Soporte en español. Desde tu celular.</p>
-    <button class="btn btn-pri" onclick="abrirModalDemo()">Solicitar demo gratuito →</button>
-  </div>
-</section>
+    <!-- MODAL DE AFILIACIÓN A LA RED FUNERARIA -->
+    <div id="join-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#0e1311] border border-white/10 w-full max-w-md rounded-3xl p-6 sm:p-8 text-white relative shadow-2xl">
+            <button onclick="closeJoinModal()" class="absolute top-5 right-5 text-white/60 hover:text-white p-2 cursor-pointer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
 
-<footer>
-  <div class="wrap">
-    <svg width="360" height="112" viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 8px;display:block;" role="img" aria-label="Funeral 360 - Software para funerarias inteligentes">
-  <g transform="translate(15,30) scale(1.15)">
-    <path d="M 64.81 14.25 A 46 46 0 1 1 14.25 55.19" fill="none" stroke="#0A1F44" stroke-width="14" stroke-linecap="round"/>
-    <path d="M 15.01 50.44 A 46 46 0 0 1 60.0 14.0" fill="none" stroke="#C2A379" stroke-width="14" stroke-linecap="round"/>
-  </g>
-  <text x="185" y="120" font-family="Montserrat, Arial, sans-serif" font-weight="800" font-size="58">
-    <tspan fill="#0A1F44">FUNERAL</tspan><tspan fill="#C2A379">360</tspan>
-  </text>
-  <text x="187" y="152" font-family="Lato, Arial, sans-serif" font-size="15" letter-spacing="3" fill="#333333">SOFTWARE PARA FUNERARIAS INTELIGENTES</text>
-</svg>
-    <p>© 2026 Funeral 360 · Un software de <a href="index.html">Omnia Technology</a><br>
-    <a href="login.html">Acceso clientes</a> · <a href="master.html">Panel maestro</a></p>
-    <p style="margin-top:8px;"><span id="connStatus"></span> · <button onclick="abrirConfigConexion()" style="background:none; border:none; color:var(--paper-dimmer); text-decoration:underline; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:11px;">Conectar backend</button></p>
-  </div>
-</footer>
+            <div id="join-form-container">
+                <div class="mb-3">
+                    <span class="text-[10px] bg-goldAccent/15 text-goldAccent px-2.5 py-1 rounded-full uppercase font-semibold font-schibsted">Red Funeraria Omnia</span>
+                </div>
+                <h3 class="font-fustat font-bold text-2xl mb-1 text-white">Solicitar Afiliación</h3>
+                <p class="text-sm text-gray-400 mb-6 font-inter">Cuéntanos sobre tu funeraria. Un asesor de la Red Funeraria te contactará para revisar los requisitos de admisión y el convenio de afiliación.</p>
 
-<!-- CONTACTO — dock lateral -->
-<div class="contact-dock" id="contactDock">
-  <button class="contact-tab" onclick="toggleContacto()">Contacto</button>
-  <div class="contact-panel">
-    <div class="cp-title">Hablar con Funeral 360</div>
-    <a href="https://wa.me/525547894225?text=Hola,%20me%20interesa%20Funeral360" target="_blank">💬 WhatsApp</a>
-    <a href="mailto:huertafune@gmail.com?subject=Interesado%20en%20Funeral360">✉️ Correo</a>
-    <a href="javascript:void(0)" onclick="abrirModalDemo(); toggleContacto();">🖥️ Solicitar demo</a>
-    <a href="javascript:void(0)" onclick="abrirModalContratar(); toggleContacto();">📩 Contratar</a>
-  </div>
-</div>
+                <form onsubmit="handleJoinFormSubmit(event)" class="space-y-4 text-sm font-inter">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre de la Funeraria</label>
+                        <input type="text" required placeholder="Funeraria San Rafael" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
 
-<!-- MODAL DEMO -->
-<div class="modal-overlay" id="modalDemo">
-  <div class="modal-box">
-    <div class="modal-titulo">Demo gratuito</div>
-    <div class="modal-sub">Te enviamos tu acceso en menos de 24 horas.</div>
-    <div class="campo-modal">
-      <label>¿Qué módulo(s) quieres probar?</label>
-      <div class="campo-check">
-        <label><input type="checkbox" id="demoODS"> App ODS (servicios inmediatos)</label>
-        <label><input type="checkbox" id="demoPrevision"> Previsión Funeraria</label>
-        <label><input type="checkbox" id="demoPaginas"> Páginas Conmemorativas</label>
-      </div>
-      <p class="campo-nota">Puedes elegir uno, dos o los tres.</p>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Ciudad y Estado</label>
+                        <input type="text" required placeholder="Xalapa, Veracruz" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre del Responsable</label>
+                        <input type="text" required placeholder="Nombre y apellido" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Teléfono o WhatsApp</label>
+                        <input type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <label class="flex items-start gap-2.5 text-xs text-gray-400 leading-relaxed pt-1">
+                        <input type="checkbox" required class="mt-0.5 accent-goldAccent">
+                        Acepto ser contactado para revisar los requisitos de admisión y el Convenio de Afiliación a la Red Funeraria Omnia.
+                    </label>
+
+                    <button type="submit" class="w-full bg-goldAccent hover:bg-white text-black font-schibsted font-semibold py-3.5 rounded-xl transition-colors mt-2 text-base shadow-lg cursor-pointer">
+                        Enviar Solicitud de Afiliación
+                    </button>
+                </form>
+            </div>
+
+            <div id="join-success" class="hidden py-8 text-center flex flex-col items-center gap-4">
+                <div class="w-12 h-12 bg-upgradeGreen/20 text-upgradeGreen rounded-full flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h4 class="text-xl font-fustat font-bold">¡Solicitud de afiliación recibida!</h4>
+                <p class="text-sm text-gray-400 font-inter">Un asesor de la Red Funeraria Omnia te contactará para continuar el proceso.</p>
+            </div>
+        </div>
     </div>
-    <div class="campo-modal"><label>Nombre de tu funeraria</label><input type="text" id="demoNombre" placeholder="Funeraria San Ángel"></div>
-    <div class="campo-modal"><label>Tu nombre</label><input type="text" id="demoContacto" placeholder="¿Con quién hablamos?"></div>
-    <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="demoWA" placeholder="2281234567"></div>
-    <div class="campo-modal"><label>Correo electrónico</label><input type="email" id="demoEmail" placeholder="funeraria@correo.com"></div>
-    <button class="btn-modal-pri" onclick="enviarDemo()">Solicitar demo gratis</button>
-    <button class="btn-modal-sec" onclick="cerrarModal('modalDemo')">Cancelar</button>
-    <div class="aviso-modal" id="avisoDemo"></div>
-  </div>
-</div>
 
-<!-- MODAL CONTRATAR -->
-<div class="modal-overlay" id="modalContratar">
-  <div class="modal-box">
-    <div class="modal-titulo">Contratar Funeral360</div>
-    <div class="modal-sub">Cada módulo tiene su propio costo. Selecciona los 3 para un precio preferencial.</div>
-    <div class="campo-modal">
-      <label>¿Qué módulo(s) quieres contratar?</label>
-      <div class="campo-check">
-        <label><input type="checkbox" id="contODS"> App ODS (servicios inmediatos)</label>
-        <label><input type="checkbox" id="contPrevision"> Previsión Funeraria</label>
-        <label><input type="checkbox" id="contPaginas"> Páginas Conmemorativas</label>
-      </div>
-      <p class="campo-nota">Al seleccionar los 3 módulos aplica precio preferencial.</p>
-    </div>
-    <div class="campo-modal"><label>Nombre de tu funeraria</label><input type="text" id="contNombre" placeholder="Funeraria San Ángel"></div>
-    <div class="campo-modal"><label>Tu nombre</label><input type="text" id="contContacto" placeholder="¿Con quién hablamos?"></div>
-    <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="contWA" placeholder="2281234567"></div>
-    <div class="campo-modal"><label>Correo electrónico</label><input type="email" id="contEmail" placeholder="funeraria@correo.com"></div>
-    <div class="campo-modal"><label>Ciudad / Estado</label><input type="text" id="contCiudad" placeholder="Xalapa, Veracruz"></div>
-    <button class="btn-modal-pri" onclick="enviarContrato()">Enviar solicitud</button>
-    <button class="btn-modal-sec" onclick="cerrarModal('modalContratar')">Cancelar</button>
-    <div class="aviso-modal" id="avisoContratar"></div>
-  </div>
-</div>
+    <!-- JAVASCRIPT: SISTEMA DE DESVANECIMIENTO DE VIDEO EXACTO (RAF SIN TRANSICIONES CSS) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("bgVideo");
+            if (!video) return;
 
-<script>
-const TU_WA = "525547894225";
-const TU_EMAIL = "huertafune@gmail.com";
+            let fadeAnimationFrame = null;
+            let fadingOut = false; // Mantiene la referencia booleana
+            const FADE_DURATION = 250; // Transición de 250ms
+            const FADE_OUT_THRESHOLD = 0.55; // Se dispara a los 0.55s antes del final
 
-// Cada módulo de Funeral 360 es un producto independiente en el Sheet "Products"
-// del Apps Script maestro (cada uno con su propia licencia/vigencia/precio).
-const PRODUCT_ID_MAP = {
-  "App ODS": "prod_f360_ods",
-  "Previsión Funeraria": "prod_f360_prevision",
-  "Páginas Conmemorativas": "prod_f360_paginas",
-};
+            // Función Helper para animar la opacidad usando requestAnimationFrame
+            function animateFade(targetOpacity, duration, onComplete) {
+                if (fadeAnimationFrame) {
+                    cancelAnimationFrame(fadeAnimationFrame);
+                    fadeAnimationFrame = null;
+                }
 
-function getApiUrl(){ return localStorage.getItem('omnia_api_url') || ''; }
-function setApiUrl(url){ localStorage.setItem('omnia_api_url', url); }
-async function apiPost(body){
-  const url = getApiUrl(); if(!url) return null;
-  try{
-    const r = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(body) });
-    return await r.json();
-  }catch(e){ console.error('Error de conexión con Apps Script', e); return null; }
-}
-function abrirConfigConexion(){
-  const url = prompt('Pega la URL de tu Apps Script (termina en /exec):', getApiUrl());
-  if(url === null) return;
-  if(url.trim() && !url.startsWith('http')) { alert('La URL debe empezar con https://'); return; }
-  setApiUrl(url.trim());
-  location.reload();
-}
+                // Obtiene la opacidad actual para reanudar suavemente sin chasquidos
+                const startOpacity = parseFloat(window.getComputedStyle(video).opacity) || 0;
+                const startTime = performance.now();
 
-function abrirModalDemo(pre){
-  ['demoODS','demoPrevision','demoPaginas'].forEach(id=>document.getElementById(id).checked=false);
-  if(pre==='App ODS') document.getElementById('demoODS').checked=true;
-  else if(pre==='Previsión Funeraria') document.getElementById('demoPrevision').checked=true;
-  else if(pre==='Páginas Conmemorativas') document.getElementById('demoPaginas').checked=true;
-  else if(pre==='Paquete completo (3 módulos)'){document.getElementById('demoODS').checked=true;document.getElementById('demoPrevision').checked=true;document.getElementById('demoPaginas').checked=true;}
-  document.getElementById('modalDemo').classList.add('abierto');document.body.style.overflow='hidden';
-}
-function abrirModalContratar(pre){
-  ['contODS','contPrevision','contPaginas'].forEach(id=>document.getElementById(id).checked=false);
-  if(pre==='App ODS') document.getElementById('contODS').checked=true;
-  else if(pre==='Previsión Funeraria') document.getElementById('contPrevision').checked=true;
-  else if(pre==='Páginas Conmemorativas') document.getElementById('contPaginas').checked=true;
-  else if(pre==='Paquete completo (3 módulos)'){document.getElementById('contODS').checked=true;document.getElementById('contPrevision').checked=true;document.getElementById('contPaginas').checked=true;}
-  document.getElementById('modalContratar').classList.add('abierto');document.body.style.overflow='hidden';
-}
-function cerrarModal(id){document.getElementById(id).classList.remove('abierto');document.body.style.overflow='';}
-function toggleContacto(){document.getElementById('contactDock').classList.toggle('abierto');}
+                function step(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Interpolación lineal de opacidad
+                    const currentOpacity = startOpacity + (targetOpacity - startOpacity) * progress;
+                    video.style.opacity = currentOpacity;
 
-document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)cerrarModal(m.id);});});
-document.addEventListener('click',e=>{
-  const dock=document.getElementById('contactDock');
-  if(dock.classList.contains('abierto') && !dock.contains(e.target)){dock.classList.remove('abierto');}
-});
+                    if (progress < 1) {
+                        fadeAnimationFrame = requestAnimationFrame(step);
+                    } else {
+                        fadeAnimationFrame = null;
+                        if (onComplete) onComplete();
+                    }
+                }
 
-function modulosSeleccionados(prefijo){
-  const mapa={ODS:'App ODS',Prevision:'Previsión Funeraria',Paginas:'Páginas Conmemorativas'};
-  const elegidos=[];
-  Object.keys(mapa).forEach(k=>{if(document.getElementById(prefijo+k).checked) elegidos.push(mapa[k]);});
-  return elegidos;
-}
+                fadeAnimationFrame = requestAnimationFrame(step);
+            }
 
-async function enviarDemo(){
-  const nombre=document.getElementById('demoNombre').value.trim();
-  const contacto=document.getElementById('demoContacto').value.trim();
-  const wa=document.getElementById('demoWA').value.trim();
-  const email=document.getElementById('demoEmail').value.trim();
-  const modulos=modulosSeleccionados('demo');
-  const aviso=document.getElementById('avisoDemo');
-  if(!nombre||!wa){aviso.className='aviso-modal aviso-error';aviso.textContent='Ingresa el nombre de la funeraria y tu WhatsApp.';return;}
-  if(modulos.length===0){aviso.className='aviso-modal aviso-error';aviso.textContent='Selecciona al menos un módulo para la demo.';return;}
+            // 1. Reproducción inicial y Fade In
+            function playAndFadeIn() {
+                fadingOut = false;
+                video.play().then(() => {
+                    animateFade(1, FADE_DURATION);
+                }).catch(err => {
+                    console.warn("Restricción de reproducción automática del navegador:", err);
+                });
+            }
 
-  const msg='🆕 SOLICITUD DE DEMO FUNERAL360\n\n🖥️ Módulo(s): '+modulos.join(', ')+'\n📋 Funeraria: '+nombre+'\n👤 Contacto: '+contacto+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+            // Inicia el desvanecimiento de entrada tan pronto como comience la reproducción
+            video.addEventListener("play", () => {
+                if (!fadingOut && parseFloat(video.style.opacity || 0) < 1) {
+                    animateFade(1, FADE_DURATION);
+                }
+            });
 
-  if(getApiUrl() && email){
-    const productIds = modulos.map(m => PRODUCT_ID_MAP[m]).filter(Boolean);
-    aviso.className='aviso-modal aviso-exito';aviso.textContent='Activando tu(s) demo(s)…';
-    const res = await apiPost({ action:'demoRequest', productIds, name:contacto||nombre, email, company:nombre });
-    if(res && !res.error){
-      aviso.textContent='✓ Demo(s) activada(s). Revisa tu correo (' + email + ') para tus claves de acceso.';
-    } else {
-      aviso.className='aviso-modal aviso-error';
-      aviso.textContent='No se pudo activar automáticamente' + (res && res.error ? ': ' + res.error : '') + '. Te contactamos por WhatsApp.';
-      setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'),800);
-    }
-    return;
-  }
+            // 2. Monitoreo del evento timeupdate para gatillar Fade Out a los 0.55s del final
+            video.addEventListener("timeupdate", () => {
+                if (video.duration) {
+                    const timeRemaining = video.duration - video.currentTime;
+                    
+                    // Si restan 0.55s o menos y aún no se está desvaneciendo
+                    if (timeRemaining <= FADE_OUT_THRESHOLD && !fadingOut) {
+                        fadingOut = true; // Evita disparar el evento repetidas veces
+                        animateFade(0, FADE_DURATION);
+                    }
+                }
+            });
 
-  // Backend no configurado (o falta correo): conserva el flujo manual por WhatsApp/correo como respaldo.
-  aviso.className='aviso-modal aviso-exito';aviso.textContent='✓ Solicitud enviada por WhatsApp y correo. Te contactaremos en menos de 24 horas.';
-  setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'),800);
-  setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de demo Funeral360 - '+nombre)+'&body='+encodeURIComponent(msg)),1200);
-}
+            // 3. Evento Ended: Opacidad a 0, delay de 100ms, reset a currentTime = 0, reproduce y reanuda fade-in
+            video.addEventListener("ended", () => {
+                video.style.opacity = "0";
+                setTimeout(() => {
+                    video.currentTime = 0;
+                    playAndFadeIn();
+                }, 100);
+            });
 
-async function enviarContrato(){
-  const nombre=document.getElementById('contNombre').value.trim();
-  const contacto=document.getElementById('contContacto').value.trim();
-  const wa=document.getElementById('contWA').value.trim();
-  const email=document.getElementById('contEmail').value.trim();
-  const ciudad=document.getElementById('contCiudad').value.trim();
-  const modulos=modulosSeleccionados('cont');
-  const aviso=document.getElementById('avisoContratar');
-  if(!nombre||!wa){aviso.className='aviso-modal aviso-error';aviso.textContent='Ingresa el nombre de la funeraria y tu WhatsApp.';return;}
-  if(modulos.length===0){aviso.className='aviso-modal aviso-error';aviso.textContent='Selecciona al menos un módulo a contratar.';return;}
-  const preferencial = modulos.length===3 ? '\n🎁 Aplica 25% de descuento en setup y mensualidad por los 3 módulos.' : '';
-  const msg='🤝 SOLICITUD DE CONTRATO FUNERAL360\n\n🖥️ Módulo(s): '+modulos.join(', ')+preferencial+'\n📋 Funeraria: '+nombre+'\n👤 Contacto: '+contacto+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email+'\n📍 Ciudad: '+ciudad;
+            // Iniciar ciclo de reproducción
+            playAndFadeIn();
 
-  // "Contratar" siempre queda como lead (nunca genera licencia sola): tú cierras la venta
-  // manualmente desde el Control Maestro cuando el pago quede confirmado.
-  if(getApiUrl()){
-    aviso.className='aviso-modal aviso-exito';aviso.textContent='Enviando tu solicitud…';
-    const res = await apiPost({ action:'leadRequest', businessName:nombre, contactName:contacto, whatsapp:wa, email, city:ciudad, productIds:modulos, notes: preferencial ? 'Interesado en los 3 módulos (precio preferencial)' : '' });
-    if(res && !res.error){
-      aviso.textContent='✓ Solicitud recibida. Te contactamos para activar tu cuenta.';
-    } else {
-      aviso.className='aviso-modal aviso-error';
-      aviso.textContent='No se pudo registrar automáticamente' + (res && res.error ? ': ' + res.error : '') + '. Te contactamos por WhatsApp.';
-      setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'),800);
-    }
-    return;
-  }
+            initCarousels();
+        });
 
-  // Backend no configurado: conserva el flujo manual por WhatsApp/correo como respaldo.
-  aviso.className='aviso-modal aviso-exito';aviso.textContent='✓ Solicitud recibida por WhatsApp y correo. Te contactamos para activar tu cuenta.';
-  setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'),800);
-  setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de contrato Funeral360 - '+nombre)+'&body='+encodeURIComponent(msg)),1200);
-}
+        /* ==================== MODAL DE DEMOSTRACIÓN ==================== */
+        function openDemoModal() {
+            document.getElementById('demo-modal').classList.remove('hidden');
+            document.getElementById('modal-form-container').classList.remove('hidden');
+            document.getElementById('modal-success').classList.add('hidden');
+        }
 
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});
-});
+        function closeDemoModal() {
+            document.getElementById('demo-modal').classList.add('hidden');
+        }
 
-document.getElementById('connStatus').textContent = getApiUrl() ? 'Conectado al backend' : 'Backend no configurado';
-</script>
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('modal-form-container').classList.add('hidden');
+            document.getElementById('modal-success').classList.remove('hidden');
+            setTimeout(() => {
+                closeDemoModal();
+            }, 2800);
+        }
 
+        /* ==================== MODAL DE AFILIACIÓN A LA RED FUNERARIA ==================== */
+        function openJoinModal() {
+            document.getElementById('join-modal').classList.remove('hidden');
+            document.getElementById('join-form-container').classList.remove('hidden');
+            document.getElementById('join-success').classList.add('hidden');
+        }
+
+        function closeJoinModal() {
+            document.getElementById('join-modal').classList.add('hidden');
+        }
+
+        function handleJoinFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('join-form-container').classList.add('hidden');
+            document.getElementById('join-success').classList.remove('hidden');
+            setTimeout(() => {
+                closeJoinModal();
+            }, 2800);
+        }
+
+        /* ==================== CARRUSELES DE IMÁGENES (4 Apps) ==================== */
+        function initCarousels() {
+            document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+                const track = carousel.querySelector('.carousel-track');
+                const slides = Array.from(track.children);
+                const dotsContainer = carousel.querySelector('.carousel-dots');
+                const prevBtn = carousel.querySelector('.carousel-prev');
+                const nextBtn = carousel.querySelector('.carousel-next');
+                let index = 0;
+                let autoplayTimer = null;
+
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'w-1.5 h-1.5 rounded-full transition-colors ' + (i === 0 ? 'bg-white' : 'bg-white/40');
+                    dot.addEventListener('click', () => goTo(i));
+                    dotsContainer.appendChild(dot);
+                });
+                const dots = Array.from(dotsContainer.children);
+
+                function render() {
+                    track.style.transform = `translateX(-${index * 100}%)`;
+                    dots.forEach((dot, i) => {
+                        dot.className = 'w-1.5 h-1.5 rounded-full transition-colors ' + (i === index ? 'bg-white' : 'bg-white/40');
+                    });
+                }
+
+                function goTo(i) {
+                    index = (i + slides.length) % slides.length;
+                    render();
+                }
+
+                function next() { goTo(index + 1); }
+                function prev() { goTo(index - 1); }
+
+                function startAutoplay() {
+                    stopAutoplay();
+                    autoplayTimer = setInterval(next, 5000);
+                }
+                function stopAutoplay() {
+                    if (autoplayTimer) clearInterval(autoplayTimer);
+                }
+
+                if (prevBtn) prevBtn.addEventListener('click', () => { prev(); startAutoplay(); });
+                if (nextBtn) nextBtn.addEventListener('click', () => { next(); startAutoplay(); });
+                carousel.addEventListener('mouseenter', stopAutoplay);
+                carousel.addEventListener('mouseleave', startAutoplay);
+
+                render();
+                startAutoplay();
+            });
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Cookies · Omnia Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Urbanist:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0E17;--marino-osc:#0D1420;--marino:#161D30;--marino-med:#202B45;
+  --paper:#EDEFF5;--paper-dim:rgba(237,239,245,0.66);--paper-dimmer:rgba(237,239,245,0.42);
+  --dorado:#6C5CE7;--dorado-claro:#8F7FFF;--dorado-osc:#4A3AC9;
+  --cyan:#00D4FF;--verde:#2ED9A3;--azul:#3B82F6;--naranja:#FF6A3D;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--paper);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:var(--dorado-claro);}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+nav.legal-nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(10,14,23,0.9);backdrop-filter:blur(10px);border-bottom:1px solid rgba(237,239,245,0.08);}
+.legal-nav .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Urbanist',sans-serif;font-weight:700;font-size:18px;color:var(--paper);}
+.legal-nav .brand span.sub{display:block;font-size:8px;letter-spacing:2px;color:var(--paper-dimmer);text-transform:uppercase;font-weight:500;}
+.legal-nav a.back{font-size:13px;color:var(--paper-dim);text-decoration:none;display:flex;align-items:center;gap:6px;}
+.legal-nav a.back:hover{color:var(--paper);}
+.legal-wrap{max-width:760px;margin:0 auto;padding:56px 24px 100px;}
+.legal-eyebrow{font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dorado-claro);margin-bottom:14px;}
+.legal-wrap h1{font-family:'Urbanist',sans-serif;font-size:clamp(28px,4vw,38px);font-weight:700;letter-spacing:-0.5px;margin-bottom:10px;}
+.legal-updated{font-size:13px;color:var(--paper-dimmer);margin-bottom:8px;}
+.legal-disclaimer{margin:24px 0 40px;padding:18px 20px;border-radius:12px;background:rgba(255,106,61,0.08);border:1px solid rgba(255,106,61,0.35);font-size:13.5px;color:var(--paper-dim);line-height:1.65;}
+.legal-disclaimer strong{color:var(--naranja);}
+.legal-toc{margin:32px 0 44px;padding:20px 22px;border-radius:12px;background:rgba(237,239,245,0.03);border:1px solid rgba(237,239,245,0.08);}
+.legal-toc h2{font-family:'Urbanist',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--paper-dim);margin-bottom:12px;}
+.legal-toc ol{list-style:none;counter-reset:toc;display:grid;gap:7px;}
+.legal-toc li{counter-increment:toc;font-size:13.5px;}
+.legal-toc li::before{content:counter(toc)". ";color:var(--dorado-claro);font-weight:600;}
+.legal-toc a{text-decoration:none;color:var(--paper-dim);}
+.legal-toc a:hover{color:var(--paper);}
+.legal-wrap section{margin-top:40px;scroll-margin-top:80px;}
+.legal-wrap h2{font-family:'Urbanist',sans-serif;font-size:20px;font-weight:700;color:var(--paper);margin-bottom:14px;letter-spacing:-0.2px;}
+.legal-wrap h2 .num{color:var(--dorado-claro);margin-right:8px;}
+.legal-wrap h3{font-family:'Urbanist',sans-serif;font-size:15px;font-weight:600;color:var(--paper);margin:20px 0 8px;}
+.legal-wrap p{font-size:14.5px;color:var(--paper-dim);margin-bottom:12px;max-width:68ch;}
+.legal-wrap ul, .legal-wrap ol.plain{margin:0 0 14px 0;padding-left:20px;}
+.legal-wrap li{font-size:14.5px;color:var(--paper-dim);margin-bottom:7px;max-width:64ch;}
+.legal-wrap strong{color:var(--paper);font-weight:600;}
+.legal-wrap .placeholder{color:var(--naranja);font-weight:600;background:rgba(255,106,61,0.1);padding:1px 6px;border-radius:4px;font-size:0.92em;}
+table.legal-table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:13.5px;}
+table.legal-table th{text-align:left;color:var(--paper);font-family:'Urbanist',sans-serif;font-weight:600;padding:9px 12px;border-bottom:1px solid rgba(237,239,245,0.15);}
+table.legal-table td{padding:9px 12px;color:var(--paper-dim);border-bottom:1px solid rgba(237,239,245,0.06);vertical-align:top;}
+.legal-table-wrap{overflow-x:auto;margin-bottom:16px;}
+.legal-contact-box{margin-top:14px;padding:18px 20px;border-radius:12px;background:rgba(108,92,231,0.08);border:1px solid rgba(108,92,231,0.3);}
+.legal-contact-box a{font-weight:600;}
+.legal-crosslinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(237,239,245,0.08);}
+.legal-crosslinks a{font-size:13px;color:var(--paper-dim);text-decoration:none;padding:8px 14px;border:1px solid rgba(237,239,245,0.15);border-radius:30px;}
+.legal-crosslinks a:hover{border-color:var(--dorado);color:var(--paper);}
+footer.legal-footer{text-align:center;padding:28px 24px;color:var(--paper-dimmer);font-size:12px;border-top:1px solid rgba(237,239,245,0.08);}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<nav class="legal-nav">
+  <a class="brand" href="landingomnia.html"><span>omnia</span><span class="sub">technology</span></a>
+  <a class="back" href="landingomnia.html">← Volver al sitio</a>
+</nav>
+
+<div class="legal-wrap">
+  <span class="legal-eyebrow">Documento legal</span>
+  <h1>Política de Cookies</h1>
+  <p class="legal-updated">Última actualización: <span class="placeholder">[FECHA]</span></p>
+
+  <div class="legal-disclaimer">
+    <strong>Aviso importante:</strong> este documento es una plantilla informativa y no sustituye la asesoría de un abogado. Antes de publicarlo, verifica que la lista de cookies y tecnologías descrita coincida exactamente con las que tu sitio usa en producción (por ejemplo, si integras Google Analytics, píxeles de anuncios o pasarelas de pago adicionales, deben agregarse aquí).
+  </div>
+
+  <div class="legal-toc">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#que-son">Qué son las cookies</a></li>
+      <li><a href="#tipos">Tipos de cookies que utilizamos</a></li>
+      <li><a href="#terceros">Cookies y servicios de terceros</a></li>
+      <li><a href="#control">Cómo controlar o eliminar las cookies</a></li>
+      <li><a href="#consentimiento">Consentimiento y cambios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ol>
+  </div>
+
+  <section id="que-son">
+    <h2><span class="num">1.</span>Qué son las cookies</h2>
+    <p>Las cookies son pequeños archivos de texto que un sitio web guarda en tu navegador para recordar información sobre tu visita. También utilizamos tecnologías similares, como el <strong>almacenamiento local del navegador (localStorage)</strong>, que cumple una función equivalente: guardar cierta información en tu dispositivo para que el sitio funcione correctamente en visitas posteriores.</p>
+  </section>
+
+  <section id="tipos">
+    <h2><span class="num">2.</span>Tipos de cookies que utilizamos</h2>
+    <div class="legal-table-wrap">
+      <table class="legal-table">
+        <tr><th>Tipo</th><th>Finalidad</th><th>¿Se puede desactivar?</th></tr>
+        <tr><td><strong>Necesarias / técnicas</strong></td><td>Permiten el funcionamiento básico del sitio (por ejemplo, recordar la URL de conexión a tu backend cuando usas el panel de administración).</td><td>No, son indispensables para que la Plataforma funcione.</td></tr>
+        <tr><td><strong>Funcionales</strong></td><td>Recuerdan preferencias como el producto que estabas explorando o si ya cerraste un aviso.</td><td>Sí, aunque esto puede afectar tu experiencia.</td></tr>
+        <tr><td><strong>Analíticas</strong> <span class="placeholder">[si aplica]</span></td><td>Nos ayudan a entender cómo se usa el sitio para mejorarlo (por ejemplo, Google Analytics).</td><td>Sí, mediante la configuración de tu navegador.</td></tr>
+      </table>
+    </div>
+    <p>Actualmente, la Plataforma utiliza principalmente almacenamiento local técnico (no cookies de rastreo publicitario) para recordar la configuración de conexión entre el sitio y el panel de administración de cada Cliente.</p>
+  </section>
+
+  <section id="terceros">
+    <h2><span class="num">3.</span>Cookies y servicios de terceros</h2>
+    <p>Algunos elementos del sitio cargan recursos de terceros que podrían establecer sus propias cookies, conforme a sus propias políticas de privacidad, entre ellos:</p>
+    <ul>
+      <li><strong>Google Fonts</strong>, para la carga de tipografías.</li>
+      <li><strong>WhatsApp</strong>, cuando utilizas los enlaces de contacto directo.</li>
+      <li><strong>Pasarelas de pago</strong> <span class="placeholder">[Stripe / Mercado Pago / la que aplique]</span>, cuando realizas un pago dentro de la Plataforma.</li>
+    </ul>
+    <p>Omnia no controla las cookies establecidas por estos terceros; te recomendamos revisar sus propias políticas de privacidad.</p>
+  </section>
+
+  <section id="control">
+    <h2><span class="num">4.</span>Cómo controlar o eliminar las cookies</h2>
+    <p>Puedes configurar tu navegador para bloquear o eliminar cookies en cualquier momento desde su configuración de privacidad. Ten en cuenta que deshabilitar cookies necesarias o el almacenamiento local podría impedir el funcionamiento correcto de algunas partes de la Plataforma, como el panel de administración.</p>
+  </section>
+
+  <section id="consentimiento">
+    <h2><span class="num">5.</span>Consentimiento y cambios</h2>
+    <p>Al continuar navegando en nuestro sitio, aceptas el uso de cookies conforme a esta política. Podemos actualizar esta Política de Cookies en cualquier momento; los cambios se publicarán en esta misma página con su fecha de actualización.</p>
+  </section>
+
+  <section id="contacto">
+    <h2><span class="num">6.</span>Contacto</h2>
+    <div class="legal-contact-box">
+      <p style="margin-bottom:6px;">✉️ Correo: <a href="mailto:huertafune@gmail.com">huertafune@gmail.com</a></p>
+      <p style="margin-bottom:0;">💬 WhatsApp: <a href="https://wa.me/525547894225">+52 55 4789 4225</a></p>
+    </div>
+  </section>
+
+  <div class="legal-crosslinks">
+    <a href="terminos-y-condiciones.html">Términos y condiciones →</a>
+    <a href="aviso-de-privacidad.html">Aviso de privacidad →</a>
+    <a href="landingomnia.html">← Volver al sitio</a>
+  </div>
+</div>
+
+<footer class="legal-footer">© <span id="y"></span> Omnia Technology · Todos los derechos reservados.</footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
