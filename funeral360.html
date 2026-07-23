@@ -548,17 +548,22 @@
                 <form onsubmit="handleFormSubmit(event)" class="space-y-4 text-sm font-inter">
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre Completo</label>
-                        <input type="text" required placeholder="Nombre y apellido" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="demoNombre" type="text" required placeholder="Nombre y apellido" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre de la Funeraria</label>
-                        <input type="text" required placeholder="Funeraria San Rafael" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="demoFuneraria" type="text" required placeholder="Funeraria San Rafael" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Teléfono o WhatsApp</label>
-                        <input type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="demoWA" type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Correo Electrónico</label>
+                        <input id="demoEmail" type="email" required placeholder="contacto@funerariasanrafael.com" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <button type="submit" class="w-full bg-goldAccent hover:bg-white text-black font-schibsted font-semibold py-3.5 rounded-xl transition-colors mt-2 text-base shadow-lg cursor-pointer">
@@ -572,7 +577,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
                 <h4 class="text-xl font-fustat font-bold">¡Solicitud recibida!</h4>
-                <p class="text-sm text-gray-400 font-inter">Un asesor de Omnia Technology te contactará en breve.</p>
+                <p id="modal-success-msg" class="text-sm text-gray-400 font-inter">Un asesor de Omnia Technology te contactará en breve.</p>
             </div>
         </div>
     </div>
@@ -594,26 +599,31 @@
                 <form onsubmit="handleJoinFormSubmit(event)" class="space-y-4 text-sm font-inter">
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre de la Funeraria</label>
-                        <input type="text" required placeholder="Funeraria San Rafael" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="joinFuneraria" type="text" required placeholder="Funeraria San Rafael" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Ciudad y Estado</label>
-                        <input type="text" required placeholder="Xalapa, Veracruz" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="joinCiudad" type="text" required placeholder="Xalapa, Veracruz" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Nombre del Responsable</label>
-                        <input type="text" required placeholder="Nombre y apellido" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="joinResponsable" type="text" required placeholder="Nombre y apellido" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <div>
                         <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Teléfono o WhatsApp</label>
-                        <input type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                        <input id="joinWA" type="tel" required placeholder="+52 55 1234 5678" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-400 mb-1">Correo Electrónico</label>
+                        <input id="joinEmail" type="email" required placeholder="contacto@funerariasanrafael.com" class="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-goldAccent">
                     </div>
 
                     <label class="flex items-start gap-2.5 text-xs text-gray-400 leading-relaxed pt-1">
-                        <input type="checkbox" required class="mt-0.5 accent-goldAccent">
+                        <input id="joinAcepta" type="checkbox" required class="mt-0.5 accent-goldAccent">
                         Acepto ser contactado para revisar los requisitos de admisión y el Convenio de Afiliación a la Red Funeraria Omnia.
                     </label>
 
@@ -628,7 +638,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
                 <h4 class="text-xl font-fustat font-bold">¡Solicitud de afiliación recibida!</h4>
-                <p class="text-sm text-gray-400 font-inter">Un asesor de la Red Funeraria Omnia te contactará para continuar el proceso.</p>
+                <p id="join-success-msg" class="text-sm text-gray-400 font-inter">Un asesor de la Red Funeraria Omnia te contactará para continuar el proceso.</p>
             </div>
         </div>
     </div>
@@ -636,6 +646,8 @@
     <!-- JAVASCRIPT: SISTEMA DE DESVANECIMIENTO DE VIDEO EXACTO (RAF SIN TRANSICIONES CSS) -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            initCarousels();
+
             const video = document.getElementById("bgVideo");
             if (!video) return;
 
@@ -715,48 +727,121 @@
 
             // Iniciar ciclo de reproducción
             playAndFadeIn();
-
-            initCarousels();
         });
 
+        /* Conexión con el mismo backend (Google Apps Script) que usa index.html.
+           Si 'omnia_api_url' está configurado en localStorage (comparte origen con
+           index.html y con el Control Maestro), el lead se registra ahí. Si no,
+           o si falla, se abre WhatsApp y correo como respaldo garantizado. */
+        const TU_WA = "525547894225";
+        const TU_EMAIL = "huertafune@gmail.com";
+        const PRODUCT_NAME = "Funeral 360";
+        const PRODUCT_ID = "prod_f360_paquete";
+
+        function getApiUrl(){ return localStorage.getItem('omnia_api_url') || ''; }
+        async function apiPost(body){
+            const url = getApiUrl(); if(!url) return null;
+            try{
+                const r = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(body) });
+                return await r.json();
+            }catch(e){ console.error('Error de conexión con Apps Script', e); return null; }
+        }
+
         /* ==================== MODAL DE DEMOSTRACIÓN ==================== */
+        let demoCloseTimer = null;
+
         function openDemoModal() {
+            if (demoCloseTimer) { clearTimeout(demoCloseTimer); demoCloseTimer = null; }
             document.getElementById('demo-modal').classList.remove('hidden');
             document.getElementById('modal-form-container').classList.remove('hidden');
             document.getElementById('modal-success').classList.add('hidden');
         }
 
         function closeDemoModal() {
+            if (demoCloseTimer) { clearTimeout(demoCloseTimer); demoCloseTimer = null; }
             document.getElementById('demo-modal').classList.add('hidden');
         }
 
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
+            const nombre = document.getElementById('demoNombre').value.trim();
+            const funeraria = document.getElementById('demoFuneraria').value.trim();
+            const wa = document.getElementById('demoWA').value.trim();
+            const email = document.getElementById('demoEmail').value.trim();
+
+            const msg = '🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+funeraria+'\n🖥️ Software: '+PRODUCT_NAME+'\n👤 Contacto: '+nombre+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+
+            const successMsg = document.getElementById('modal-success-msg');
+            let sentOk = false;
+
+            if (getApiUrl()) {
+                const res = await apiPost({ action:'demoRequest', productId: PRODUCT_ID, name: nombre, email, company: funeraria });
+                if (res && !res.error) {
+                    successMsg.textContent = '✓ Demo activada. Revisa tu correo ('+email+') para tu clave de acceso.';
+                    sentOk = true;
+                }
+            }
+
+            if (!sentOk) {
+                successMsg.textContent = 'Un asesor de Omnia Technology te contactará en breve.';
+                setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'), 500);
+                setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de demo - '+funeraria)+'&body='+encodeURIComponent(msg)), 900);
+            }
+
             document.getElementById('modal-form-container').classList.add('hidden');
             document.getElementById('modal-success').classList.remove('hidden');
-            setTimeout(() => {
+            demoCloseTimer = setTimeout(() => {
                 closeDemoModal();
-            }, 2800);
+            }, 4000);
         }
 
         /* ==================== MODAL DE AFILIACIÓN A LA RED FUNERARIA ==================== */
+        let joinCloseTimer = null;
+
         function openJoinModal() {
+            if (joinCloseTimer) { clearTimeout(joinCloseTimer); joinCloseTimer = null; }
             document.getElementById('join-modal').classList.remove('hidden');
             document.getElementById('join-form-container').classList.remove('hidden');
             document.getElementById('join-success').classList.add('hidden');
         }
 
         function closeJoinModal() {
+            if (joinCloseTimer) { clearTimeout(joinCloseTimer); joinCloseTimer = null; }
             document.getElementById('join-modal').classList.add('hidden');
         }
 
-        function handleJoinFormSubmit(e) {
+        async function handleJoinFormSubmit(e) {
             e.preventDefault();
+            const funeraria = document.getElementById('joinFuneraria').value.trim();
+            const ciudad = document.getElementById('joinCiudad').value.trim();
+            const responsable = document.getElementById('joinResponsable').value.trim();
+            const wa = document.getElementById('joinWA').value.trim();
+            const email = document.getElementById('joinEmail').value.trim();
+
+            const msg = '🤝 SOLICITUD DE AFILIACIÓN A LA RED FUNERARIA OMNIA\n\n📋 Funeraria: '+funeraria+'\n📍 Ciudad: '+ciudad+'\n👤 Responsable: '+responsable+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+
+            const successMsg = document.getElementById('join-success-msg');
+            let sentOk = false;
+
+            if (getApiUrl()) {
+                const res = await apiPost({ action:'leadRequest', businessName:funeraria, contactName:responsable, whatsapp:wa, email, city:ciudad, productIds:[PRODUCT_NAME], notes:'Solicitud de afiliación a la Red Funeraria Omnia' });
+                if (res && !res.error) {
+                    successMsg.textContent = '✓ Solicitud registrada. Un asesor de la Red Funeraria Omnia te contactará en menos de 24 horas.';
+                    sentOk = true;
+                }
+            }
+
+            if (!sentOk) {
+                successMsg.textContent = 'Un asesor de la Red Funeraria Omnia te contactará para continuar el proceso.';
+                setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'), 500);
+                setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de afiliación - '+funeraria)+'&body='+encodeURIComponent(msg)), 900);
+            }
+
             document.getElementById('join-form-container').classList.add('hidden');
             document.getElementById('join-success').classList.remove('hidden');
-            setTimeout(() => {
+            joinCloseTimer = setTimeout(() => {
                 closeJoinModal();
-            }, 2800);
+            }, 4000);
         }
 
         /* ==================== CARRUSELES DE IMÁGENES (4 Apps) ==================== */

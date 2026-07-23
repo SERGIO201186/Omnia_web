@@ -630,55 +630,125 @@
        DEMO MODAL
        ========================================================================== */
     const DemoModal = ({ activeModal, onClose }) => {
+      const [status, setStatus] = useState('form');
+      const [successMsg, setSuccessMsg] = useState('');
+      const closeTimerRef = useRef(null);
+
+      useEffect(() => {
+        if (activeModal) {
+          setStatus('form');
+          if (closeTimerRef.current) { clearTimeout(closeTimerRef.current); closeTimerRef.current = null; }
+        }
+      }, [activeModal]);
+
+      useEffect(() => () => { if (closeTimerRef.current) clearTimeout(closeTimerRef.current); }, []);
+
       if (!activeModal) return null;
+
+      /* Conexión con el mismo backend (Google Apps Script) que usa index.html.
+         Si 'omnia_api_url' está configurado en localStorage (comparte origen con
+         index.html y con el Control Maestro), el lead se registra ahí. Si no,
+         o si falla, se abre WhatsApp y correo como respaldo garantizado. */
+      const TU_WA = "525547894225";
+      const TU_EMAIL = "huertafune@gmail.com";
+      const PRODUCT_NAME = "NovaPOS Pro";
+      const PRODUCT_ID = "prod_novapos";
+
+      const getApiUrl = () => localStorage.getItem('omnia_api_url') || '';
+      const apiPost = async (body) => {
+        const url = getApiUrl();
+        if (!url) return null;
+        try {
+          const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+          return await r.json();
+        } catch (e) {
+          console.error('Error de conexión con Apps Script', e);
+          return null;
+        }
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const nombre = form.nombre.value.trim();
+        const negocio = form.negocio.value.trim();
+        const giro = form.giro.value;
+        const telefono = form.telefono.value.trim();
+        const email = form.email.value.trim();
+
+        const msg = `🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: ${negocio} (${giro})\n🖥️ Software: ${PRODUCT_NAME}\n👤 Contacto: ${nombre}\n📱 WhatsApp: ${telefono}\n📧 Email: ${email}\n📌 Interés: ${activeModal}`;
+
+        let sentOk = false;
+        if (getApiUrl()) {
+          const res = await apiPost({ action: 'demoRequest', productId: PRODUCT_ID, name: nombre, email, company: negocio });
+          if (res && !res.error) {
+            setSuccessMsg(`✓ Demo activada. Revisa tu correo (${email}) para tu clave de acceso.`);
+            sentOk = true;
+          }
+        }
+
+        if (!sentOk) {
+          setSuccessMsg('Un asesor especialista de Omnia Technology te contactará en breve.');
+          setTimeout(() => window.open(`https://wa.me/${TU_WA}?text=${encodeURIComponent(msg)}`, '_blank'), 500);
+          setTimeout(() => window.open(`mailto:${TU_EMAIL}?subject=${encodeURIComponent('Solicitud de demo - ' + negocio)}&body=${encodeURIComponent(msg)}`), 900);
+        }
+
+        setStatus('success');
+        closeTimerRef.current = setTimeout(() => { onClose(); }, 4000);
+      };
 
       return (
         <div className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative border border-neutral-200">
-            <button 
+            <button
               onClick={onClose}
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-black font-bold hover:bg-neutral-200 cursor-pointer"
             >
               ✕
             </button>
 
-            <div className="mb-4">
-              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
-                NovaPOS PRO
-              </span>
-              <h3 className="text-xl md:text-2xl font-extrabold text-black mt-2">
-                {activeModal}
-              </h3>
-              <p className="text-xs text-neutral-500 mt-1">
-                Ingresa tus datos para agendar una demostración adaptada a tu negocio.
-              </p>
-            </div>
+            {status === 'form' ? (
+              <>
+                <div className="mb-4">
+                  <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                    NovaPOS PRO
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-extrabold text-black mt-2">
+                    {activeModal}
+                  </h3>
+                  <p className="text-xs text-neutral-500 mt-1">
+                    Ingresa tus datos para agendar una demostración adaptada a tu negocio.
+                  </p>
+                </div>
 
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              alert(`¡Gracias! Solicitud recibida para: ${activeModal}`);
-              onClose();
-            }} className="space-y-3">
-              <input type="text" placeholder="Nombre completo" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
-              <input type="text" placeholder="Nombre de tu negocio o tienda" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
-              
-              <select required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black bg-white">
-                <option value="">Giro de tu negocio...</option>
-                <option value="abarrotes">Tienda de Abarrotes / Minisúper</option>
-                <option value="farmacia">Farmacia</option>
-                <option value="ferreteria">Ferretería</option>
-                <option value="ropa">Tienda de Ropa / Boutique</option>
-                <option value="papeleria">Papelería / Útiles Escolares</option>
-                <option value="otro">Otro tipo de negocio</option>
-              </select>
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <input name="nombre" type="text" placeholder="Nombre completo" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+                  <input name="negocio" type="text" placeholder="Nombre de tu negocio o tienda" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
 
-              <input type="tel" placeholder="Teléfono / WhatsApp" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
-              <input type="email" placeholder="Correo electrónico" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+                  <select name="giro" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black bg-white">
+                    <option value="">Giro de tu negocio...</option>
+                    <option value="abarrotes">Tienda de Abarrotes / Minisúper</option>
+                    <option value="farmacia">Farmacia</option>
+                    <option value="ferreteria">Ferretería</option>
+                    <option value="ropa">Tienda de Ropa / Boutique</option>
+                    <option value="papeleria">Papelería / Útiles Escolares</option>
+                    <option value="otro">Otro tipo de negocio</option>
+                  </select>
 
-              <button type="submit" className="w-full py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-colors cursor-pointer shadow-lg mt-2">
-                Confirmar Solicitud
-              </button>
-            </form>
+                  <input name="telefono" type="tel" placeholder="Teléfono / WhatsApp" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+                  <input name="email" type="email" placeholder="Correo electrónico" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+
+                  <button type="submit" className="w-full py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-colors cursor-pointer shadow-lg mt-2">
+                    Confirmar Solicitud
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-4xl mb-3">✅</div>
+                <p className="text-sm text-neutral-700 font-medium">{successMsg}</p>
+              </div>
+            )}
           </div>
         </div>
       );
