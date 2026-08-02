@@ -312,11 +312,13 @@
 
           {/* Tarjeta Principal Hero */}
           <div
-            className="w-full flex-1 min-h-0 rounded-xl md:rounded-2xl overflow-hidden relative bg-cover bg-[center_right]"
+            className="w-full flex-1 min-h-0 rounded-xl md:rounded-2xl overflow-hidden relative bg-cover bg-[center_right] flex flex-col justify-between p-4 md:p-7"
             style={{ ...s1Reveal.getAnimStyle(3), backgroundImage: `url("${bgImage}")` }}
           >
-            {/* Fila Superior: texto informativo + botón, en flex para que nunca se encimen (si no caben, el botón baja de línea) */}
-            <div className="absolute top-4 left-4 right-4 md:top-7 md:left-7 md:right-7 z-10 flex flex-wrap items-start justify-between gap-3">
+            {/* Fila Superior: texto informativo + botón. En flujo normal (no absolute) junto con el bloque inferior,
+                así el navegador siempre reserva el espacio de ambos y nunca pueden encimarse, sin importar
+                la altura real de la ventana. */}
+            <div className="z-10 flex flex-wrap items-start justify-between gap-3">
               <div className="text-black text-xs md:text-sm font-semibold leading-4 md:leading-5 max-w-[200px] md:max-w-[320px] bg-white/85 p-3 rounded-xl backdrop-blur-md border border-black/10 shadow-md">
                 Encargado cobrando feliz y con facilidad usando NovaPOS en su computadora.
               </div>
@@ -330,7 +332,7 @@
             </div>
 
             {/* Bloque Inferior Izquierdo */}
-            <div className="absolute bottom-5 left-3 md:bottom-8 md:left-4 z-10">
+            <div className="z-10">
               <span className="block text-black text-xs md:text-sm font-semibold mb-1 md:mb-2 bg-white/85 px-3 py-1 rounded-full backdrop-blur-md inline-block border border-black/10">
                 Punto de Venta e Inventario en México
               </span>
@@ -571,7 +573,7 @@
                 Caja registradora digital y punto de venta para abarrotes, farmacias, ferreterías, tiendas de ropa y papelerías.
               </p>
               <p className="text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                Software by Omnia Technology
+                Software by <a href="index.html" className="hover:text-white transition-colors">Omnia Technology</a>
               </p>
             </div>
 
