@@ -1,9 +1,6 @@
 // Google Analytics 4 (GA4) de Omnia Technology — se carga en todas las páginas del sitio.
-// 1. Crea una propiedad GA4 en https://analytics.google.com (Admin > Crear propiedad).
-// 2. Copia tu "ID de medición" (formato G-XXXXXXXXXX) desde Administración > Flujos de datos > tu flujo web.
-// 3. Reemplaza el valor de GA_MEASUREMENT_ID de abajo por ese ID y sube el cambio.
 (function () {
-  var GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+  var GA_MEASUREMENT_ID = 'G-05XS3EW0CR';
 
   if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID.indexOf('XXXX') !== -1) {
     console.warn('Omnia Analytics: configura tu GA_MEASUREMENT_ID real en analytics.js para activar Google Analytics.');
