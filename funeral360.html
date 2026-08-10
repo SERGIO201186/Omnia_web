@@ -158,6 +158,7 @@
                     </div>
                 </div>
                 <a href="#comunidad" class="hover:text-goldAccent transition-colors">Red Funeraria</a>
+                <a href="#precios" class="hover:text-goldAccent transition-colors">Precios</a>
                 <a href="#contacto" class="hover:text-goldAccent transition-colors">Contacto</a>
             </div>
 
@@ -499,6 +500,229 @@
                     Solicitar afiliación a la Red Funeraria
                 </button>
             </div>
+        </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section id="precios" class="py-20 px-6 md:px-12 lg:px-[120px] bg-[#0b0f17] border-t border-white/10">
+        <div class="max-w-[1180px] mx-auto">
+            <div class="text-center max-w-[700px] mx-auto mb-10">
+                <span class="text-goldAccent font-schibsted uppercase tracking-widest text-xs font-semibold">Precios</span>
+                <h2 class="font-fustat font-bold text-3xl sm:text-4xl text-white mt-2">4 aplicaciones independientes, cada una con su propio costo</h2>
+                <p class="text-gray-400 text-sm sm:text-base mt-3">Contrata solo la que necesitas hoy, o combina varias y desbloquea beneficios.</p>
+            </div>
+
+            <!-- Beneficio por combinar módulos -->
+            <div class="bg-goldAccent/10 border border-goldAccent/30 rounded-2xl p-6 md:p-8 mb-16 text-center">
+                <p class="text-white font-semibold text-base">Al contratar 3 o 4 de las aplicaciones de Funeral360, eliges uno de estos beneficios:</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mt-5 text-sm">
+                    <div class="bg-black/30 border border-white/10 rounded-xl px-6 py-4">
+                        <span class="text-goldAccent font-bold text-lg">15%</span>
+                        <span class="text-gray-300"> de descuento sobre el total mensual contratado</span>
+                    </div>
+                    <div class="hidden sm:flex items-center text-gray-500">o</div>
+                    <div class="bg-black/30 border border-white/10 rounded-xl px-6 py-4">
+                        <span class="text-goldAccent font-bold">Membresía gratuita</span>
+                        <span class="text-gray-300"> a la Red Funeraria, con todos sus beneficios</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓDULO 1: VENTAS DE SERVICIOS INMEDIATOS (ODS) -->
+            <div class="mb-16">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 bg-goldAccent/20 rounded-lg flex items-center justify-center text-goldAccent">⚡</span>
+                    <h3 class="font-fustat font-bold text-xl sm:text-2xl text-white">App 1 · Ventas de Servicios Inmediatos (ODS)</h3>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-xl p-5 md:p-6 mb-6 flex flex-col md:flex-row md:items-center gap-4">
+                    <div class="md:w-1/4">
+                        <span class="text-xs uppercase tracking-widest text-goldAccent font-bold">Instalación</span>
+                        <p class="text-white text-2xl font-bold mt-1">$2,000 <span class="text-sm font-medium text-gray-400">MXN</span></p>
+                    </div>
+                    <p class="md:w-3/4 text-gray-400 text-sm">Instalación a distancia o presencial, días de verificación de funcionalidad, capacitación, manual de usuario y soporte técnico de arranque.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-white font-bold">Versión 1</h4>
+                            <div class="my-4"><span class="text-white text-3xl font-extrabold">$700</span><span class="text-gray-400 text-sm"> MXN / mes</span></div>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 sucursal</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 vendedor</li>
+                            </ul>
+                        </div>
+                        <button onclick="openDemoModal()" class="mt-6 w-full py-2.5 rounded-full border border-goldAccent text-goldAccent text-sm font-semibold hover:bg-goldAccent hover:text-black transition-colors">Elegir Versión 1</button>
+                    </div>
+                    <div class="bg-white/5 border-2 border-goldAccent rounded-2xl p-6 flex flex-col justify-between relative">
+                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-goldAccent text-black font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full">Recomendada</span>
+                        <div>
+                            <h4 class="text-white font-bold">Versión 2</h4>
+                            <div class="my-4"><span class="text-white text-3xl font-extrabold">$850</span><span class="text-gray-400 text-sm"> MXN / mes</span></div>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 sucursal</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Panel de administrador con acceso a toda la app</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 2 usuarios con acceso limitado, controlado desde el panel admin</li>
+                            </ul>
+                        </div>
+                        <button onclick="openDemoModal()" class="mt-6 w-full py-2.5 rounded-full bg-goldAccent text-black text-sm font-semibold hover:bg-white transition-colors">Elegir Versión 2</button>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-white font-bold">Versión 3</h4>
+                            <div class="my-4"><span class="text-white text-2xl font-extrabold">Personalizado</span></div>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Multi-sucursal, multi-usuario</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Base de datos unificada para mejor control</li>
+                            </ul>
+                        </div>
+                        <button onclick="openDemoModal()" class="mt-6 w-full py-2.5 rounded-full border border-goldAccent text-goldAccent text-sm font-semibold hover:bg-goldAccent hover:text-black transition-colors">Solicitar cotización</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓDULO 2: PREVISIÓN FUNERARIA -->
+            <div class="mb-16">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 bg-goldAccent/20 rounded-lg flex items-center justify-center text-goldAccent">🛡️</span>
+                    <h3 class="font-fustat font-bold text-xl sm:text-2xl text-white">App 2 · Previsión Funeraria</h3>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-xl p-5 md:p-6 mb-6 flex flex-col md:flex-row md:items-center gap-4">
+                    <div class="md:w-1/4">
+                        <span class="text-xs uppercase tracking-widest text-goldAccent font-bold">Instalación</span>
+                        <p class="text-white text-2xl font-bold mt-1">$2,000 <span class="text-sm font-medium text-gray-400">MXN</span></p>
+                    </div>
+                    <p class="md:w-3/4 text-gray-400 text-sm">Instalación a distancia o presencial, días de verificación de funcionalidad, capacitación, manual de usuario y soporte técnico de arranque.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-white font-bold">Versión 1</h4>
+                            <div class="my-4"><span class="text-white text-3xl font-extrabold">$600</span><span class="text-gray-400 text-sm"> MXN / mes</span></div>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 sucursal</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 vendedor</li>
+                            </ul>
+                        </div>
+                        <button onclick="openDemoModal()" class="mt-6 w-full py-2.5 rounded-full border border-goldAccent text-goldAccent text-sm font-semibold hover:bg-goldAccent hover:text-black transition-colors">Elegir Versión 1</button>
+                    </div>
+                    <div class="bg-white/5 border-2 border-goldAccent rounded-2xl p-6 flex flex-col justify-between relative">
+                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-goldAccent text-black font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full">Recomendada</span>
+                        <div>
+                            <h4 class="text-white font-bold">Versión 2</h4>
+                            <div class="my-4"><span class="text-white text-3xl font-extrabold">$750</span><span class="text-gray-400 text-sm"> MXN / mes</span></div>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 sucursal</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Panel de administrador con acceso a toda la app</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 2 usuarios con acceso limitado, controlado desde el panel admin</li>
+                            </ul>
+                        </div>
+                        <button onclick="openDemoModal()" class="mt-6 w-full py-2.5 rounded-full bg-goldAccent text-black text-sm font-semibold hover:bg-white transition-colors">Elegir Versión 2</button>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-white font-bold">Versión 3</h4>
+                            <div class="my-4"><span class="text-white text-2xl font-extrabold">Personalizado</span></div>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Multi-sucursal, multi-usuario</li>
+                                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Base de datos unificada para mejor control</li>
+                            </ul>
+                        </div>
+                        <button onclick="openDemoModal()" class="mt-6 w-full py-2.5 rounded-full border border-goldAccent text-goldAccent text-sm font-semibold hover:bg-goldAccent hover:text-black transition-colors">Solicitar información</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓDULO 3: TIENDA VIRTUAL -->
+            <div class="mb-16">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-9 h-9 bg-goldAccent/20 rounded-lg flex items-center justify-center text-goldAccent">🛒</span>
+                    <h3 class="font-fustat font-bold text-xl sm:text-2xl text-white">App 3 · Tienda Virtual</h3>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
+                    <div class="md:w-1/3">
+                        <span class="text-xs uppercase tracking-widest text-goldAccent font-bold">Instalación</span>
+                        <p class="text-white text-2xl font-bold mt-1">$1,000 <span class="text-sm font-medium text-gray-400">MXN</span></p>
+                        <div class="mt-4">
+                            <span class="text-white text-3xl font-extrabold">$300</span>
+                            <span class="text-gray-400 text-sm"> MXN / mes</span>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="text-gray-300 text-sm leading-relaxed mb-3">Se conecta a la app de Ventas Inmediatas, a Previsión, o a las dos juntas. Separa los tipos de servicio (previsión, uso inmediato: inhumación con ataúdes vigentes en piso, cremación) y otros artículos.</p>
+                        <ul class="text-xs text-gray-400 space-y-2">
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Agrega productos directo a la ODS desde la tienda</li>
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Descuenta el inventario automáticamente al venderse</li>
+                        </ul>
+                        <button onclick="openDemoModal()" class="mt-5 py-2.5 px-6 rounded-full bg-goldAccent text-black text-sm font-semibold hover:bg-white transition-colors">Elegir Tienda Virtual</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓDULO 4: PÁGINAS CONMEMORATIVAS -->
+            <div class="bg-gradient-to-b from-goldAccent/[0.07] to-transparent border border-goldAccent/20 rounded-3xl p-6 sm:p-10">
+                <div class="text-center max-w-[720px] mx-auto mb-10">
+                    <span class="w-14 h-14 bg-goldAccent/20 rounded-2xl flex items-center justify-center text-goldAccent text-2xl mx-auto mb-4">🕊️</span>
+                    <span class="text-goldAccent font-schibsted uppercase tracking-widest text-xs font-semibold">App 4 · La más rentable de las 4</span>
+                    <h3 class="font-fustat font-bold text-2xl sm:text-3xl text-white mt-2">Páginas Conmemorativas: un ingreso extra que se genera solo</h3>
+                    <p class="text-gray-300 text-sm sm:text-base mt-4 leading-relaxed">
+                        Cada familia que despides recibe una página conmemorativa digital para honrar a su ser querido: fotos, mensajes de condolencias, velas virtuales encendidas por quien no pudo llegar a tiempo, y hasta videollamada para el familiar que vive lejos. Es un espacio para acompañar el duelo que tu funeraria ya sabe dar — solo que ahora también <strong class="text-white">deja una comisión sin que muevas un dedo extra.</strong>
+                    </p>
+                </div>
+
+                <!-- 3 razones para contratarla -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                    <div class="bg-black/20 border border-white/10 rounded-xl p-5 text-center">
+                        <span class="text-2xl">💰</span>
+                        <p class="text-white font-semibold text-sm mt-2">Ingreso pasivo, sin esfuerzo</p>
+                        <p class="text-gray-400 text-xs mt-1 leading-relaxed">Tú activas la página en minutos; Omnia se encarga de cobrar y de la tecnología. Ganas un porcentaje aunque no vendas nada tú mismo.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/10 rounded-xl p-5 text-center">
+                        <span class="text-2xl">✨</span>
+                        <p class="text-white font-semibold text-sm mt-2">Te diferencia de la competencia</p>
+                        <p class="text-gray-400 text-xs mt-1 leading-relaxed">Muy pocas funerarias en México ofrecen esto hoy. Es la primera impresión moderna que las familias recuerdan y recomiendan.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/10 rounded-xl p-5 text-center">
+                        <span class="text-2xl">🕯️</span>
+                        <p class="text-white font-semibold text-sm mt-2">Acompaña incluso a quien no llegó</p>
+                        <p class="text-gray-400 text-xs mt-1 leading-relaxed">Familiares en otra ciudad o país pueden encender una vela, escribir un mensaje o entrar a videollamada — sin haber podido viajar.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Lo que invierte la funeraria -->
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7">
+                        <span class="text-xs uppercase tracking-widest text-goldAccent font-bold">Tu inversión (muy baja)</span>
+                        <ul class="text-sm text-gray-300 space-y-3 mt-4">
+                            <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span> <span><strong class="text-white">$500 MXN</strong> inscripción inicial (pago único) — se crea tu panel de administrador</span></li>
+                            <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span> <span><strong class="text-white">$99 MXN / mes</strong> mantenimiento de la app</span></li>
+                            <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span> <span><strong class="text-white">$149 MXN</strong> por cada página que actives (pago único, desde tu portal)</span></li>
+                        </ul>
+                    </div>
+                    <!-- Cómo se genera el ingreso extra -->
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7">
+                        <span class="text-xs uppercase tracking-widest text-goldAccent font-bold">Cómo se convierte en ingreso extra para ti</span>
+                        <ul class="text-sm text-gray-300 space-y-3 mt-4">
+                            <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span> <span>La familia adquiere la página completa por <strong class="text-white">$499 MXN</strong>: publicaciones, likes, velas encendidas, fecha del velorio y una URL propia disponible siempre</span></li>
+                            <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span> <span>Videollamada para familiares lejanos: <strong class="text-white">$300 MXN</strong></span></li>
+                            <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span> <span>Tienda de créditos: los acompañantes compran créditos con dinero real para regalar flores, abrazos y velas virtuales en la página — algunos hasta incluyen un arreglo floral físico que llega directo al velorio</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-goldAccent/10 border border-goldAccent/30 rounded-2xl p-6 md:p-8 text-center">
+                    <p class="text-goldAccent font-bold text-xs uppercase tracking-widest mb-2">Así se ve tu comisión</p>
+                    <p class="text-white text-base md:text-lg leading-relaxed max-w-[640px] mx-auto">
+                        Todos esos pagos los hace la familia directo a Omnia — tú no cobras ni administras nada. Al final del mes, Omnia te bonifica el <strong class="text-goldAccent">25% del monto</strong> (después de IVA) de todo lo que las familias de tu funeraria hayan comprado.
+                    </p>
+                    <p class="text-gray-400 text-sm mt-3">Ejemplo: si en un servicio la familia adquiere la página, una videollamada y algunos detalles, y suman <strong class="text-white">$1,000 MXN</strong>, tú recibes <strong class="text-white">$250 MXN</strong> — sin haber cobrado tú mismo ni un peso.</p>
+                    <button onclick="openDemoModal()" class="mt-6 py-3 px-8 rounded-full bg-goldAccent text-black text-sm font-bold hover:bg-white transition-colors">Quiero activar Páginas Conmemorativas</button>
+                </div>
+            </div>
+
         </div>
     </section>
 
