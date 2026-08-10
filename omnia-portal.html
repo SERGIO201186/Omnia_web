@@ -558,6 +558,15 @@ function renderPortalBox(){
   `;
 }
 
+function guideUrlForProduct(productId){
+  if(!productId) return null;
+  if(productId.startsWith('prod_f360')) return 'guia-funeral360.html';
+  if(productId.startsWith('prod_farmapos')) return 'guia-farmapos.html';
+  if(productId.startsWith('prod_novapos')) return 'guia-novapos.html';
+  if(productId.startsWith('prod_fastfood')) return 'guia-fastfood.html';
+  return null;
+}
+
 function renderAccountDashboard(box){
   const c = myAccount.client || {};
   const apps = myAccount.apps || [];
@@ -578,13 +587,20 @@ function renderAccountDashboard(box){
         const actionBtn = isPro
           ? `<button class="btn-tiny" style="background:var(--navy); color:#fff;" onclick="pagarApp('${a.licenseId}','${a.productId}','pro')">Gestionar pago</button>`
           : `<button class="btn-tiny" style="background:var(--gold); color:var(--navy);" onclick="pagarApp('${a.licenseId}','${a.productId}','demo')">Comprar ahora</button>`;
+        const guideUrl = guideUrlForProduct(a.productId);
+        const guideLink = guideUrl
+          ? `<a href="${guideUrl}" target="_blank" rel="noopener" class="btn-tiny" style="background:#fff; color:var(--navy); border:1px solid var(--border); text-decoration:none; display:inline-flex; align-items:center;">📘 Guía de uso</a>`
+          : '';
+        const clausesLink = (a.productId || '').startsWith('prod_f360')
+          ? `<a href="clausulas-personalizadas.html" target="_blank" rel="noopener" class="btn-tiny" style="background:#fff; color:var(--navy); border:1px solid var(--border); text-decoration:none; display:inline-flex; align-items:center;">⚖️ Cláusulas personalizadas</a>`
+          : '';
         return `
           <div class="app-card">
             <div>
               <div class="name">${esc(a.productName)} ${typeBadge} ${statusBadge}</div>
               <div class="meta">${monto ? monto + ' · ' : ''}${vencimiento}</div>
             </div>
-            <div class="actions" id="appActions_${esc(a.licenseId)}">${actionBtn}</div>
+            <div class="actions" id="appActions_${esc(a.licenseId)}">${guideLink}${clausesLink}${actionBtn}</div>
           </div>`;
       }).join('');
 

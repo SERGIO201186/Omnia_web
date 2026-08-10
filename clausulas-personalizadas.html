@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cláusulas Personalizadas · Omnia Technology</title>
+<meta name="description" content="Cómo cargar tus propios documentos legales validados (contrato, pagaré, aviso de privacidad) para que Funeral 360 los use en lugar de las plantillas genéricas.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.omnia-technology.com/clausulas-personalizadas.html">
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A0E17; --navy-soft:#161D30;
+    --paper:#FCFBF8; --ink:#14181F; --muted:#5B6472; --border:#E7E5DF;
+    --gold:#6C5CE7; --gold-soft:#E4E0FB;
+    --green:#2F9E64; --green-soft:#E3F3EA;
+    --red:#C4483A; --red-soft:#F6E4E1;
+    --amber:#B8860B; --amber-soft:#FBF1DA;
+    --display:'Space Grotesk', ui-sans-serif, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3,h4{font-family:var(--display); margin:0 0 10px; letter-spacing:-0.01em; color:var(--ink);}
+  code{font-family:var(--mono); background:var(--gold-soft); color:#4A3AC9; padding:1px 6px; border-radius:5px; font-size:0.92em;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .nav{position:sticky; top:0; z-index:40; background:var(--navy); color:#fff;}
+  .nav .wrap{max-width:1160px; display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:18px; color:#fff; text-decoration:none;}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--gold);}
+  .nav-links{display:flex; align-items:center; gap:10px;}
+  .nav-links a{opacity:.85; text-decoration:none; color:#fff; font-size:13.5px; padding:8px 12px; border-radius:7px;}
+  .nav-links a:hover{opacity:1; background:rgba(255,255,255,0.08);}
+  .nav-links a.close{background:var(--gold); color:var(--navy); font-weight:600; opacity:1;}
+
+  .hero{background:var(--navy); color:#fff; padding:46px 0 40px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--gold); text-transform:uppercase;}
+  .hero h1{font-size:30px; color:#fff; margin:12px 0 10px;}
+  .hero p{color:#B9C0CE; font-size:15px; margin:0;}
+
+  main{padding:44px 0 80px;}
+  main h2{font-size:21px; margin-top:36px;}
+  main p{font-size:14.5px;}
+  main ul, main ol{padding-left:22px; font-size:14.5px;}
+  main li{margin-bottom:6px;}
+  .lead{color:var(--muted); font-size:14.5px;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px;}
+  th, td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:var(--navy-soft); color:#fff; font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;}
+  tr:nth-child(even) td{background:#fff;}
+  tr:nth-child(odd) td{background:var(--paper);}
+
+  .box{border-radius:12px; padding:16px 18px; margin:14px 0; font-size:13.5px;}
+  .box.amber{background:var(--amber-soft); border:1px solid #ecd6a0;}
+  .box.gray{background:#fff; border:1px solid var(--border);}
+  .box.green{background:var(--green-soft); border:1px solid #bfe4cf;}
+  .box p:first-child{margin-top:0;}
+  .box p:last-child{margin-bottom:0;}
+
+  .steps{list-style:none; padding:0; margin:14px 0; counter-reset:step;}
+  .steps li{counter-increment:step; position:relative; padding-left:38px; margin-bottom:14px; font-size:14.5px;}
+  .steps li::before{content:counter(step); position:absolute; left:0; top:0; width:26px; height:26px; border-radius:50%; background:var(--gold-soft); color:#4A3AC9; font-family:var(--mono); font-weight:600; font-size:13px; display:flex; align-items:center; justify-content:center;}
+
+  footer{background:var(--navy); color:#8B93A1; padding:28px 0; font-size:12.5px;}
+  footer .wrap{max-width:1160px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer a{color:#B9C0CE; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="dot"></span>Omnia Technology</a>
+    <div class="nav-links">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+      <a class="close" href="javascript:window.close()" onclick="if(!window.opener){location.href='omnia-portal.html';}">Cerrar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">⚖️ Documentos legales</div>
+    <h1>Cláusulas personalizadas</h1>
+    <p>Cómo reemplazar las plantillas genéricas de contrato, pagaré y aviso de privacidad por tus propios documentos, validados por tu abogado.</p>
+  </div>
+</header>
+
+<div class="wrap">
+<main>
+
+  <p class="lead">Aplica principalmente a Funeral 360, que genera contratos de adhesión y pagarés a partir de cada orden de servicio. Como se indica en la <a href="terminos-y-condiciones.html#obligaciones" target="_blank" rel="noopener">Cláusula 8</a> de los Términos y Condiciones, esos documentos son formatos de referencia administrativa: la Plataforma te permite sustituirlos por tus propias versiones para que se usen automáticamente en cada expediente que generes.</p>
+
+  <div class="box amber">
+    <p><strong>Por qué importa:</strong> las plantillas genéricas no están ajustadas a la normativa de tu estado, ni incluyen las cláusulas específicas de tu funeraria (renuncias de fuero, condiciones propias, PROFECO local). Usarlas sin adaptar es responsabilidad tuya frente a tus clientes finales.</p>
+  </div>
+
+  <h2>Qué puedes cargar</h2>
+  <ul>
+    <li><strong>Contrato de adhesión</strong> — el documento que firma el contratante al crear una orden.</li>
+    <li><strong>Pagaré mercantil</strong> — usado cuando el servicio se paga en parcialidades.</li>
+    <li><strong>Aviso de privacidad</strong> — para el tratamiento de datos de tus clientes finales.</li>
+  </ul>
+
+  <h2>Requisitos del archivo</h2>
+  <table>
+    <tr><th>Requisito</th><th>Detalle</th></tr>
+    <tr><td>Formato</td><td>PDF únicamente</td></tr>
+    <tr><td>Tamaño máximo</td><td>5 MB</td></tr>
+    <tr><td>Validación</td><td>Debe estar revisado por tu propio abogado antes de subirlo</td></tr>
+    <tr><td>Estructura</td><td>Título claro, secciones legibles y espacio de firma/aceptación</td></tr>
+  </table>
+
+  <h2>Cómo se sube y se aprueba</h2>
+  <ol class="steps">
+    <li>En Funeral 360, ve a <strong>Administración → Documentos Legales</strong>.</li>
+    <li>Elige el tipo de documento (contrato, pagaré o aviso de privacidad) y sube tu PDF.</li>
+    <li>El sistema valida el formato y lo envía a revisión de Omnia (24–48 horas hábiles).</li>
+    <li>Omnia revisa que el archivo <strong>no</strong> contenga código malicioso, no viole derechos de terceros y tenga estructura de documento legal — <strong>no</strong> evalúa si tu documento cumple la ley; eso es responsabilidad de tu abogado.</li>
+    <li>Una vez aprobado, se integra automáticamente: todos los expedientes nuevos usan tu documento en lugar de la plantilla genérica.</li>
+  </ol>
+
+  <div class="box gray">
+    <p>Mientras no cargues un documento propio para un tipo determinado (por ejemplo, si solo subiste el contrato pero no el pagaré), el sistema sigue usando la plantilla genérica de Omnia para ese documento específico.</p>
+  </div>
+
+  <h2>Después de aprobado</h2>
+  <ul>
+    <li>Siempre imprime el documento generado y hazlo firmar físicamente — la firma capturada en pantalla es una copia administrativa, no el original legal.</li>
+    <li>Guarda el original firmado en el expediente físico del servicio.</li>
+    <li>Si necesitas actualizar tu documento (por ejemplo, tras una reforma legal en tu estado), repite el proceso de carga con la nueva versión.</li>
+  </ul>
+
+  <div class="box green">
+    <p>¿Dudas sobre el proceso de carga o el estado de tu documento en revisión? Escribe a <a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a> o consulta el <a href="manual.html#clausulas-soporte" target="_blank" rel="noopener">manual de usuario</a>.</p>
+  </div>
+
+</main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <a href="index.html">Omnia Technology</a></span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="guia-funeral360.html" target="_blank" rel="noopener">Guía Funeral 360</a>
+      <a href="terminos-y-condiciones.html" target="_blank" rel="noopener">Términos y condiciones</a>
+    </span>
+  </div>
+</footer>
+
+<script src="cookie-consent.js"></script>
+</body>
+</html>
