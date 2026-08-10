@@ -92,15 +92,26 @@
   .badge.red{background:var(--red-soft); color:var(--red);}
   .badge.gray{background:var(--paper); color:var(--muted); border:1px solid var(--border);}
 
-  .app-card{border:1px solid var(--border); border-radius:12px; padding:16px; margin-top:12px; background:#fff; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center;}
+  .app-card{border:1px solid var(--border); border-radius:12px; padding:16px; margin-top:12px; background:#fff; display:flex; flex-direction:column; gap:10px;}
+  .app-card .top-row{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center;}
   .app-card .name{font-weight:600; font-size:14.5px;}
   .app-card .meta{font-size:12.5px; color:var(--muted); margin-top:3px;}
   .app-card .actions{display:flex; gap:8px; flex-wrap:wrap;}
+  .app-links{display:flex; gap:16px; flex-wrap:wrap;}
+  .app-links a{font-size:12px; color:#4A3AC9; text-decoration:none; font-weight:600;}
+  .app-links a:hover{text-decoration:underline;}
+  .payment-history{border-top:1px dashed var(--border); padding-top:8px;}
+  .payment-history .ph-label{font-size:10.5px; color:var(--mutedDim,var(--muted)); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px;}
+  .payment-history .row{display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); padding:2px 0; font-family:var(--mono);}
   .btn-tiny{padding:8px 12px; border-radius:7px; font-size:12.5px; font-weight:600; border:none;}
+  .btn-outline{background:#fff; border:1px solid var(--border); color:var(--ink);}
   .ticket-row{border-top:1px solid var(--border); padding:10px 0; font-size:13px;}
   .ticket-row .subject{font-weight:500;}
   .ticket-row .meta{font-size:11.5px; color:var(--muted); margin-top:2px; font-family:var(--mono);}
-  .portal-foot-link{background:none; border:none; color:var(--muted); font-size:12.5px; text-decoration:underline; cursor:pointer; padding:0; margin-top:10px;}
+  .portal-foot-link{background:none; border:none; color:var(--muted); font-size:12.5px; text-decoration:underline; cursor:pointer; padding:0;}
+  .dashboard-head{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; border-bottom:1px solid var(--border); padding-bottom:16px; margin-bottom:4px;}
+  .dashboard-head h3{font-size:19px; margin:0 0 3px;}
+  .dashboard-actions{display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
 
   .support{background:var(--paper);}
   .support-form{max-width:560px;}
@@ -241,13 +252,28 @@
   <div class="modal">
     <div class="modal-head"><h3>Comprar</h3><button class="modal-close" onclick="closeModal('buyModal')">✕</button></div>
     <div id="buyStep1">
-      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Serás redirigido a Stripe Checkout para completar el pago de forma segura.</p>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Serás redirigido a Mercado Pago para completar el pago de forma segura.</p>
       <div class="field" style="margin-top:16px;"><label>Correo de facturación</label><input type="email" id="buyEmail" required /></div>
       <div class="field"><label>Nombre / Empresa</label><input id="buyName" required /></div>
-      <button class="btn-submit" onclick="goToStripe()">Continuar a Stripe</button>
-      <p class="note">En producción este botón llama a <code>POST /api/checkout/create-session</code> y redirige a Stripe. Aquí simula el resultado del pago.</p>
+      <button class="btn-submit" onclick="goToCheckout()">Continuar a Mercado Pago</button>
     </div>
     <div id="buySuccess" style="display:none;"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="supportModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Solicitar atención</h3><button class="modal-close" onclick="closeModal('supportModal')">✕</button></div>
+    <div id="supportFormWrap">
+      <p class="note" style="margin-top:0;">Se envía directo al equipo de soporte, con el nombre y correo de tu cuenta.</p>
+      <div class="field"><label>Asunto</label><input id="supportSubject" required /></div>
+      <div class="field"><label>Prioridad</label>
+        <select id="supportPriority"><option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option></select>
+      </div>
+      <div class="field"><label>Descripción</label><textarea id="supportMessage" rows="3" required></textarea></div>
+      <button class="btn-submit" onclick="enviarTicketPortal()">Enviar solicitud</button>
+    </div>
+    <div id="supportSuccess" style="display:none;"></div>
   </div>
 </div>
 
@@ -343,6 +369,8 @@ function closeModal(id){
   document.getElementById('demoSuccess').style.display='none';
   document.getElementById('buyStep1').style.display='block';
   document.getElementById('buySuccess').style.display='none';
+  document.getElementById('supportFormWrap').style.display='block';
+  document.getElementById('supportSuccess').style.display='none';
 }
 function openDemo(productId){ activeProduct = PRODUCTS.find(p=>p.id===productId); openModal('demoModal'); }
 function openBuy(productId){ activeProduct = PRODUCTS.find(p=>p.id===productId); openModal('buyModal'); }
@@ -377,27 +405,27 @@ async function submitDemo(){
     </div>`;
 }
 
-async function goToStripe(){
+async function goToCheckout(){
   const email = document.getElementById('buyEmail').value.trim();
   const name = document.getElementById('buyName').value.trim();
   const box = document.getElementById('buySuccess');
   if(!email || !name || !activeProduct){
     box.style.display='block';
-    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Ingresa tu correo y nombre para continuar a Stripe.</p>`;
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Ingresa tu correo y nombre para continuar a Mercado Pago.</p>`;
     return;
   }
   if(requiereConexion(box)){ box.style.display='block'; document.getElementById('buyStep1').style.display='none'; return; }
 
   document.getElementById('buyStep1').style.display='none';
   box.style.display='block';
-  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Conectando con Stripe…</p>`;
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Conectando con Mercado Pago…</p>`;
 
   const res = await apiPost({ action:'createCheckoutSession', productId: activeProduct.id, email, clientName:name });
   if(!res || res.error || !res.url){
-    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo iniciar el pago${res && res.error ? ': ' + esc(res.error) : ''}. Verifica que el producto tenga stripePriceId configurado.</p>`;
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo iniciar el pago${res && res.error ? ': ' + esc(res.error) : ''}. Verifica que el producto tenga un precio (proPrice) configurado.</p>`;
     return;
   }
-  window.location.href = res.url; // redirección real a Stripe Checkout
+  window.location.href = res.url; // redirección real a Mercado Pago
 }
 
 /* =========================================================================
@@ -507,14 +535,16 @@ async function pagarApp(licenseId, productId, type){
   const session = getClientSession();
   if(!session) return;
   const card = document.getElementById('appActions_' + licenseId);
-  if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--muted);">Conectando con Stripe…</span>`;
+  // Las apps Pro se gestionan en el Billing Portal de Stripe; comprar/renovar una demo pasa por Mercado Pago.
+  const proveedor = type === 'pro' ? 'Stripe' : 'Mercado Pago';
+  if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--muted);">Conectando con ${proveedor}…</span>`;
 
   const res = type === 'pro'
     ? await apiPost({ action:'createBillingPortalSession', sessionToken: session.sessionToken })
     : await apiPost({ action:'createCheckoutSession', productId, sessionToken: session.sessionToken });
 
   if(!res || res.error || !res.url){
-    if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--red);">${res && res.error ? esc(res.error) : 'No se pudo abrir Stripe.'}</span>`;
+    if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--red);">${res && res.error ? esc(res.error) : 'No se pudo abrir ' + proveedor + '.'}</span>`;
     return;
   }
   window.location.href = res.url;
@@ -550,6 +580,11 @@ function renderAccountDashboard(box){
   const apps = myAccount.apps || [];
   const tickets = myAccount.tickets || [];
 
+  // Saludo con el primer nombre de la persona (o de la empresa, si es lo único que tenemos).
+  const nombreCompleto = c.name || c.company || c.email || '';
+  const primerNombre = nombreCompleto.split(' ')[0];
+  const mostrarEmpresa = c.company && c.company !== c.name;
+
   const appsHtml = apps.length === 0
     ? `<p style="font-size:13px; color:var(--muted); margin-top:12px;">Todavía no tienes apps activas.</p>`
     : apps.map(a => {
@@ -560,18 +595,38 @@ function renderAccountDashboard(box){
             ? `<span class="badge gray">expirada</span>`
             : `<span class="badge red">bloqueada</span>`;
         const typeBadge = isPro ? `<span class="badge gold">PRO</span>` : `<span class="badge gray">DEMO</span>`;
-        const vencimiento = a.expiresAt ? `vence ${formatDate(a.expiresAt)}` : 'sin vencimiento';
+
+        const diasParaVencer = a.expiresAt ? (new Date(a.expiresAt).getTime() - Date.now()) / 86400000 : null;
+        const vencePronto = diasParaVencer !== null && diasParaVencer > 0 && diasParaVencer <= 3;
+        const vencimientoColor = a.status !== 'active' ? 'var(--red)' : (vencePronto ? '#B8860B' : 'var(--muted)');
+        const vencimiento = !a.expiresAt ? 'sin vencimiento' : (a.status === 'active' ? `próximo pago ${formatDate(a.expiresAt)}` : `venció ${formatDate(a.expiresAt)}`);
         const monto = a.amount ? `${formatMoney(a.amount)} / ${cycleLabel(a.billingCycle)}` : '';
+
         const actionBtn = isPro
           ? `<button class="btn-tiny" style="background:var(--navy); color:#fff;" onclick="pagarApp('${a.licenseId}','${a.productId}','pro')">Gestionar pago</button>`
           : `<button class="btn-tiny" style="background:var(--gold); color:var(--navy);" onclick="pagarApp('${a.licenseId}','${a.productId}','demo')">Comprar ahora</button>`;
+        const reportarBtn = `<button class="btn-tiny btn-outline" onclick="abrirSoporteModal('${esc(a.productName)}')">Reportar problema</button>`;
+
+        const links = [];
+        if(a.appUrl) links.push(`<a href="${esc(a.appUrl)}" target="_blank" rel="noopener">Abrir mi app →</a>`);
+        if(a.manualUrl) links.push(`<a href="${esc(a.manualUrl)}" target="_blank" rel="noopener">Ver manual</a>`);
+        const linksHtml = links.length ? `<div class="app-links">${links.join('')}</div>` : '';
+
+        const paymentsHtml = (a.payments && a.payments.length)
+          ? `<div class="payment-history"><div class="ph-label">Últimos pagos</div>${a.payments.slice(0,3).map(p => `<div class="row"><span>${formatDate(p.date)}</span><span>${formatMoney(p.amount)} · ${esc(p.status)}</span></div>`).join('')}</div>`
+          : '';
+
         return `
           <div class="app-card">
-            <div>
-              <div class="name">${esc(a.productName)} ${typeBadge} ${statusBadge}</div>
-              <div class="meta">${monto ? monto + ' · ' : ''}${vencimiento}</div>
+            <div class="top-row">
+              <div>
+                <div class="name">${esc(a.productName)} ${typeBadge} ${statusBadge}</div>
+                <div class="meta">${monto ? monto + ' · ' : ''}<span style="color:${vencimientoColor};">${vencimiento}</span></div>
+              </div>
+              <div class="actions" id="appActions_${esc(a.licenseId)}">${actionBtn}${reportarBtn}</div>
             </div>
-            <div class="actions" id="appActions_${esc(a.licenseId)}">${actionBtn}</div>
+            ${linksHtml}
+            ${paymentsHtml}
           </div>`;
       }).join('');
 
@@ -584,18 +639,57 @@ function renderAccountDashboard(box){
         </div>`).join('');
 
   box.innerHTML = `
-    <div class="account-row" style="border-bottom:1px solid var(--border); padding-bottom:14px; margin-bottom:4px;">
+    <div class="dashboard-head">
       <div>
-        <div style="font-weight:600; font-size:15.5px;">${esc(c.company || c.name || c.email)}</div>
-        <div style="font-size:12.5px; color:var(--muted);">${esc(c.email)}</div>
+        <h3>Hola, ${esc(primerNombre)}</h3>
+        <div style="font-size:12.5px; color:var(--muted);">${mostrarEmpresa ? esc(c.company) + ' · ' : ''}${esc(c.email)}</div>
       </div>
-      <button class="portal-foot-link" onclick="cerrarSesionCliente()">Cerrar sesión</button>
+      <div class="dashboard-actions">
+        <button class="btn-tiny" style="background:var(--gold-soft); color:#4A3AC9;" onclick="abrirSoporteModal()">Solicitar atención</button>
+        <button class="portal-foot-link" onclick="cerrarSesionCliente()">Cerrar sesión</button>
+      </div>
     </div>
     <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:16px;">Tus apps</div>
     ${appsHtml}
     <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:22px;">Soporte</div>
     ${ticketsHtml}
   `;
+}
+
+function abrirSoporteModal(prefillSubject){
+  const session = getClientSession();
+  if(!session) return;
+  document.getElementById('supportSubject').value = prefillSubject ? `Problema con ${prefillSubject}` : '';
+  document.getElementById('supportMessage').value = '';
+  document.getElementById('supportPriority').value = 'media';
+  openModal('supportModal');
+}
+
+async function enviarTicketPortal(){
+  const session = getClientSession();
+  if(!session || !myAccount) return;
+  const subject = document.getElementById('supportSubject').value.trim();
+  const message = document.getElementById('supportMessage').value.trim();
+  const priority = document.getElementById('supportPriority').value;
+  const box = document.getElementById('supportSuccess');
+  if(!subject || !message){
+    box.style.display='block';
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Completa el asunto y la descripción.</p>`;
+    return;
+  }
+
+  document.getElementById('supportFormWrap').style.display='none';
+  box.style.display='block';
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Enviando…</p>`;
+
+  const c = myAccount.client || {};
+  const res = await apiPost({ action:'supportTicket', clientName: c.company || c.name || c.email, email: c.email, subject, priority, message });
+  if(!res || res.error){
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo enviar. Intenta de nuevo.</p>`;
+    return;
+  }
+  box.innerHTML = `<p style="font-size:14px; color:var(--green); font-weight:600;">Solicitud enviada. Te contactaremos pronto.</p>`;
+  await loadMyAccount(); // refresca la lista de tickets del dashboard con el nuevo
 }
 
 initPortal();
