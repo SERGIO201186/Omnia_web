@@ -769,6 +769,17 @@
       const PRODUCT_NAME = "NovaPOS Pro";
       const PRODUCT_ID = "prod_novapos";
 
+      /* Traduce el título mostrado en el modal a la versión real publicada en la
+         sección de precios (#precios), para que Control Omnia sepa si es una
+         demo genérica o una compra de una versión específica, y active la
+         licencia correcta. */
+      const inferPurchaseInfo = (title) => {
+        const t = (title || '').toLowerCase();
+        if (t.includes('versión 2')) return { requestType: 'compra', version: 'v2', productId: 'prod_novapos_v2' };
+        if (t.includes('versión 1')) return { requestType: 'compra', version: 'v1', productId: 'prod_novapos_v1' };
+        return { requestType: 'demo', version: null, productId: PRODUCT_ID };
+      };
+
       const getApiUrl = () => localStorage.getItem('omnia_api_url') || '';
       const apiPost = async (body) => {
         const url = getApiUrl();
@@ -792,10 +803,11 @@
         const email = form.email.value.trim();
 
         const msg = `🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: ${negocio} (${giro})\n🖥️ Software: ${PRODUCT_NAME}\n👤 Contacto: ${nombre}\n📱 WhatsApp: ${telefono}\n📧 Email: ${email}\n📌 Interés: ${activeModal}`;
+        const { requestType, version, productId } = inferPurchaseInfo(activeModal);
 
         let sentOk = false;
         if (getApiUrl()) {
-          const res = await apiPost({ action: 'demoRequest', productId: PRODUCT_ID, name: nombre, email, company: negocio });
+          const res = await apiPost({ action: 'demoRequest', productId, requestType, version, name: nombre, email, company: negocio });
           if (res && !res.error) {
             setSuccessMsg(`✓ Demo activada. Revisa tu correo (${email}) para tu clave de acceso.`);
             sentOk = true;
