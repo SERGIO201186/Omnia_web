@@ -874,7 +874,7 @@
             </ul>
           </div>
           <button
-            onclick="openDemoModal()"
+            onclick="openDemoModal('prod_fastfood_v1', 'Versión 1', 'compra')"
             class="w-full py-3 rounded-full border border-[#E8A33D] text-[#E8A33D] font-bold hover:bg-[#E8A33D] hover:text-gray-900 transition-colors"
           >
             Elegir Versión 1
@@ -905,7 +905,7 @@
             <p class="text-[#8A7A63] text-[12.5px] mt-4 leading-relaxed">* El costo de la API de WhatsApp es muy accesible (fracciones de peso por conversación) — se paga solo con lo que ganas de más al no perder ni un pedido, incluso fuera de horario.</p>
           </div>
           <button
-            onclick="openDemoModal()"
+            onclick="openDemoModal('prod_fastfood_v2', 'Versión 2', 'compra')"
             class="w-full py-3 rounded-full bg-[#E8A33D] text-gray-900 font-bold hover:bg-[#D4882F] transition-colors shadow-md"
           >
             Elegir Versión 2
@@ -928,7 +928,7 @@
             </ul>
           </div>
           <button
-            onclick="openDemoModal()"
+            onclick="openDemoModal('prod_fastfood_enterprise', 'Enterprise (personalizado)', 'cotizacion')"
             class="w-full py-3 rounded-full border border-[#E8A33D] text-[#E8A33D] font-bold hover:bg-[#E8A33D] hover:text-gray-900 transition-colors"
           >
             Llamar para cotizar
@@ -1269,8 +1269,18 @@
     }
 
     let demoCloseTimer = null;
+    let selectedProductId = PRODUCT_ID;
+    let selectedRequestType = 'demo';
+    let selectedLabel = 'Solicitar Demo';
 
-    function openDemoModal() {
+    /* Los botones "Elegir Versión 1/2" y "Llamar para cotizar" pasan el
+       productId real usado en el catálogo del portal (omnia-portal.html),
+       para que Control Omnia sepa si es una demo, una compra o una
+       cotización, y de qué versión. */
+    function openDemoModal(productId, label, requestType) {
+      selectedProductId = productId || PRODUCT_ID;
+      selectedLabel = label || 'Solicitar Demo';
+      selectedRequestType = requestType || 'demo';
       if (demoCloseTimer) { clearTimeout(demoCloseTimer); demoCloseTimer = null; }
       document.getElementById('demoModal').classList.remove('hidden');
     }
@@ -1288,13 +1298,13 @@
       const wa = document.getElementById('modalWAInput').value.trim();
       const email = document.getElementById('modalEmailInput').value.trim();
 
-      const msg = '🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+restaurante+'\n🖥️ Software: '+PRODUCT_NAME+'\n👤 Contacto: '+nombre+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+      const msg = '🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+restaurante+'\n🖥️ Software: '+PRODUCT_NAME+'\n👤 Contacto: '+nombre+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email+'\n📌 Interés: '+selectedLabel;
 
       const successMsg = document.getElementById('modalSuccessMsg');
       let sentOk = false;
 
       if (getApiUrl()) {
-        const res = await apiPost({ action:'demoRequest', productId: PRODUCT_ID, name: nombre, email, company: restaurante });
+        const res = await apiPost({ action:'demoRequest', productId: selectedProductId, requestType: selectedRequestType, name: nombre, email, company: restaurante });
         if (res && !res.error) {
           successMsg.textContent = '✓ Demo activada. Revisa tu correo ('+email+') para tu clave de acceso.';
           sentOk = true;

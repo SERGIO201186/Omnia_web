@@ -440,7 +440,7 @@
               <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Alta y baja de proveedores</li>
             </ul>
           </div>
-          <button onclick="openDemoModal()" class="mt-8 w-full py-3 rounded-full border border-omnia-500 text-omnia-400 font-bold hover:bg-omnia-600 hover:text-white transition-colors">
+          <button onclick="openDemoModal('prod_farmapos_v1', 'Versión 1', 'compra')" class="mt-8 w-full py-3 rounded-full border border-omnia-500 text-omnia-400 font-bold hover:bg-omnia-600 hover:text-white transition-colors">
             Elegir Versión 1
           </button>
         </div>
@@ -463,7 +463,7 @@
             </ul>
             <p class="text-white/50 text-xs mt-4">* Los costos/comisiones de la terminal o pasarela de pago corren por cuenta del cliente.</p>
           </div>
-          <button onclick="openDemoModal()" class="mt-8 w-full py-3 rounded-full bg-omnia-600 text-white font-bold hover:bg-omnia-500 transition-colors">
+          <button onclick="openDemoModal('prod_farmapos_v2', 'Versión 2', 'compra')" class="mt-8 w-full py-3 rounded-full bg-omnia-600 text-white font-bold hover:bg-omnia-500 transition-colors">
             Elegir Versión 2
           </button>
         </div>
@@ -649,8 +649,17 @@
     }
 
     let demoCloseTimer = null;
+    let selectedProductId = PRODUCT_ID;
+    let selectedRequestType = 'demo';
+    let selectedLabel = 'Solicitar Demo';
 
-    function openDemoModal() {
+    /* Los botones "Elegir Versión 1/2" pasan el productId real usado en el
+       catálogo del portal (omnia-portal.html), para que Control Omnia sepa
+       si es una demo o una compra, y de qué versión. */
+    function openDemoModal(productId, label, requestType) {
+      selectedProductId = productId || PRODUCT_ID;
+      selectedLabel = label || 'Solicitar Demo';
+      selectedRequestType = requestType || 'demo';
       if (demoCloseTimer) { clearTimeout(demoCloseTimer); demoCloseTimer = null; }
       document.getElementById('demo-modal').classList.remove('hidden');
       document.getElementById('modal-form-container').classList.remove('hidden');
@@ -669,13 +678,13 @@
       const wa = document.getElementById('demoWA').value.trim();
       const email = document.getElementById('demoEmail').value.trim();
 
-      const msg = '🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+farmacia+'\n🖥️ Software: '+PRODUCT_NAME+'\n👤 Contacto: '+nombre+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+      const msg = '🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+farmacia+'\n🖥️ Software: '+PRODUCT_NAME+'\n👤 Contacto: '+nombre+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email+'\n📌 Interés: '+selectedLabel;
 
       const successMsg = document.getElementById('modal-success-msg');
       let sentOk = false;
 
       if (getApiUrl()) {
-        const res = await apiPost({ action:'demoRequest', productId: PRODUCT_ID, name: nombre, email, company: farmacia });
+        const res = await apiPost({ action:'demoRequest', productId: selectedProductId, requestType: selectedRequestType, name: nombre, email, company: farmacia });
         if (res && !res.error) {
           successMsg.textContent = '✓ Demo activada. Revisa tu correo ('+email+') para tu clave de acceso.';
           sentOk = true;
