@@ -137,6 +137,7 @@
       <a href="#productos">Productos</a>
       <a href="#portal">Portal de cliente</a>
       <a href="#soporte">Soporte</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual</a>
     </div>
     <button class="btn-portal" onclick="document.getElementById('portal').scrollIntoView({behavior:'smooth'})">Portal de cliente</button>
   </div>
@@ -192,6 +193,7 @@
       <div class="eyebrow">Atención al cliente</div>
       <h2>Reportar una incidencia</h2>
       <p>Tu solicitud entra directo al Control Maestro del equipo de soporte.</p>
+      <p class="note" style="margin-top:12px;">¿Es un problema de instalación, acceso o sincronización? Muchos se resuelven al momento consultando el <a href="manual.html" target="_blank" rel="noopener" style="color:var(--gold); font-weight:600;">manual de usuario ↗</a> — incluye la política de costos de soporte.</p>
     </div>
     <form class="support-form" onsubmit="submitTicket(event)">
       <div class="field"><label>Nombre</label><input required id="tkName" /></div>
@@ -593,7 +595,10 @@ function renderAccountDashboard(box){
     </div>
     <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:16px;">Tus apps</div>
     ${appsHtml}
-    <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:22px;">Soporte</div>
+    <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:22px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <span>Soporte</span>
+      <a href="manual.html" target="_blank" rel="noopener" style="font-size:12px; text-transform:none; letter-spacing:normal; color:var(--gold); font-weight:600; text-decoration:none;">📖 Manual de usuario</a>
+    </div>
     ${ticketsHtml}
   `;
 }
