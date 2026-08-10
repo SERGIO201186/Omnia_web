@@ -252,8 +252,10 @@
 // para que el sitio no se vea vacío mientras conectas el backend real.
 const FALLBACK_PRODUCTS = [
   { id:"prod_f360_paquete", name:"Funeral 360", category:"Funerarias", proPrice:799, billingCycle:"Mensual", demoDurationDays:15, description:"Gestión de servicios funerarios, previsión y páginas conmemorativas." },
-  { id:"prod_farmapos", name:"Farma POS", category:"Farmacias", proPrice:699, billingCycle:"Mensual", demoDurationDays:15, description:"Punto de venta e inventario con control de caducidades y lotes." },
-  { id:"prod_novapos", name:"NovaPOS Pro", category:"Retail", proPrice:649, billingCycle:"Mensual", demoDurationDays:15, description:"Punto de venta multi-giro para abarrotes, ferreterías y tiendas de ropa." },
+  { id:"prod_farmapos_v1", name:"Farma POS — Versión 1", category:"Farmacias", proPrice:200, setupFee:1500, billingCycle:"Mensual", demoDurationDays:15, description:"Base de datos, escáner, impresora, inventario y cobro manual. Cobro manual, sin integraciones de pago." },
+  { id:"prod_farmapos_v2", name:"Farma POS — Versión 2", category:"Farmacias", proPrice:300, setupFee:1500, billingCycle:"Mensual", demoDurationDays:15, description:"Todo lo de Versión 1 + facturación CFDI y cobro con terminal (API), con actualización automática al confirmarse el cobro." },
+  { id:"prod_novapos_v1", name:"NovaPOS Pro — Versión 1", category:"Retail", proPrice:250, setupFee:1500, billingCycle:"Mensual", demoDurationDays:15, description:"Base de datos, escáner, impresora, inventario y proveedores. Cobro manual, sin integraciones de pago." },
+  { id:"prod_novapos_v2", name:"NovaPOS Pro — Versión 2", category:"Retail", proPrice:400, setupFee:1500, billingCycle:"Mensual", demoDurationDays:15, description:"Todo lo de Versión 1 + facturación CFDI y cobros electrónicos (terminal, link de pago, SPEI)." },
   { id:"prod_fastfood_omnia", name:"FastFood Omnia", category:"Restaurantes", proPrice:499, billingCycle:"Mensual", demoDurationDays:15, description:"Asistente de IA, comandero móvil y pantalla de cocina para restaurantes." },
 ];
 let PRODUCTS = [];
@@ -299,6 +301,7 @@ function renderProducts(){
       <h3>${esc(p.name)}</h3>
       <p class="desc">${esc(p.description||'')}</p>
       <div class="price-row"><span class="price">${formatMoney(p.proPrice)}</span><span class="cycle">/ ${cycleLabel(p.billingCycle)}</span></div>
+      ${p.setupFee ? `<span class="demo-days">+ ${formatMoney(p.setupFee)} instalación (pago único)</span>` : ''}
       <span class="demo-days">Demo disponible: ${esc(p.demoDurationDays)} días</span>
       <div class="card-actions">
         <button class="btn-buy" onclick="openBuy('${p.id}')">Comprar</button>
