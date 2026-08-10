@@ -836,57 +836,78 @@
         </h2>
       </div>
 
+      <!-- Pago único de instalación -->
+      <div class="bg-[#2A2118] border border-[#3D3225] rounded-2xl p-6 md:p-8 mb-10 flex flex-col md:flex-row md:items-center gap-6 max-w-[1100px] mx-auto">
+        <div class="md:w-1/3">
+          <span class="text-xs uppercase tracking-widest text-[#E8A33D] font-bold">Pago único</span>
+          <p class="text-[#F7F1E6] text-3xl font-bold mt-1">$1,500 <span class="text-base font-medium text-[#B8A890]">MXN</span></p>
+          <p class="text-[#B8A890] text-sm mt-1">Instalación y arranque</p>
+        </div>
+        <ul class="md:w-2/3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[#B8A890] text-sm">
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Instalación a distancia o presencial (Xalapa)</li>
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Días de verificación de funcionalidad</li>
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Capacitación para el personal que lo usará</li>
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Manual de usuario</li>
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Soporte técnico de arranque</li>
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Carga inicial de tu menú</li>
+          <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Acompañamiento por WhatsApp tu primera semana</li>
+        </ul>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-        <!-- Básico -->
+        <!-- Versión 1 -->
         <div class="bg-[#2A2118] border border-[#3D3225] rounded-2xl p-8 flex flex-col justify-between">
           <div>
-            <h3 class="text-2xl font-bold text-[#F7F1E6]">Básico</h3>
-            <p class="text-[#B8A890] text-[14px] mt-1">Ideal para locales pequeños</p>
+            <h3 class="text-2xl font-bold text-[#F7F1E6]">Versión 1</h3>
+            <p class="text-[#B8A890] text-[14px] mt-1">Operación diaria en un solo local</p>
             <div class="my-6">
-              <span class="text-4xl font-extrabold text-[#E8A33D]">$199</span>
+              <span class="text-4xl font-extrabold text-[#E8A33D]">$499</span>
               <span class="text-[#B8A890] text-[14px]"> / mes</span>
             </div>
             <ul class="space-y-3 mb-8 text-[14px] text-[#B8A890]">
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Hasta 2 mesas simultáneas</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Menú ilimitado</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> 1 mesero + 1 cocina</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Reportes básicos</li>
-              <li class="flex items-center gap-2 text-gray-500 line-through">Sin facturación CFDI</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> 4 accesos incluidos: mesero, cocina, caja y panel de dueño</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> El dueño controla qué acceso le da a cada persona</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Cada acceso ve solo lo suyo: el mesero no entra a cocina, caja ni al panel de dueño</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Integración de impresora</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Captura pedidos externos (WhatsApp, teléfono) y los manda a cocina como para comer en el restaurante, para recoger o a domicilio</li>
+              <li class="flex items-center gap-2 text-gray-500 line-through">Sin agente de IA (respuestas manuales)</li>
             </ul>
           </div>
-          <button 
+          <button
             onclick="openDemoModal()"
             class="w-full py-3 rounded-full border border-[#E8A33D] text-[#E8A33D] font-bold hover:bg-[#E8A33D] hover:text-gray-900 transition-colors"
           >
-            Elegir Básico
+            Elegir Versión 1
           </button>
         </div>
 
-        <!-- PRO - Destacado -->
+        <!-- Versión 2 - Destacada -->
         <div class="bg-[#2A2118] border-2 border-[#E8A33D] rounded-2xl p-8 flex flex-col justify-between relative shadow-[0_0_30px_rgba(232,163,61,0.15)] transform md:-translate-y-2">
           <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E8A33D] text-gray-900 font-extrabold text-[11px] uppercase tracking-wider px-4 py-1 rounded-full shadow">
             MÁS POPULAR
           </span>
           <div>
-            <h3 class="text-2xl font-bold text-[#F7F1E6]">PRO</h3>
-            <p class="text-[#B8A890] text-[14px] mt-1">Para restaurantes en expansión</p>
+            <h3 class="text-2xl font-bold text-[#F7F1E6]">Versión 2</h3>
+            <p class="text-[#B8A890] text-[14px] mt-1">Con IA y cobros electrónicos</p>
             <div class="my-6">
-              <span class="text-4xl font-extrabold text-[#E8A33D]">$499</span>
+              <span class="text-4xl font-extrabold text-[#E8A33D]">$800</span>
               <span class="text-[#B8A890] text-[14px]"> / mes</span>
             </div>
             <ul class="space-y-3 mb-8 text-[14px] text-[#F7F1E6]">
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Mesas e impresoras ilimitadas</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Hasta 5 meseros concurrentes</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Pantalla de cocina (KDS) completa</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Caja integrada y reportes avanzadas</li>
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Facturación CFDI incluida</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Todo lo incluido en Versión 1</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Agente de IA que contesta y toma pedidos por WhatsApp 24/7 (API de WhatsApp a cargo del cliente)</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Administración y asignación de mesas por mesero</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Panel de administración: configuración de productos vendidos y del negocio</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Impresión de tickets</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Cobro electrónico: transferencia, QR, link de pago y terminal</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> 1 mesero incluido, cada mesero adicional +$100 MXN/mes</li>
             </ul>
           </div>
-          <button 
+          <button
             onclick="openDemoModal()"
             class="w-full py-3 rounded-full bg-[#E8A33D] text-gray-900 font-bold hover:bg-[#D4882F] transition-colors shadow-md"
           >
-            Activar PRO
+            Elegir Versión 2
           </button>
         </div>
 
@@ -896,20 +917,20 @@
             <h3 class="text-2xl font-bold text-[#F7F1E6]">Enterprise</h3>
             <p class="text-[#B8A890] text-[14px] mt-1">Cadenas y multi-sucursal</p>
             <div class="my-6">
-              <span class="text-4xl font-extrabold text-[#E8A33D]">Custom</span>
+              <span class="text-4xl font-extrabold text-[#E8A33D]">Personalizado</span>
             </div>
             <ul class="space-y-3 mb-8 text-[14px] text-[#B8A890]">
-              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Todo lo incluido en PRO</li>
+              <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Todo lo incluido en Versión 2</li>
               <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Usuarios y locales ilimitados</li>
               <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Integraciones API personalizadas</li>
               <li class="flex items-center gap-2"><span class="text-[#E8A33D]">✓</span> Soporte prioritario 24/7</li>
             </ul>
           </div>
-          <button 
+          <button
             onclick="openDemoModal()"
             class="w-full py-3 rounded-full border border-[#E8A33D] text-[#E8A33D] font-bold hover:bg-[#E8A33D] hover:text-gray-900 transition-colors"
           >
-            Contactar Ventas
+            Llamar para cotizar
           </button>
         </div>
       </div>
