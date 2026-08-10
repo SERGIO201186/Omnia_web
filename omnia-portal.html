@@ -241,11 +241,10 @@
   <div class="modal">
     <div class="modal-head"><h3>Comprar</h3><button class="modal-close" onclick="closeModal('buyModal')">✕</button></div>
     <div id="buyStep1">
-      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Serás redirigido a Stripe Checkout para completar el pago de forma segura.</p>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Serás redirigido a Mercado Pago para completar el pago de forma segura.</p>
       <div class="field" style="margin-top:16px;"><label>Correo de facturación</label><input type="email" id="buyEmail" required /></div>
       <div class="field"><label>Nombre / Empresa</label><input id="buyName" required /></div>
-      <button class="btn-submit" onclick="goToStripe()">Continuar a Stripe</button>
-      <p class="note">En producción este botón llama a <code>POST /api/checkout/create-session</code> y redirige a Stripe. Aquí simula el resultado del pago.</p>
+      <button class="btn-submit" onclick="goToCheckout()">Continuar a Mercado Pago</button>
     </div>
     <div id="buySuccess" style="display:none;"></div>
   </div>
@@ -377,27 +376,27 @@ async function submitDemo(){
     </div>`;
 }
 
-async function goToStripe(){
+async function goToCheckout(){
   const email = document.getElementById('buyEmail').value.trim();
   const name = document.getElementById('buyName').value.trim();
   const box = document.getElementById('buySuccess');
   if(!email || !name || !activeProduct){
     box.style.display='block';
-    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Ingresa tu correo y nombre para continuar a Stripe.</p>`;
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">Ingresa tu correo y nombre para continuar a Mercado Pago.</p>`;
     return;
   }
   if(requiereConexion(box)){ box.style.display='block'; document.getElementById('buyStep1').style.display='none'; return; }
 
   document.getElementById('buyStep1').style.display='none';
   box.style.display='block';
-  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Conectando con Stripe…</p>`;
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Conectando con Mercado Pago…</p>`;
 
   const res = await apiPost({ action:'createCheckoutSession', productId: activeProduct.id, email, clientName:name });
   if(!res || res.error || !res.url){
-    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo iniciar el pago${res && res.error ? ': ' + esc(res.error) : ''}. Verifica que el producto tenga stripePriceId configurado.</p>`;
+    box.innerHTML = `<p style="font-size:13px; color:var(--red);">No se pudo iniciar el pago${res && res.error ? ': ' + esc(res.error) : ''}. Verifica que el producto tenga un precio (proPrice) configurado.</p>`;
     return;
   }
-  window.location.href = res.url; // redirección real a Stripe Checkout
+  window.location.href = res.url; // redirección real a Mercado Pago
 }
 
 /* =========================================================================
@@ -507,14 +506,16 @@ async function pagarApp(licenseId, productId, type){
   const session = getClientSession();
   if(!session) return;
   const card = document.getElementById('appActions_' + licenseId);
-  if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--muted);">Conectando con Stripe…</span>`;
+  // Las apps Pro se gestionan en el Billing Portal de Stripe; comprar/renovar una demo pasa por Mercado Pago.
+  const proveedor = type === 'pro' ? 'Stripe' : 'Mercado Pago';
+  if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--muted);">Conectando con ${proveedor}…</span>`;
 
   const res = type === 'pro'
     ? await apiPost({ action:'createBillingPortalSession', sessionToken: session.sessionToken })
     : await apiPost({ action:'createCheckoutSession', productId, sessionToken: session.sessionToken });
 
   if(!res || res.error || !res.url){
-    if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--red);">${res && res.error ? esc(res.error) : 'No se pudo abrir Stripe.'}</span>`;
+    if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--red);">${res && res.error ? esc(res.error) : 'No se pudo abrir ' + proveedor + '.'}</span>`;
     return;
   }
   window.location.href = res.url;
