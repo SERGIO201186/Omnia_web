@@ -582,6 +582,91 @@
     };
 
     /* ==========================================================================
+       SECCIÓN DE PRECIOS
+       ========================================================================== */
+    const Pricing = ({ onOpenModal }) => {
+      return (
+        <section id="precios" className="w-full px-4 md:px-8 lg:px-12 py-16 md:py-24 bg-white">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-bold text-black leading-tight">
+                Instalación única + una mensualidad clara
+              </h2>
+            </div>
+
+            <div className="rounded-2xl bg-stone-50 border border-stone-200 p-6 md:p-8 mb-8 flex flex-col md:flex-row md:items-center gap-6">
+              <div className="md:w-1/3">
+                <span className="text-xs uppercase tracking-widest text-neutral-500 font-bold">Pago único</span>
+                <p className="text-black text-3xl font-bold mt-1">$1,500 <span className="text-base font-medium text-neutral-500">MXN</span></p>
+                <p className="text-neutral-500 text-sm mt-1">Instalación y arranque</p>
+              </div>
+              <ul className="md:w-2/3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-neutral-700 text-sm">
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Instalación a distancia o presencial (Xalapa)</li>
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Días de verificación de funcionalidad</li>
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Capacitación para el personal que lo usará</li>
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Manual de usuario</li>
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Soporte técnico de arranque</li>
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Carga inicial de tu catálogo de productos</li>
+                <li className="flex items-center gap-2"><span className="text-black">✓</span> Acompañamiento por WhatsApp tu primera semana</li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-2xl border border-stone-200 p-6 md:p-8 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-black text-xl font-bold">Versión 1</h3>
+                  <p className="text-neutral-500 text-sm mt-1">Operación diaria de mostrador</p>
+                  <div className="my-5">
+                    <span className="text-black text-4xl font-extrabold">$250</span>
+                    <span className="text-neutral-500 text-sm"> MXN / mes</span>
+                  </div>
+                  <ul className="space-y-2.5 text-neutral-700 text-sm">
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Base de datos de tu negocio</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Integración de escáner de código de barras</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Integración de impresora de tickets</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Inventario: alta y baja de productos y existencias</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Cobro con suma automática y total (cobro manual)</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Alta y baja de proveedores</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => onOpenModal('NovaPOS Pro — Versión 1')}
+                  className="mt-8 w-full py-3 rounded-full border border-black text-black font-bold hover:bg-black hover:text-white transition-colors"
+                >
+                  Elegir Versión 1
+                </button>
+              </div>
+
+              <div className="rounded-2xl border-2 border-black p-6 md:p-8 relative flex flex-col justify-between">
+                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-black text-white font-extrabold text-[11px] uppercase tracking-wider px-4 py-1 rounded-full shadow">Recomendada</span>
+                <div>
+                  <h3 className="text-black text-xl font-bold">Versión 2</h3>
+                  <p className="text-neutral-500 text-sm mt-1">Facturación y cobros electrónicos</p>
+                  <div className="my-5">
+                    <span className="text-black text-4xl font-extrabold">$400</span>
+                    <span className="text-neutral-500 text-sm"> MXN / mes</span>
+                  </div>
+                  <ul className="space-y-2.5 text-neutral-700 text-sm">
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Todo lo incluido en Versión 1</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Integración API de facturación electrónica (CFDI)</li>
+                    <li className="flex items-center gap-2"><span className="text-black">✓</span> Integración API de cobros electrónicos: terminal, link de pago y SPEI (Stripe o Mercado Pago)</li>
+                  </ul>
+                  <p className="text-neutral-400 text-xs mt-4">* Los costos/comisiones de la terminal o pasarela de pago corren por cuenta del cliente.</p>
+                </div>
+                <button
+                  onClick={() => onOpenModal('NovaPOS Pro — Versión 2')}
+                  className="mt-8 w-full py-3 rounded-full bg-black text-white font-bold hover:bg-neutral-800 transition-colors"
+                >
+                  Elegir Versión 2
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    /* ==========================================================================
        PIE DE PÁGINA (LEGAL, CONTACTO Y MARCA OMNIA TECHNOLOGY)
        ========================================================================== */
     const Footer = ({ onOpenModal }) => {
@@ -812,6 +897,8 @@
           <Section3
             onOpenModal={(title) => setActiveModal(title)}
           />
+
+          <Pricing onOpenModal={(title) => setActiveModal(title)} />
 
           <Footer onOpenModal={(title) => setActiveModal(title)} />
 

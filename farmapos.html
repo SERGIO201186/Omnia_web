@@ -143,6 +143,7 @@
     >
       <nav class="flex flex-col gap-2 font-sans text-sm font-medium text-center">
         <a href="#features" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Módulos PRO</a>
+        <a href="#precios" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Precios</a>
         <a href="#about" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Omnia Technology</a>
         <a href="#contacto" class="nav-item py-2 px-4 rounded-xl hover:bg-neutral-100 text-neutral-800 transition-colors">Soporte y Contacto</a>
         <button 
@@ -389,6 +390,84 @@
 
       </div>
 
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PRECIOS -->
+  <section id="precios" class="relative px-5 md:px-10 lg:px-16 py-20 md:py-32 bg-ink">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-xs font-bold text-omnia-400 uppercase tracking-widest mb-3 block">Precios</span>
+        <h2 class="text-white text-2xl sm:text-3xl lg:text-[42px] leading-[1.2] font-normal">
+          Instalación única + una mensualidad clara
+        </h2>
+      </div>
+
+      <!-- Pago único de instalación -->
+      <div class="bg-omnia-950/60 border border-omnia-700/40 rounded-2xl p-6 md:p-8 mb-10 flex flex-col md:flex-row md:items-center gap-6">
+        <div class="md:w-1/3">
+          <span class="text-xs uppercase tracking-widest text-omnia-400 font-bold">Pago único</span>
+          <p class="text-white text-3xl font-bold mt-1">$1,500 <span class="text-base font-medium text-white/60">MXN</span></p>
+          <p class="text-white/60 text-sm mt-1">Instalación y arranque</p>
+        </div>
+        <ul class="md:w-2/3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-white/80 text-sm">
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Instalación a distancia o presencial (Xalapa)</li>
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Días de verificación de funcionalidad</li>
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Capacitación para el personal que lo usará</li>
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Manual de usuario</li>
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Soporte técnico de arranque</li>
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Carga inicial de tu catálogo de productos</li>
+          <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Acompañamiento por WhatsApp tu primera semana</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Versión 1 -->
+        <div class="bg-black/30 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-white/10 flex flex-col justify-between">
+          <div>
+            <h3 class="text-white text-xl font-bold">Versión 1</h3>
+            <p class="text-white/60 text-sm mt-1">Operación diaria de mostrador</p>
+            <div class="my-5">
+              <span class="text-white text-4xl font-extrabold">$200</span>
+              <span class="text-white/60 text-sm"> MXN / mes</span>
+            </div>
+            <ul class="space-y-2.5 text-white/80 text-sm">
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Base de datos de tu farmacia</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Integración de escáner de código de barras</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Integración de impresora de tickets</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Inventario: alta y baja de productos y existencias</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Cobro con suma automática y total (cobro manual)</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Alta y baja de proveedores</li>
+            </ul>
+          </div>
+          <button onclick="openDemoModal()" class="mt-8 w-full py-3 rounded-full border border-omnia-500 text-omnia-400 font-bold hover:bg-omnia-600 hover:text-white transition-colors">
+            Elegir Versión 1
+          </button>
+        </div>
+
+        <!-- Versión 2 -->
+        <div class="bg-black/30 backdrop-blur-md rounded-3xl p-6 md:p-8 border-2 border-omnia-500 relative flex flex-col justify-between shadow-[0_0_30px_rgba(46,217,163,0.15)]">
+          <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-omnia-500 text-ink font-extrabold text-[11px] uppercase tracking-wider px-4 py-1 rounded-full shadow">Recomendada</span>
+          <div>
+            <h3 class="text-white text-xl font-bold">Versión 2</h3>
+            <p class="text-white/60 text-sm mt-1">Facturación y cobros electrónicos</p>
+            <div class="my-5">
+              <span class="text-white text-4xl font-extrabold">$300</span>
+              <span class="text-white/60 text-sm"> MXN / mes</span>
+            </div>
+            <ul class="space-y-2.5 text-white/80 text-sm">
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Todo lo incluido en Versión 1</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Integración API de facturación electrónica (CFDI)</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Integración API de cobro con terminal</li>
+              <li class="flex items-center gap-2"><span class="text-omnia-400">✓</span> Actualización automática de inventario y ventas al confirmarse el cobro</li>
+            </ul>
+            <p class="text-white/50 text-xs mt-4">* Los costos/comisiones de la terminal o pasarela de pago corren por cuenta del cliente.</p>
+          </div>
+          <button onclick="openDemoModal()" class="mt-8 w-full py-3 rounded-full bg-omnia-600 text-white font-bold hover:bg-omnia-500 transition-colors">
+            Elegir Versión 2
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
