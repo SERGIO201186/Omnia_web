@@ -764,7 +764,7 @@
            index.html y con el Control Maestro), el lead se registra ahí. Si no,
            o si falla, se abre WhatsApp y correo como respaldo garantizado. */
         const TU_WA = "525547894225";
-        const TU_EMAIL = "huertafune@gmail.com";
+        const TU_EMAIL = "ventas@omnia-technology.com";
         const PRODUCT_NAME = "Funeral 360";
         const PRODUCT_ID = "prod_f360_paquete";
 
@@ -926,6 +926,19 @@
             });
         }
     </script>
+<style>
+.omnia-wa-float{position:fixed;right:22px;bottom:22px;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.35);z-index:9999;text-decoration:none;animation:omniaWaPulse 2.4s ease-in-out infinite;}
+.omnia-wa-float:hover{transform:scale(1.08);animation-play-state:paused;}
+@keyframes omniaWaPulse{0%,100%{box-shadow:0 8px 24px rgba(0,0,0,0.35),0 0 0 0 rgba(37,211,102,0.5);}50%{box-shadow:0 8px 24px rgba(0,0,0,0.35),0 0 0 10px rgba(37,211,102,0);}}
+.omnia-wa-tip{position:absolute;right:70px;top:50%;transform:translateY(-50%);background:#111;color:#fff;font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease;box-shadow:0 6px 16px rgba(0,0,0,0.3);}
+.omnia-wa-float:hover .omnia-wa-tip{opacity:1;}
+@media (max-width:640px){.omnia-wa-float{width:52px;height:52px;right:16px;bottom:16px;}.omnia-wa-tip{display:none;}}
+@media (prefers-reduced-motion: reduce){.omnia-wa-float{animation:none;}}
+</style>
+<a href="https://wa.me/525547894225?text=Hola,%20me%20interesa%20conocer%20mas%20sobre%20Funeral360" target="_blank" rel="noopener" class="omnia-wa-float" aria-label="Chatear por WhatsApp">
+  <svg viewBox="0 0 32 32" width="30" height="30" fill="#fff" aria-hidden="true"><path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.348.672 4.54 1.836 6.393L4 29l7.828-1.79A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.8c-1.98 0-3.85-.52-5.47-1.43l-.39-.22-4.64 1.06 1.08-4.52-.25-.4A9.77 9.77 0 0 1 5.2 15c0-5.96 4.85-10.8 10.8-10.8S26.8 9.04 26.8 15 21.96 24.8 16.004 24.8Zm5.98-8.1c-.33-.16-1.93-.95-2.23-1.06-.3-.11-.52-.16-.74.16-.22.33-.85 1.06-1.04 1.27-.19.22-.38.24-.71.08-.33-.16-1.4-.51-2.66-1.63-.98-.88-1.65-1.96-1.84-2.29-.19-.33-.02-.5.14-.67.15-.15.33-.38.5-.57.16-.19.22-.33.33-.55.11-.22.05-.41-.03-.57-.08-.16-.74-1.77-1.01-2.42-.27-.65-.54-.56-.74-.57l-.63-.01c-.22 0-.57.08-.87.41-.3.33-1.14 1.12-1.14 2.72 0 1.6 1.17 3.15 1.33 3.37.16.22 2.3 3.5 5.57 4.91.78.34 1.38.54 1.86.69.78.25 1.49.21 2.05.13.63-.09 1.93-.79 2.2-1.55.27-.76.27-1.41.19-1.55-.08-.14-.3-.22-.63-.38Z"/></svg>
+  <span class="omnia-wa-tip">¿Dudas? Escríbenos por WhatsApp</span>
+</a>
 <script src="cookie-consent.js"></script>
 </body>
 </html>
