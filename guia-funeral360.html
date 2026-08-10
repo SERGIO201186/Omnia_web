@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guía de Uso · Funeral 360 · Omnia Technology</title>
+<meta name="description" content="Guía paso a paso para usar Funeral 360: crear órdenes de servicio (ODS), tablero logístico, equipos, pagos y documentos legales.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.omnia-technology.com/guia-funeral360.html">
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A0E17; --navy-soft:#161D30;
+    --paper:#FCFBF8; --ink:#14181F; --muted:#5B6472; --border:#E7E5DF;
+    --gold:#6C5CE7; --gold-soft:#E4E0FB;
+    --green:#2F9E64; --green-soft:#E3F3EA;
+    --red:#C4483A; --red-soft:#F6E4E1;
+    --amber:#B8860B; --amber-soft:#FBF1DA;
+    --display:'Space Grotesk', ui-sans-serif, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3,h4{font-family:var(--display); margin:0 0 10px; letter-spacing:-0.01em; color:var(--ink);}
+  code{font-family:var(--mono); background:var(--gold-soft); color:#4A3AC9; padding:1px 6px; border-radius:5px; font-size:0.92em;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .nav{position:sticky; top:0; z-index:40; background:var(--navy); color:#fff;}
+  .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:18px; color:#fff; text-decoration:none;}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--gold);}
+  .nav-links{display:flex; align-items:center; gap:10px;}
+  .nav-links a{opacity:.85; text-decoration:none; color:#fff; font-size:13.5px; padding:8px 12px; border-radius:7px;}
+  .nav-links a:hover{opacity:1; background:rgba(255,255,255,0.08);}
+  .nav-links a.close{background:var(--gold); color:var(--navy); font-weight:600; opacity:1;}
+
+  .hero{background:var(--navy); color:#fff; padding:46px 0 40px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--gold); text-transform:uppercase;}
+  .hero h1{font-size:32px; color:#fff; margin:12px 0 10px;}
+  .hero p{color:#B9C0CE; font-size:15px; max-width:640px; margin:0;}
+  .hero-meta{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; font-family:var(--mono); font-size:12px; color:#8B93A1;}
+
+  .layout{display:grid; grid-template-columns:250px 1fr; gap:44px; padding:40px 0 80px; align-items:start;}
+  .toc{position:sticky; top:84px; align-self:start; border-right:1px solid var(--border); padding-right:20px;}
+  .toc-title{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
+  .toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+  .toc a{display:block; text-decoration:none; color:var(--muted); font-size:13px; padding:6px 8px; border-radius:6px;}
+  .toc a:hover{background:var(--gold-soft); color:#4A3AC9;}
+
+  main section{padding-bottom:44px; margin-bottom:44px; border-bottom:1px solid var(--border); scroll-margin-top:84px;}
+  main section:last-child{border-bottom:none;}
+  main h2{font-size:23px; display:flex; align-items:center; gap:10px;}
+  main h3{font-size:16.5px; margin-top:22px;}
+  main p{color:var(--ink); font-size:14.5px;}
+  main ul, main ol{padding-left:22px; font-size:14.5px;}
+  main li{margin-bottom:4px;}
+  .lead{color:var(--muted); font-size:14.5px; margin-bottom:18px;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px;}
+  th, td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:var(--navy-soft); color:#fff; font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;}
+  tr:nth-child(even) td{background:#fff;}
+  tr:nth-child(odd) td{background:var(--paper);}
+
+  details{background:#fff; border:1px solid var(--border); border-radius:12px; padding:0; margin-bottom:12px; overflow:hidden;}
+  details summary{cursor:pointer; padding:14px 18px; font-weight:600; font-size:14.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::after{content:"+"; font-family:var(--mono); color:var(--muted); font-size:18px;}
+  details[open] summary::after{content:"–";}
+  details .body{padding:0 18px 18px;}
+  details[open]{border-color:var(--gold);}
+
+  .box{border-radius:12px; padding:16px 18px; margin:14px 0; font-size:13.5px;}
+  .box.green{background:var(--green-soft); border:1px solid #bfe4cf;}
+  .box.red{background:var(--red-soft); border:1px solid #eec7c0;}
+  .box.amber{background:var(--amber-soft); border:1px solid #ecd6a0;}
+  .box.gray{background:var(--paper); border:1px solid var(--border);}
+  .box p:first-child{margin-top:0;}
+  .box p:last-child{margin-bottom:0;}
+
+  .steps{list-style:none; padding:0; margin:14px 0; counter-reset:step;}
+  .steps li{counter-increment:step; position:relative; padding-left:38px; margin-bottom:14px; font-size:14.5px;}
+  .steps li::before{content:counter(step); position:absolute; left:0; top:0; width:26px; height:26px; border-radius:50%; background:var(--gold-soft); color:#4A3AC9; font-family:var(--mono); font-weight:600; font-size:13px; display:flex; align-items:center; justify-content:center;}
+
+  footer{background:var(--navy); color:#8B93A1; padding:28px 0; font-size:12.5px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer a{color:#B9C0CE; text-decoration:none;}
+
+  .back-top{position:fixed; bottom:22px; right:22px; background:var(--navy); color:#fff; border:none; border-radius:999px; padding:11px 16px; font-family:var(--mono); font-size:12px; cursor:pointer; box-shadow:0 8px 22px rgba(10,14,23,0.28); opacity:0; pointer-events:none; transition:opacity .2s;}
+  .back-top.show{opacity:1; pointer-events:auto;}
+
+  @media (max-width: 900px){
+    .layout{grid-template-columns:1fr;}
+    .toc{position:static; border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:20px; margin-bottom:10px;}
+    .toc ol{flex-direction:row; flex-wrap:wrap;}
+    .hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="dot"></span>Omnia Technology</a>
+    <div class="nav-links">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+      <a class="close" href="javascript:window.close()" onclick="if(!window.opener){location.href='omnia-portal.html';}">Cerrar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">🕊️ Guía de uso · Funeral 360</div>
+    <h1>Cómo usar Funeral 360</h1>
+    <p>Guía operativa paso a paso para crear órdenes de servicio (ODS), dar seguimiento logístico, controlar equipos de velación y registrar pagos.</p>
+    <div class="hero-meta">
+      <span>Versión 1.0</span>
+      <span>Última actualización: Agosto 2026</span>
+      <span>Audiencia: vendedores, coordinadores, administradores de funeraria</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc">
+    <div class="toc-title">Contenido</div>
+    <ol>
+      <li><a href="#login">1. Iniciar sesión</a></li>
+      <li><a href="#dashboard">2. Pantalla principal</a></li>
+      <li><a href="#nueva-ods">3. Crear una Orden (ODS)</a></li>
+      <li><a href="#tablero">4. Tablero logístico</a></li>
+      <li><a href="#equipos">5. Equipos de velación</a></li>
+      <li><a href="#pagos">6. Registrar pagos</a></li>
+      <li><a href="#legales">7. Documentos legales</a></li>
+      <li><a href="#buenas-practicas">8. Buenas prácticas</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <section id="login">
+    <h2>🔐 1. Iniciar sesión</h2>
+    <p class="lead">Abre tu navegador (Chrome recomendado) y entra a la URL que te dio tu administrador, por ejemplo <code>https://funeral360.omnia-tech.mx/index.html?client=tu-funeraria</code>.</p>
+    <h3>Opción A — PIN (recomendado para mostrador)</h3>
+    <ol class="steps">
+      <li>En la pantalla de acceso, elige la pestaña "PIN".</li>
+      <li>Escribe tu PIN de 4 dígitos en el teclado numérico.</li>
+      <li>Haz clic en "OK". Verás un mensaje de bienvenida con tu nombre y puesto.</li>
+    </ol>
+    <h3>Opción B — Usuario y contraseña (administradores)</h3>
+    <ol class="steps">
+      <li>Elige la pestaña "Usuario".</li>
+      <li>Ingresa tu correo y contraseña.</li>
+      <li>Haz clic en "Iniciar Sesión".</li>
+    </ol>
+    <div class="box gray">¿Olvidaste tu PIN o tienes problemas para entrar? Consulta la sección de <a href="manual.html#acceso" target="_blank" rel="noopener">problemas de acceso</a> en el manual general.</div>
+  </section>
+
+  <section id="dashboard">
+    <h2>📊 2. Pantalla principal</h2>
+    <p>Al entrar verás un resumen de tu turno:</p>
+    <ul>
+      <li><strong>Barra superior:</strong> nombre de la funeraria, indicador ● en línea / sin conexión, y la hora.</li>
+      <li><strong>Menú lateral:</strong> Resumen de Turno, Nueva Orden (ODS), Tablero Logístico, Equipos Velación, Pagos Pendientes, Colaboradores (solo administrador), Sincronización en Nube (solo administrador).</li>
+      <li><strong>Tarjetas de estadísticas:</strong> ODS Totales, Activas, Equipos Instalados, Por Cobrar.</li>
+      <li><strong>Alertas — Equipos por Recoger:</strong> lista con código de color: 🔴 vencido, 🟠 urgente (≤48h), 🟡 próximo (3–5 días), 🟢 en tiempo (&gt;5 días).</li>
+      <li><strong>Estado del sistema:</strong> si la sincronización con la nube está configurada, cuántos cambios están pendientes de sincronizar y cuándo fue la última sincronía.</li>
+      <li><strong>Tareas del turno:</strong> recordatorios automáticos (equipos por verificar, saldos por cobrar).</li>
+    </ul>
+  </section>
+
+  <section id="nueva-ods">
+    <h2>➕ 3. Crear una Orden de Servicio (ODS)</h2>
+    <p class="lead">Ve a "Nueva Orden (ODS)" en el menú. El formulario está dividido en secciones que se llenan de arriba hacia abajo; puedes guardar aunque falten datos logísticos (se completan después).</p>
+
+    <h3>3.1 Datos del titular y finado</h3>
+    <p>Campos obligatorios: <strong>Fallecido/finado</strong>, <strong>nombre del contratante</strong> (quien paga) y <strong>teléfono de contacto</strong>. Opcionales: calle, colonia, localidad y municipio de dónde se está velando. Mientras más completes aquí, menos llamadas tendrás que hacer después.</p>
+
+    <h3>3.2 Modalidad de servicio</h3>
+    <p>Elige <strong>Inhumación</strong> o <strong>Cremación</strong>:</p>
+    <ul>
+      <li><strong>Inhumación:</strong> selecciona el ataúd del inventario disponible; el sistema llena automáticamente nombre y costo. Si no hay ataúdes cargados, avisa al administrador para que actualice el inventario.</li>
+      <li><strong>Cremación:</strong> elige tipo (con velación o directa) y el paquete de cremación disponible; puedes cambiar la urna incluida por otra con costo adicional. Si aplica, agrega cargos por exceso de peso o por objetos en el cuerpo (marcapasos, etc.) — estos son ejemplos de conceptos que cada funeraria configura con sus propios montos.</li>
+    </ul>
+
+    <h3>3.3 Embalsamado</h3>
+    <p>Selecciona una opción: ninguno, patológico, médico legal, o putrefacto (este último normalmente con costo adicional por el trabajo de restauración que implica).</p>
+
+    <h3>3.4 Trámites</h3>
+    <p>Marca los trámites requeridos (Registro Civil, FGE/Fiscalía, Servicios Periciales) y los adicionales con costo si tu funeraria los gestiona (certificación, permiso de 48 horas, permiso de traslado).</p>
+
+    <h3>3.5 Velación</h3>
+    <p>Elige entre:</p>
+    <ul>
+      <li><strong>En domicilio (equipo):</strong> selecciona el equipamiento a instalar (biombo, base, cristo, candeleros). La fecha de recolección se calcula automáticamente a partir de la fecha de instalación, según la política de tu funeraria.</li>
+      <li><strong>Sala de velación:</strong> elige la sala disponible; el costo se llena automáticamente según la sala seleccionada.</li>
+    </ul>
+
+    <h3>3.6 Logística de sepelio o cremación</h3>
+    <p>Estos datos (panteón/crematorio, fechas y horarios de misa, salida y sepelio/cremación) son opcionales al crear la orden — normalmente se confirman horas después y se completan desde el Tablero Logístico.</p>
+
+    <h3>3.7 Traslado</h3>
+    <p>Si el destino es local, no genera costo adicional. Si es foráneo, indica el municipio/estado destino: el sistema calcula automáticamente los kilómetros y el costo de traslado según la tarifa configurada por tu funeraria.</p>
+
+    <h3>3.8 Desglose financiero</h3>
+    <p>El sistema calcula automáticamente el subtotal (suma de ataúd/urna, trámites, sala, traslado, etc.), aplica el descuento manual si lo autoriza un gerente, calcula el IVA si aplica, y muestra el total. Registra el anticipo recibido hoy — el sistema calcula el restante.</p>
+    <p>Si el servicio se paga en parcialidades, activa "Pago en parcialidades / Pagaré": el sistema llena automáticamente el monto financiado (el restante), lo convierte a letras, calcula el vencimiento y te pide los datos del deudor (teléfono, nombre, identificación, domicilio).</p>
+
+    <h3>3.9 Firma del contratante</h3>
+    <div class="box amber"><strong>Importante:</strong> la firma capturada en pantalla es una copia digital administrativa. El documento con validez debe imprimirse y firmarse físicamente, y guardarse en el expediente.</div>
+    <p>Pide al contratante que firme en el recuadro (con dedo, mouse o stylus), confirma la firma y continúa.</p>
+
+    <h3>3.10 Anotaciones internas</h3>
+    <p>Usa este campo para instrucciones que debe conocer el equipo (preferencias religiosas, correcciones de nombre, cambios de destino, acuerdos especiales de pago).</p>
+
+    <h3>3.11 Guardar</h3>
+    <p>Al hacer clic en "Guardar Orden", el sistema valida los campos obligatorios y asigna un folio (por ejemplo <code>ODS-25-0125</code>). Desde ahí puedes ver/imprimir el expediente o enviarlo por WhatsApp.</p>
+  </section>
+
+  <section id="tablero">
+    <h2>📋 4. Tablero logístico</h2>
+    <p>Aquí ves y das seguimiento a todas las órdenes: buscador por folio, fallecido o contratante, y filtros (Todas / Activas / Cerradas). Al abrir una orden puedes: activar/cerrar la ODS, marcar equipo recogido, actualizar logística, ver/imprimir el expediente, enviarlo por WhatsApp, o eliminarla (solo administrador).</p>
+  </section>
+
+  <section id="equipos">
+    <h2>📦 5. Equipos de velación</h2>
+    <p>Muestra los equipos instalados en domicilio con su estado por color (🔴 vencido, 🟠 urgente ≤2 días, 🟡 próximo ≤5 días, 🟢 en tiempo). Si un equipo aparece en rojo o naranja, avisa de inmediato al coordinador para programar la recolección.</p>
+  </section>
+
+  <section id="pagos">
+    <h2>💰 6. Registrar pagos</h2>
+    <p>La sección "Pagos Pendientes" muestra el total por cobrar y el detalle por orden. Para registrar un abono: abre la orden, indica el monto abonado, la fecha, el método (efectivo, transferencia, tarjeta, depósito) y, si aplica, la referencia. Si no eres administrador, el abono queda pendiente de confirmación en caja.</p>
+  </section>
+
+  <section id="legales">
+    <h2>⚖️ 7. Documentos legales</h2>
+    <div class="box amber">
+      <p><strong>Los contratos, pagarés y expedientes que genera Funeral 360 son formatos de referencia administrativa</strong>, no documentos validados por un abogado. Tu funeraria es responsable de que cumplan con la normativa de tu estado y de tu giro antes de usarlos frente a tus clientes finales — ver la <a href="terminos-y-condiciones.html" target="_blank" rel="noopener">Cláusula 8</a> de los Términos y Condiciones.</p>
+      <p>Puedes cargar tus propios documentos validados para que se usen en lugar de las plantillas genéricas. Ver: <a href="clausulas-personalizadas.html" target="_blank" rel="noopener">Cláusulas personalizadas ↗</a>.</p>
+    </div>
+  </section>
+
+  <section id="buenas-practicas">
+    <h2>✅ 8. Buenas prácticas</h2>
+    <ul>
+      <li>Completa la mayor cantidad de datos posible al crear la orden — evita llamadas de seguimiento.</li>
+      <li>Sincroniza antes de cerrar sesión, especialmente al final del turno.</li>
+      <li>Imprime y haz firmar físicamente todo documento generado; la firma digital es solo referencia.</li>
+      <li>Usa el campo de anotaciones para cualquier acuerdo fuera de lo estándar.</li>
+      <li>¿Algo no funciona como se describe aquí? Consulta el <a href="manual.html" target="_blank" rel="noopener">manual de solución de problemas</a> antes de abrir un ticket.</li>
+    </ul>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <a href="index.html">Omnia Technology</a></span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+      <a href="clausulas-personalizadas.html" target="_blank" rel="noopener">Cláusulas personalizadas</a>
+    </span>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Arriba</button>
+<script>
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => { backTop.classList.toggle('show', window.scrollY > 600); });
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guía de Uso · Farma POS · Omnia Technology</title>
+<meta name="description" content="Guía paso a paso para usar Farma POS: dispensación, control de caducidades y lotes, cortes de caja y facturación CFDI.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.omnia-technology.com/guia-farmapos.html">
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A0E17; --navy-soft:#161D30;
+    --paper:#FCFBF8; --ink:#14181F; --muted:#5B6472; --border:#E7E5DF;
+    --gold:#6C5CE7; --gold-soft:#E4E0FB;
+    --green:#2F9E64; --green-soft:#E3F3EA;
+    --red:#C4483A; --red-soft:#F6E4E1;
+    --amber:#B8860B; --amber-soft:#FBF1DA;
+    --display:'Space Grotesk', ui-sans-serif, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3,h4{font-family:var(--display); margin:0 0 10px; letter-spacing:-0.01em; color:var(--ink);}
+  code{font-family:var(--mono); background:var(--gold-soft); color:#4A3AC9; padding:1px 6px; border-radius:5px; font-size:0.92em;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .nav{position:sticky; top:0; z-index:40; background:var(--navy); color:#fff;}
+  .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:18px; color:#fff; text-decoration:none;}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--gold);}
+  .nav-links{display:flex; align-items:center; gap:10px;}
+  .nav-links a{opacity:.85; text-decoration:none; color:#fff; font-size:13.5px; padding:8px 12px; border-radius:7px;}
+  .nav-links a:hover{opacity:1; background:rgba(255,255,255,0.08);}
+  .nav-links a.close{background:var(--gold); color:var(--navy); font-weight:600; opacity:1;}
+
+  .hero{background:var(--navy); color:#fff; padding:46px 0 40px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--gold); text-transform:uppercase;}
+  .hero h1{font-size:32px; color:#fff; margin:12px 0 10px;}
+  .hero p{color:#B9C0CE; font-size:15px; max-width:640px; margin:0;}
+  .hero-meta{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; font-family:var(--mono); font-size:12px; color:#8B93A1;}
+
+  .layout{display:grid; grid-template-columns:250px 1fr; gap:44px; padding:40px 0 80px; align-items:start;}
+  .toc{position:sticky; top:84px; align-self:start; border-right:1px solid var(--border); padding-right:20px;}
+  .toc-title{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
+  .toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+  .toc a{display:block; text-decoration:none; color:var(--muted); font-size:13px; padding:6px 8px; border-radius:6px;}
+  .toc a:hover{background:var(--gold-soft); color:#4A3AC9;}
+
+  main section{padding-bottom:44px; margin-bottom:44px; border-bottom:1px solid var(--border); scroll-margin-top:84px;}
+  main section:last-child{border-bottom:none;}
+  main h2{font-size:23px; display:flex; align-items:center; gap:10px;}
+  main h3{font-size:16.5px; margin-top:22px;}
+  main p{color:var(--ink); font-size:14.5px;}
+  main ul, main ol{padding-left:22px; font-size:14.5px;}
+  main li{margin-bottom:4px;}
+  .lead{color:var(--muted); font-size:14.5px; margin-bottom:18px;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px;}
+  th, td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:var(--navy-soft); color:#fff; font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;}
+  tr:nth-child(even) td{background:#fff;}
+  tr:nth-child(odd) td{background:var(--paper);}
+  td.ok{color:var(--green); font-weight:600;}
+  td.bad{color:var(--red); font-weight:600;}
+
+  .box{border-radius:12px; padding:16px 18px; margin:14px 0; font-size:13.5px;}
+  .box.green{background:var(--green-soft); border:1px solid #bfe4cf;}
+  .box.amber{background:var(--amber-soft); border:1px solid #ecd6a0;}
+  .box.gray{background:var(--paper); border:1px solid var(--border);}
+  .box p:first-child{margin-top:0;}
+  .box p:last-child{margin-bottom:0;}
+
+  .steps{list-style:none; padding:0; margin:14px 0; counter-reset:step;}
+  .steps li{counter-increment:step; position:relative; padding-left:38px; margin-bottom:14px; font-size:14.5px;}
+  .steps li::before{content:counter(step); position:absolute; left:0; top:0; width:26px; height:26px; border-radius:50%; background:var(--gold-soft); color:#4A3AC9; font-family:var(--mono); font-weight:600; font-size:13px; display:flex; align-items:center; justify-content:center;}
+
+  footer{background:var(--navy); color:#8B93A1; padding:28px 0; font-size:12.5px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer a{color:#B9C0CE; text-decoration:none;}
+
+  .back-top{position:fixed; bottom:22px; right:22px; background:var(--navy); color:#fff; border:none; border-radius:999px; padding:11px 16px; font-family:var(--mono); font-size:12px; cursor:pointer; box-shadow:0 8px 22px rgba(10,14,23,0.28); opacity:0; pointer-events:none; transition:opacity .2s;}
+  .back-top.show{opacity:1; pointer-events:auto;}
+
+  @media (max-width: 900px){
+    .layout{grid-template-columns:1fr;}
+    .toc{position:static; border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:20px; margin-bottom:10px;}
+    .toc ol{flex-direction:row; flex-wrap:wrap;}
+    .hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="dot"></span>Omnia Technology</a>
+    <div class="nav-links">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+      <a class="close" href="javascript:window.close()" onclick="if(!window.opener){location.href='omnia-portal.html';}">Cerrar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">💊 Guía de uso · Farma POS</div>
+    <h1>Cómo usar Farma POS</h1>
+    <p>Guía operativa para dispensación en mostrador, control de caducidades y lotes, cortes de caja y facturación.</p>
+    <div class="hero-meta">
+      <span>Versión 1.0</span>
+      <span>Última actualización: Agosto 2026</span>
+      <span>Audiencia: dependientes, farmacéuticos, administradores</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc">
+    <div class="toc-title">Contenido</div>
+    <ol>
+      <li><a href="#login">1. Primer acceso</a></li>
+      <li><a href="#mostrador">2. Dispensación en mostrador</a></li>
+      <li><a href="#caducidades">3. Lotes y caducidades</a></li>
+      <li><a href="#proveedores">4. Inventario y proveedores</a></li>
+      <li><a href="#cobro">5. Cobro y facturación</a></li>
+      <li><a href="#cortes">6. Cortes de caja y reportes</a></li>
+      <li><a href="#versiones">7. Versión 1 vs. Versión 2</a></li>
+      <li><a href="#buenas-practicas">8. Buenas prácticas</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <section id="login">
+    <h2>🔐 1. Primer acceso</h2>
+    <p class="lead">Entra a la URL que te dio tu administrador (por ejemplo <code>https://farmapos.omnia-tech.mx/index.html?client=tu-farmacia</code>) e inicia sesión con tu PIN o con usuario y contraseña.</p>
+    <div class="box gray">La instalación incluye la carga inicial de tu catálogo de medicamentos y una semana de acompañamiento por WhatsApp.</div>
+  </section>
+
+  <section id="mostrador">
+    <h2>💊 2. Dispensación en mostrador</h2>
+    <p>Busca el medicamento por <strong>marca</strong> o por <strong>sustancia activa</strong> — útil cuando el cliente solo recuerda el genérico o cuando quieres ofrecer una alternativa disponible en inventario. Esto agiliza la atención de recetas y reduce errores en la entrega al paciente.</p>
+  </section>
+
+  <section id="caducidades">
+    <h2>⏳ 3. Control de lotes y caducidades</h2>
+    <p>Cada producto se registra con su lote y fecha de caducidad. El sistema:</p>
+    <ul>
+      <li>Emite alertas automáticas de medicamentos próximos a caducar.</li>
+      <li>Sugiere rotación de inventario (vender primero lo que caduca antes) para reducir mermas.</li>
+    </ul>
+    <div class="box amber">Revisa las alertas de caducidad todos los días — es la forma más efectiva de evitar pérdidas por medicamento caduco.</div>
+  </section>
+
+  <section id="proveedores">
+    <h2>🚚 4. Inventario y proveedores</h2>
+    <p>Da de alta y de baja productos y existencias, y registra a tus proveedores para saber con quién reabastecer cada línea. Actualiza el inventario cada vez que recibas mercancía.</p>
+  </section>
+
+  <section id="cobro">
+    <h2>💳 5. Cobro y facturación</h2>
+    <p>En la <strong>Versión 1</strong> el cobro es manual (efectivo, registrado por el dependiente). En la <strong>Versión 2</strong> puedes cobrar con terminal (vía API) y facturar electrónicamente (CFDI) desde el mismo sistema; el inventario y las ventas se actualizan automáticamente al confirmarse el cobro.</p>
+  </section>
+
+  <section id="cortes">
+    <h2>📊 6. Cortes de caja y reportes</h2>
+    <p>Al cierre de turno, realiza el corte de caja para conciliar lo vendido contra lo cobrado. Los reportes y tableros de ventas están disponibles en tiempo real desde el panel de administración.</p>
+  </section>
+
+  <section id="versiones">
+    <h2>⚖️ 7. Versión 1 vs. Versión 2</h2>
+    <table>
+      <tr><th>Incluye</th><th>Versión 1</th><th>Versión 2</th></tr>
+      <tr><td>Base de datos, escáner, impresora de tickets</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+      <tr><td>Inventario, lotes, caducidades y proveedores</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+      <tr><td>Cobro manual</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+      <tr><td>Facturación electrónica (CFDI)</td><td class="bad">—</td><td class="ok">✓</td></tr>
+      <tr><td>Cobro con terminal (API)</td><td class="bad">—</td><td class="ok">✓</td></tr>
+      <tr><td>Actualización automática al confirmar cobro</td><td class="bad">—</td><td class="ok">✓</td></tr>
+    </table>
+  </section>
+
+  <section id="buenas-practicas">
+    <h2>✅ 8. Buenas prácticas</h2>
+    <ul>
+      <li>Revisa las alertas de caducidad a diario.</li>
+      <li>Registra cada entrada de mercancía el mismo día que llega.</li>
+      <li>Cada dependiente debe tener su propio usuario o PIN.</li>
+      <li>¿Algo no funciona como se describe aquí? Consulta el <a href="manual.html" target="_blank" rel="noopener">manual de solución de problemas</a> antes de abrir un ticket.</li>
+    </ul>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <a href="index.html">Omnia Technology</a></span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+    </span>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Arriba</button>
+<script>
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => { backTop.classList.toggle('show', window.scrollY > 600); });
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>

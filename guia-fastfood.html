@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guía de Uso · FastFood Omnia · Omnia Technology</title>
+<meta name="description" content="Guía paso a paso para usar FastFood Omnia: menú digital, toma de órdenes, pantalla de cocina (KDS), agente de IA en WhatsApp y reportes.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.omnia-technology.com/guia-fastfood.html">
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A0E17; --navy-soft:#161D30;
+    --paper:#FCFBF8; --ink:#14181F; --muted:#5B6472; --border:#E7E5DF;
+    --gold:#6C5CE7; --gold-soft:#E4E0FB;
+    --green:#2F9E64; --green-soft:#E3F3EA;
+    --red:#C4483A; --red-soft:#F6E4E1;
+    --amber:#B8860B; --amber-soft:#FBF1DA;
+    --display:'Space Grotesk', ui-sans-serif, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3,h4{font-family:var(--display); margin:0 0 10px; letter-spacing:-0.01em; color:var(--ink);}
+  code{font-family:var(--mono); background:var(--gold-soft); color:#4A3AC9; padding:1px 6px; border-radius:5px; font-size:0.92em;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .nav{position:sticky; top:0; z-index:40; background:var(--navy); color:#fff;}
+  .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:18px; color:#fff; text-decoration:none;}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--gold);}
+  .nav-links{display:flex; align-items:center; gap:10px;}
+  .nav-links a{opacity:.85; text-decoration:none; color:#fff; font-size:13.5px; padding:8px 12px; border-radius:7px;}
+  .nav-links a:hover{opacity:1; background:rgba(255,255,255,0.08);}
+  .nav-links a.close{background:var(--gold); color:var(--navy); font-weight:600; opacity:1;}
+
+  .hero{background:var(--navy); color:#fff; padding:46px 0 40px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--gold); text-transform:uppercase;}
+  .hero h1{font-size:32px; color:#fff; margin:12px 0 10px;}
+  .hero p{color:#B9C0CE; font-size:15px; max-width:640px; margin:0;}
+  .hero-meta{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; font-family:var(--mono); font-size:12px; color:#8B93A1;}
+
+  .layout{display:grid; grid-template-columns:250px 1fr; gap:44px; padding:40px 0 80px; align-items:start;}
+  .toc{position:sticky; top:84px; align-self:start; border-right:1px solid var(--border); padding-right:20px;}
+  .toc-title{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
+  .toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+  .toc a{display:block; text-decoration:none; color:var(--muted); font-size:13px; padding:6px 8px; border-radius:6px;}
+  .toc a:hover{background:var(--gold-soft); color:#4A3AC9;}
+
+  main section{padding-bottom:44px; margin-bottom:44px; border-bottom:1px solid var(--border); scroll-margin-top:84px;}
+  main section:last-child{border-bottom:none;}
+  main h2{font-size:23px; display:flex; align-items:center; gap:10px;}
+  main h3{font-size:16.5px; margin-top:22px;}
+  main p{color:var(--ink); font-size:14.5px;}
+  main ul, main ol{padding-left:22px; font-size:14.5px;}
+  main li{margin-bottom:4px;}
+  .lead{color:var(--muted); font-size:14.5px; margin-bottom:18px;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px;}
+  th, td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:var(--navy-soft); color:#fff; font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;}
+  tr:nth-child(even) td{background:#fff;}
+  tr:nth-child(odd) td{background:var(--paper);}
+  td.ok{color:var(--green); font-weight:600;}
+  td.bad{color:var(--red); font-weight:600;}
+
+  .box{border-radius:12px; padding:16px 18px; margin:14px 0; font-size:13.5px;}
+  .box.green{background:var(--green-soft); border:1px solid #bfe4cf;}
+  .box.amber{background:var(--amber-soft); border:1px solid #ecd6a0;}
+  .box.gray{background:var(--paper); border:1px solid var(--border);}
+  .box p:first-child{margin-top:0;}
+  .box p:last-child{margin-bottom:0;}
+
+  .steps{list-style:none; padding:0; margin:14px 0; counter-reset:step;}
+  .steps li{counter-increment:step; position:relative; padding-left:38px; margin-bottom:14px; font-size:14.5px;}
+  .steps li::before{content:counter(step); position:absolute; left:0; top:0; width:26px; height:26px; border-radius:50%; background:var(--gold-soft); color:#4A3AC9; font-family:var(--mono); font-weight:600; font-size:13px; display:flex; align-items:center; justify-content:center;}
+
+  footer{background:var(--navy); color:#8B93A1; padding:28px 0; font-size:12.5px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer a{color:#B9C0CE; text-decoration:none;}
+
+  .back-top{position:fixed; bottom:22px; right:22px; background:var(--navy); color:#fff; border:none; border-radius:999px; padding:11px 16px; font-family:var(--mono); font-size:12px; cursor:pointer; box-shadow:0 8px 22px rgba(10,14,23,0.28); opacity:0; pointer-events:none; transition:opacity .2s;}
+  .back-top.show{opacity:1; pointer-events:auto;}
+
+  @media (max-width: 900px){
+    .layout{grid-template-columns:1fr;}
+    .toc{position:static; border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:20px; margin-bottom:10px;}
+    .toc ol{flex-direction:row; flex-wrap:wrap;}
+    .hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="dot"></span>Omnia Technology</a>
+    <div class="nav-links">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+      <a class="close" href="javascript:window.close()" onclick="if(!window.opener){location.href='omnia-portal.html';}">Cerrar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">🍔 Guía de uso · FastFood Omnia</div>
+    <h1>Cómo usar FastFood Omnia</h1>
+    <p>Guía operativa para cargar tu menú, tomar órdenes, trabajar en cocina con el KDS y usar el agente de IA por WhatsApp.</p>
+    <div class="hero-meta">
+      <span>Versión 1.0</span>
+      <span>Última actualización: Agosto 2026</span>
+      <span>Audiencia: meseros, cocina, cajeros, administradores</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc">
+    <div class="toc-title">Contenido</div>
+    <ol>
+      <li><a href="#primeros-pasos">1. Primeros pasos</a></li>
+      <li><a href="#menu">2. Menú digital</a></li>
+      <li><a href="#ordenes">3. Toma de órdenes</a></li>
+      <li><a href="#kds">4. Pantalla de cocina (KDS)</a></li>
+      <li><a href="#whatsapp">5. Agente de IA en WhatsApp</a></li>
+      <li><a href="#caja">6. Caja y cobros</a></li>
+      <li><a href="#reportes">7. Reportes</a></li>
+      <li><a href="#planes">8. Planes: Básico, PRO, Enterprise</a></li>
+      <li><a href="#buenas-practicas">9. Buenas prácticas</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <section id="primeros-pasos">
+    <h2>🚀 1. Primeros pasos</h2>
+    <p class="lead">Pon en marcha FastFood Omnia en 4 pasos:</p>
+    <ol class="steps">
+      <li><strong>Carga tu menú:</strong> sube platillos, fotos y precios manualmente o con un archivo masivo.</li>
+      <li><strong>Configura roles:</strong> asigna permisos a meseros, cocineros y cajeros.</li>
+      <li><strong>Abre la app:</strong> conecta los celulares, tablets o laptops del restaurante a la red local.</li>
+      <li><strong>A vender:</strong> captura órdenes, monitorea cocina en tiempo real y consulta reportes al cierre.</li>
+    </ol>
+  </section>
+
+  <section id="menu">
+    <h2>📖 2. Menú digital</h2>
+    <p>El catálogo admite fotos en alta definición, categorías ilimitadas, combos y modificadores (por ejemplo, "sin cebolla" o "extra queso"), y puedes marcar platillos como no disponibles en tiempo real cuando se agoten.</p>
+  </section>
+
+  <section id="ordenes">
+    <h2>📱 3. Toma de órdenes</h2>
+    <p>Desde el POS móvil (comandero), el mesero captura la orden con búsqueda inteligente de platillos, agrega notas especiales para cocina, puede dividir la cuenta por asiento, y aplicar descuentos autorizados.</p>
+  </section>
+
+  <section id="kds">
+    <h2>🖥️ 4. Pantalla de cocina (KDS)</h2>
+    <p>El KDS sustituye la impresora de comandas por una pantalla interactiva: muestra las órdenes por orden de llegada, el tiempo de espera de cada una, y permite marcar un platillo como "listo" con un toque — sin boletos de papel traspapelados.</p>
+  </section>
+
+  <section id="whatsapp">
+    <h2>🤖 5. Agente de IA en WhatsApp</h2>
+    <p>El agente conversacional (no es un chatbot de respuestas fijas) puede tomar pedidos, agendar reservaciones y cobrar directo por WhatsApp, adaptándose a cada conversación.</p>
+    <div class="box gray">El costo de uso del proveedor de inteligencia artificial se factura por separado y de forma transparente — ver <a href="terminos-y-condiciones.html#servicios" target="_blank" rel="noopener">Términos y Condiciones, sección 3</a>.</div>
+  </section>
+
+  <section id="caja">
+    <h2>💳 6. Caja y cobros</h2>
+    <p>Acepta múltiples formas de pago, gestiona propinas, y lleva el control de apertura y cierre de caja con histórico de transacciones. La facturación CFDI está incluida en el plan PRO.</p>
+  </section>
+
+  <section id="reportes">
+    <h2>📊 7. Reportes en tiempo real</h2>
+    <p>Consulta ventas por hora pico, platillos más vendidos y desempeño de personal, con exportación a Excel o PDF. El chat interno entre meseros y cocina, con alertas y notificaciones push, ayuda a coordinar el servicio en tiempo real.</p>
+  </section>
+
+  <section id="planes">
+    <h2>⚖️ 8. Planes: Básico, PRO, Enterprise</h2>
+    <table>
+      <tr><th>Incluye</th><th>Básico</th><th>PRO</th><th>Enterprise</th></tr>
+      <tr><td>Mesas simultáneas</td><td>Hasta 2</td><td>Ilimitadas</td><td>Ilimitadas</td></tr>
+      <tr><td>Meseros / cocina concurrentes</td><td>1 mesero + 1 cocina</td><td>Hasta 5 meseros</td><td>Ilimitados</td></tr>
+      <tr><td>Pantalla de cocina (KDS)</td><td class="bad">—</td><td class="ok">Completa</td><td class="ok">Completa</td></tr>
+      <tr><td>Facturación CFDI</td><td class="bad">—</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+      <tr><td>Reportes</td><td>Básicos</td><td>Avanzados</td><td>Avanzados + multi-sucursal</td></tr>
+      <tr><td>Integraciones API / soporte prioritario</td><td class="bad">—</td><td class="bad">—</td><td class="ok">✓</td></tr>
+    </table>
+    <p>Sin contrato de permanencia forzosa; puedes cambiar de plan cuando lo necesites.</p>
+  </section>
+
+  <section id="buenas-practicas">
+    <h2>✅ 9. Buenas prácticas</h2>
+    <ul>
+      <li>Mantén el menú y la disponibilidad de platillos actualizados durante el servicio.</li>
+      <li>Usa las notas de cocina para instrucciones especiales en lugar de avisar verbalmente.</li>
+      <li>Si se corta el internet, el sistema sigue tomando órdenes localmente y sincroniza al reconectarse — no se pierden pedidos.</li>
+      <li>¿Algo no funciona como se describe aquí? Consulta el <a href="manual.html" target="_blank" rel="noopener">manual de solución de problemas</a> antes de abrir un ticket.</li>
+    </ul>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <a href="index.html">Omnia Technology</a></span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="manual.html" target="_blank" rel="noopener">Manual y soporte</a>
+    </span>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Arriba</button>
+<script>
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => { backTop.classList.toggle('show', window.scrollY > 600); });
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>

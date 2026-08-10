@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manual de Usuario y Soporte Técnico · Omnia Technology</title>
+<meta name="description" content="Manual de instalación, uso y solución de problemas para Funeral 360, Farma POS, NovaPOS Pro y FastFood Omnia, incluyendo la política de soporte técnico.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.omnia-technology.com/manual.html">
+<script src="analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A0E17; --navy-soft:#161D30;
+    --paper:#FCFBF8; --ink:#14181F; --muted:#5B6472; --border:#E7E5DF;
+    --gold:#6C5CE7; --gold-soft:#E4E0FB;
+    --green:#2F9E64; --green-soft:#E3F3EA;
+    --red:#C4483A; --red-soft:#F6E4E1;
+    --amber:#B8860B; --amber-soft:#FBF1DA;
+    --display:'Space Grotesk', ui-sans-serif, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3,h4{font-family:var(--display); margin:0 0 10px; letter-spacing:-0.01em; color:var(--ink);}
+  code{font-family:var(--mono); background:var(--gold-soft); color:#4A3AC9; padding:1px 6px; border-radius:5px; font-size:0.92em;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .nav{position:sticky; top:0; z-index:40; background:var(--navy); color:#fff;}
+  .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:600; font-size:18px; color:#fff; text-decoration:none;}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--gold);}
+  .nav-links{display:flex; align-items:center; gap:10px;}
+  .nav-links a{opacity:.85; text-decoration:none; color:#fff; font-size:13.5px; padding:8px 12px; border-radius:7px;}
+  .nav-links a:hover{opacity:1; background:rgba(255,255,255,0.08);}
+  .nav-links a.close{background:var(--gold); color:var(--navy); font-weight:600; opacity:1;}
+
+  .hero{background:var(--navy); color:#fff; padding:46px 0 40px;}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--gold); text-transform:uppercase;}
+  .hero h1{font-size:32px; color:#fff; margin:12px 0 10px;}
+  .hero p{color:#B9C0CE; font-size:15px; max-width:640px; margin:0;}
+  .hero-meta{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; font-family:var(--mono); font-size:12px; color:#8B93A1;}
+  .app-chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .app-chip{font-family:var(--mono); font-size:11.5px; padding:6px 12px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); color:#E4E0FB;}
+
+  .layout{display:grid; grid-template-columns:250px 1fr; gap:44px; padding:40px 0 80px; align-items:start;}
+  .toc{position:sticky; top:84px; align-self:start; border-right:1px solid var(--border); padding-right:20px;}
+  .toc-title{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
+  .toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+  .toc a{display:block; text-decoration:none; color:var(--muted); font-size:13px; padding:6px 8px; border-radius:6px;}
+  .toc a:hover{background:var(--gold-soft); color:#4A3AC9;}
+
+  main section{padding-bottom:44px; margin-bottom:44px; border-bottom:1px solid var(--border); scroll-margin-top:84px;}
+  main section:last-child{border-bottom:none;}
+  main h2{font-size:23px; display:flex; align-items:center; gap:10px;}
+  main h3{font-size:16.5px; margin-top:22px;}
+  main p{color:var(--ink); font-size:14.5px;}
+  main ul, main ol{padding-left:22px; font-size:14.5px;}
+  main li{margin-bottom:4px;}
+  .lead{color:var(--muted); font-size:14.5px; margin-bottom:18px;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px;}
+  th, td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:var(--navy-soft); color:#fff; font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;}
+  tr:nth-child(even) td{background:#fff;}
+  tr:nth-child(odd) td{background:var(--paper);}
+
+  details{background:#fff; border:1px solid var(--border); border-radius:12px; padding:0; margin-bottom:12px; overflow:hidden;}
+  details summary{cursor:pointer; padding:14px 18px; font-weight:600; font-size:14.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::after{content:"+"; font-family:var(--mono); color:var(--muted); font-size:18px;}
+  details[open] summary::after{content:"–";}
+  details .body{padding:0 18px 18px;}
+  details[open]{border-color:var(--gold);}
+
+  .box{border-radius:12px; padding:16px 18px; margin:14px 0; font-size:13.5px;}
+  .box.green{background:var(--green-soft); border:1px solid #bfe4cf;}
+  .box.red{background:var(--red-soft); border:1px solid #eec7c0;}
+  .box.amber{background:var(--amber-soft); border:1px solid #ecd6a0;}
+  .box.gray{background:var(--paper); border:1px solid var(--border);}
+  .box p:first-child{margin-top:0;}
+  .box p:last-child{margin-bottom:0;}
+
+  .clause{background:#fff; border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:10px; padding:16px 18px; margin-bottom:14px;}
+  .clause .num{font-family:var(--mono); font-size:11.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; display:block;}
+  .clause h4{margin:0 0 6px; font-size:15px;}
+  .clause p{margin:0; font-size:13.5px;}
+  .clause ul{margin:8px 0 0;}
+
+  .pill-table td.ok{color:var(--green); font-weight:600;}
+  .pill-table td.bad{color:var(--red); font-weight:600;}
+
+  footer{background:var(--navy); color:#8B93A1; padding:28px 0; font-size:12.5px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer a{color:#B9C0CE; text-decoration:none;}
+
+  .back-top{position:fixed; bottom:22px; right:22px; background:var(--navy); color:#fff; border:none; border-radius:999px; padding:11px 16px; font-family:var(--mono); font-size:12px; cursor:pointer; box-shadow:0 8px 22px rgba(10,14,23,0.28); opacity:0; pointer-events:none; transition:opacity .2s;}
+  .back-top.show{opacity:1; pointer-events:auto;}
+
+  @media (max-width: 900px){
+    .layout{grid-template-columns:1fr;}
+    .toc{position:static; border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:20px; margin-bottom:10px;}
+    .toc ol{flex-direction:row; flex-wrap:wrap;}
+    .hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="dot"></span>Omnia Technology</a>
+    <div class="nav-links">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a class="close" href="javascript:window.close()" onclick="if(!window.opener){location.href='omnia-portal.html';}">Cerrar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Centro de ayuda</div>
+    <h1>Manual de Usuario, Instalación y Soporte Técnico</h1>
+    <p>Guía única para las cuatro aplicaciones de Omnia Technology: cómo entrar, resolver problemas comunes y cuándo el soporte técnico tiene costo. Consúltalo cuantas veces lo necesites.</p>
+    <div class="app-chips">
+      <span class="app-chip">🕊️ Funeral 360</span>
+      <span class="app-chip">💊 Farma POS</span>
+      <span class="app-chip">🛒 NovaPOS Pro</span>
+      <span class="app-chip">🍔 FastFood Omnia</span>
+    </div>
+    <div class="hero-meta">
+      <span>Versión 1.1</span>
+      <span>Última actualización: Agosto 2026</span>
+      <span>Audiencia: usuarios finales, administradores, soporte</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc">
+    <div class="toc-title">Contenido</div>
+    <ol>
+      <li><a href="#instalacion">1. Acceso e instalación</a></li>
+      <li><a href="#requisitos">2. Requisitos del sistema</a></li>
+      <li><a href="#acceso">3. Problemas de acceso</a></li>
+      <li><a href="#conectividad">4. Conectividad</a></li>
+      <li><a href="#sincronizacion">5. Sincronización</a></li>
+      <li><a href="#datos">6. Datos e información</a></li>
+      <li><a href="#documentos">7. Documentos y comprobantes</a></li>
+      <li><a href="#rendimiento">8. Rendimiento</a></li>
+      <li><a href="#faq">9. Preguntas frecuentes</a></li>
+      <li><a href="#clausulas-soporte"><strong>10. Política de soporte y tickets</strong></a></li>
+      <li><a href="#contacto">11. Contacto y escalación</a></li>
+      <li><a href="#checklist">12. Checklist antes de reportar</a></li>
+      <li><a href="#resumen">13. Resumen rápido</a></li>
+      <li><a href="#recursos">14. Recursos adicionales</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <section id="instalacion">
+    <h2>🚀 1. Acceso e instalación</h2>
+    <p class="lead">Todas las aplicaciones de Omnia Technology son <strong>100% web</strong>: no se descargan de ninguna tienda de apps ni se instalan en el disco. Se usan desde el navegador, en cualquier dispositivo.</p>
+
+    <div class="box green">
+      <p><strong>✅ Funciona en:</strong> computadoras (Windows, Mac, Linux), tablets (iPad, Android) y smartphones (iPhone, Android) — cualquier dispositivo con navegador.</p>
+      <p><strong>❌ No requiere:</strong> descargas de App Store / Play Store, instalación en disco, permisos especiales ni licencias de software adicionales.</p>
+    </div>
+
+    <h3>Paso 1 — Obtén tu URL de acceso</h3>
+    <p>Tu administrador de Omnia te entrega una URL personalizada según la app que contrataste, con la clave de tu negocio al final:</p>
+    <table>
+      <tr><th>Aplicación</th><th>URL de acceso (ejemplo)</th></tr>
+      <tr><td>🕊️ Funeral 360</td><td><code>https://funeral360.omnia-tech.mx/index.html?client=tu-funeraria</code></td></tr>
+      <tr><td>💊 Farma POS</td><td><code>https://farmapos.omnia-tech.mx/index.html?client=tu-farmacia</code></td></tr>
+      <tr><td>🛒 NovaPOS Pro</td><td><code>https://novapos.omnia-tech.mx/index.html?client=tu-negocio</code></td></tr>
+      <tr><td>🍔 FastFood Omnia</td><td><code>https://fastfood.omnia-tech.mx/index.html?client=tu-restaurante</code></td></tr>
+    </table>
+    <p>Guárdala en marcadores del navegador, en una nota de tu teléfono y en tu correo personal.</p>
+
+    <h3>Paso 2 — Usa un navegador soportado</h3>
+    <table>
+      <tr><th>Navegador</th><th>Versión mínima</th><th>Escritorio</th><th>Móvil</th></tr>
+      <tr><td>Chrome</td><td>90+</td><td class="ok">✅ Excelente</td><td class="ok">✅ Excelente</td></tr>
+      <tr><td>Firefox</td><td>88+</td><td class="ok">✅ Excelente</td><td class="ok">✅ Bueno</td></tr>
+      <tr><td>Safari</td><td>14+</td><td class="ok">✅ Bueno</td><td class="ok">✅ Bueno</td></tr>
+      <tr><td>Edge</td><td>90+</td><td class="ok">✅ Excelente</td><td class="bad">❌ No recomendado</td></tr>
+    </table>
+    <p><strong>No soportado:</strong> Internet Explorer y navegadores anteriores a 2020. <strong>Recomendado:</strong> Chrome actualizado.</p>
+
+    <h3>Paso 3 — Inicia sesión</h3>
+    <p>Según la app y tu rol, verás una de estas opciones (o ambas):</p>
+    <ul>
+      <li><strong>PIN de 4 dígitos</strong> — el método más rápido para cajeros, vendedores, choferes u operadores de mostrador.</li>
+      <li><strong>Usuario + contraseña</strong> — para administradores y gerentes, con acceso a configuración y reportes.</li>
+    </ul>
+    <p>El primer acceso del día puede tardar 3–5 segundos en cargar; los siguientes accesos, 1–2 segundos.</p>
+  </section>
+
+  <section id="requisitos">
+    <h2>🖥️ 2. Requisitos del sistema</h2>
+    <h3>Internet</h3>
+    <ul>
+      <li>Velocidad mínima: 1 Mbps · Recomendada: 10 Mbps.</li>
+      <li>Conexión: WiFi, datos móviles (4G/5G) o Ethernet (cable — la opción más estable).</li>
+      <li>Prueba tu velocidad en <a href="https://speedtest.net" target="_blank" rel="noopener">speedtest.net</a>.</li>
+    </ul>
+    <h3>Computadora / tablet</h3>
+    <table>
+      <tr><th>Aspecto</th><th>Mínimo</th><th>Recomendado</th></tr>
+      <tr><td>RAM</td><td>2 GB</td><td>4–8 GB</td></tr>
+      <tr><td>Espacio en disco</td><td>100 MB</td><td>500 MB</td></tr>
+      <tr><td>Procesador</td><td>Intel i3 / AMD Ryzen 3</td><td>i5 / Ryzen 5 o superior</td></tr>
+      <tr><td>Pantalla</td><td>1024×768 px</td><td>1920×1080 px</td></tr>
+      <tr><td>Antigüedad</td><td>2015+</td><td>2018+</td></tr>
+    </table>
+    <h3>Almacenamiento local</h3>
+    <p>Las apps guardan una copia de tus datos en el navegador (<code>localStorage</code>): funcionan sin conexión y sincronizan cuando vuelve el internet. Uso estimado: ~50 MB por año de operación.</p>
+  </section>
+
+  <section id="acceso">
+    <h2>🔐 3. Problemas de acceso</h2>
+
+    <details>
+      <summary>"PIN incorrecto" o "Usuario/contraseña inválidos"</summary>
+      <div class="body">
+        <p><strong>Causa más común:</strong> el dato se escribió mal. El PIN debe ser exactamente 4 dígitos, sin espacios; la contraseña distingue mayúsculas y minúsculas.</p>
+        <p><strong>Solución:</strong> verifica que no queden espacios al inicio/final, reintenta con calma (máximo 5 intentos) y confirma con tu administrador que el usuario sigue activo.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Tu usuario fue desactivado</summary>
+      <div class="body">
+        <p><strong>Síntomas:</strong> ayer entrabas sin problema y hoy no, tus compañeros sí pueden entrar, o el sistema dice "usuario no encontrado".</p>
+        <p><strong>Causas posibles:</strong> baja del colaborador, cambio de puesto/turno, licencia del negocio vencida, o bloqueo por seguridad.</p>
+        <p><strong>Solución:</strong> contacta a tu gerente o administrador — solo él/ella puede reactivar tu usuario, cambiar tu PIN o asignarte uno nuevo.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Olvidaste tu PIN</summary>
+      <div class="body">
+        <ul>
+          <li><strong>Si eres administrador:</strong> usa el PIN de emergencia <code>0000</code> y ve de inmediato a Administración → Cambiar PIN.</li>
+          <li><strong>Si no eres administrador:</strong> pide a tu gerente que reestablezca tu PIN. Te dará uno temporal para cambiarlo en tu siguiente inicio de sesión.</li>
+          <li><strong>Sin gerente disponible:</strong> escribe a <a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a> con asunto "Solicitud reset PIN — [tu nombre]", incluyendo nombre completo, negocio y correo de contacto. Respuesta en máximo 48 horas.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>"Cuenta bloqueada" o "Acceso denegado"</summary>
+      <div class="body">
+        <p><strong>Por intentos fallidos (&gt;5):</strong> el sistema se desbloquea solo en 15 minutos. Limpia caché del navegador y reintenta.</p>
+        <p><strong>Por licencia vencida:</strong> se bloquean todos los usuarios del negocio hasta que se regularice el pago. Esto lo resuelve el administrador/gerente con Omnia, no el usuario.</p>
+        <p><strong>Por seguridad</strong> (accesos desde varios países o dispositivos simultáneos): escribe a <a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a> con asunto "Desbloqueo de cuenta" incluyendo nombre, negocio, fecha del bloqueo y último dispositivo usado.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Error 401 — "Usuario no encontrado en sistema de autenticación"</summary>
+      <div class="body">
+        <p>Significa que tu usuario nunca fue dado de alta. Confirma con tu gerente si tu registro se completó; si sí, puede ser un error de sincronización que Omnia resuelve recreando el usuario. Si no, tu gerente debe darte de alta con tu correo o teléfono para generar tu acceso.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="conectividad">
+    <h2>📡 4. Problemas de conectividad</h2>
+
+    <details>
+      <summary>Icono "Sin conexión" en rojo</summary>
+      <div class="body">
+        <p>Puedes seguir trabajando: los datos se guardan en tu dispositivo y se sincronizan al volver la conexión, pero mientras tanto no ves datos nuevos de otros usuarios.</p>
+        <ol>
+          <li>Abre otra pestaña y prueba <code>google.com</code>. Si carga, el problema es solo de la app: recarga con <code>Ctrl+R</code>.</li>
+          <li>Si no carga nada, reinicia tu módem (30 segundos apagado) y espera 2 minutos.</li>
+          <li>Acércate al router o cambia a datos móviles si el WiFi está débil.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details>
+      <summary>"No se puede alcanzar el servidor" / ERR_INTERNET_DISCONNECTED</summary>
+      <div class="body">
+        <ol>
+          <li>Verifica que tienes internet (abre <code>google.com</code>).</li>
+          <li>Revisa el estado del servicio en <code>status.omnia-tech.mx</code>.</li>
+          <li>Limpia caché y cookies (<code>Ctrl+Shift+Delete</code>) y reintenta.</li>
+          <li>Prueba con otro navegador para descartar un problema local.</li>
+          <li>Si nada funciona, escribe a soporte incluyendo navegador, sistema operativo, mensaje de error exacto, captura de pantalla y hora del problema.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details>
+      <summary>Error de certificado / HTTPS ("Tu conexión no es privada")</summary>
+      <div class="body">
+        <p>Casi siempre es la hora/fecha del dispositivo desconfigurada, o un antivirus interceptando la conexión.</p>
+        <ol>
+          <li>Verifica que la fecha y hora de tu dispositivo sean correctas (o actívalas en automático).</li>
+          <li>Desactiva temporalmente el antivirus y reintenta; si funciona, agrega el dominio de tu app a la lista blanca.</li>
+          <li>Si persiste, contacta a soporte con una captura del error.</li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <section id="sincronizacion">
+    <h2>💾 5. Problemas de sincronización</h2>
+    <p class="lead">Cada negocio tiene su propia carpeta en Google Drive donde se respaldan los datos (por ejemplo <code>FUNERAL360_TuNegocio</code>, <code>FARMAPOS_TuNegocio</code>, <code>NOVAPOS_TuNegocio</code> o <code>FASTFOOD_TuNegocio</code>).</p>
+
+    <details>
+      <summary>"Cambios pendientes" no baja a cero</summary>
+      <div class="body">
+        <ol>
+          <li>Ve a Administración → Sincronización en Nube y verifica que exista una URL configurada.</li>
+          <li>Presiona "Probar conexión". Si es exitosa, presiona "Sincronizar ahora" y espera ~30 segundos.</li>
+          <li>Si falla, revisa que la URL empiece con <code>https://</code> y termine en <code>/exec</code>, sin espacios ni caracteres cortados.</li>
+          <li>Confirma en Google Drive que tienes acceso a la carpeta del negocio.</li>
+          <li>Si nada funciona, escribe a soporte con el mensaje de error exacto y cuántos cambios pendientes tienes.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details>
+      <summary>"Última sincronía: Nunca"</summary>
+      <div class="body">
+        <div class="box amber"><strong>⚠️ Esto es crítico:</strong> significa que tus datos existen solo en este dispositivo. Si lo pierdes, pierdes la información.</div>
+        <p>Contacta a soporte de inmediato con asunto "URGENTE: sincronización nunca funcionó", indicando desde cuándo usas la app y cuántos registros tienes aproximadamente. Omnia revisará la configuración y forzará un respaldo (24–48 horas).</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Errores 403 / 404 / 500 / Timeout al sincronizar</summary>
+      <div class="body">
+        <ul>
+          <li><strong>403 Forbidden:</strong> Google Drive no tiene permiso sobre la carpeta — contacta a Omnia o a tu gerente.</li>
+          <li><strong>404 Not Found:</strong> la URL de sincronización cambió o está mal copiada — pide la URL correcta.</li>
+          <li><strong>500 Server Error:</strong> falla temporal del servidor — espera 5–10 minutos y reintenta; si persiste más de una hora, reporta.</li>
+          <li><strong>Timeout:</strong> tu conexión es muy lenta — acércate al router o cambia a datos móviles.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <section id="datos">
+    <h2>📊 6. Datos e información</h2>
+
+    <details>
+      <summary>Perdí registros (órdenes, ventas, comandas)</summary>
+      <div class="body">
+        <ol>
+          <li>Revisa la carpeta de Google Drive de tu negocio — si los datos están ahí, se pueden restaurar.</li>
+          <li>Si no están, contacta a Omnia de inmediato con asunto "URGENTE: pérdida de datos", indicando cuántos registros y fechas aproximadas. Se revisan respaldos del servidor (24–72 horas).</li>
+        </ol>
+        <p><strong>Prevención:</strong> sincroniza siempre antes de cerrar sesión, revisa "Cambios pendientes" a diario y no borres la caché del navegador mientras trabajas.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Registros duplicados</summary>
+      <div class="body">
+        <p>Suele deberse a una sincronización defectuosa o caché corrupta. Limpia caché, luego fuerza "Sincronizar ahora" en Administración — el sistema detecta y elimina duplicados automáticamente. Si persiste, repórtalo con los folios/números duplicados.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Campos faltantes tras guardar</summary>
+      <div class="body">
+        <p>Casi siempre es una sincronización parcial (la conexión se cortó a mitad de proceso). Edita el registro, completa los campos faltantes y vuelve a sincronizar. Si el registro no se puede editar, anota los datos, crea uno nuevo correcto y pide a un administrador que elimine el incompleto.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="documentos">
+    <h2>📄 7. Documentos y comprobantes</h2>
+    <p class="lead">Cada app genera un tipo de documento distinto; los problemas típicos y sus soluciones son los mismos en todas.</p>
+    <table>
+      <tr><th>Aplicación</th><th>Documento que genera</th></tr>
+      <tr><td>🕊️ Funeral 360</td><td>Contrato / expediente de servicio (ODS)</td></tr>
+      <tr><td>💊 Farma POS</td><td>Ticket de venta y, en la versión con facturación, CFDI</td></tr>
+      <tr><td>🛒 NovaPOS Pro</td><td>Ticket de venta y, en la versión con facturación, CFDI</td></tr>
+      <tr><td>🍔 FastFood Omnia</td><td>Comanda de cocina y ticket de cuenta</td></tr>
+    </table>
+
+    <details>
+      <summary>El botón de generar documento no hace nada, o marca error</summary>
+      <div class="body">
+        <ol>
+          <li>Verifica que el registro tenga todos los campos obligatorios completos.</li>
+          <li>Desactiva el bloqueador de ventanas emergentes (pop-ups) del navegador para el sitio, ya que el documento suele abrirse en una pestaña nueva.</li>
+          <li>Usa Chrome o Firefox actualizados en lugar de navegadores antiguos.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details>
+      <summary>El PDF no se abre, o se abre en blanco</summary>
+      <div class="body">
+        <ol>
+          <li>Descarga el documento en lugar de abrirlo directo, y ábrelo con un lector de PDF (Adobe Reader, Foxit, etc.).</li>
+          <li>Si sigue en blanco, sincroniza primero (Administración → Sincronizar ahora) y vuelve a generarlo: el documento toma los datos de la nube, y si no sincronizó, sale vacío.</li>
+          <li>Alternativa: abre el registro y usa <code>Ctrl+P</code> → "Guardar como PDF".</li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <section id="rendimiento">
+    <h2>⚡ 8. Rendimiento</h2>
+    <details>
+      <summary>La app está lenta</summary>
+      <div class="body">
+        <ul>
+          <li><strong>Muchos registros acumulados (500+):</strong> pide a tu administrador archivar o depurar registros de más de 6 meses.</li>
+          <li><strong>Internet lenta (&lt;1 Mbps):</strong> revisa tu velocidad en speedtest.net y considera cambiar de proveedor o usar datos móviles.</li>
+          <li><strong>Caché corrupta:</strong> límpiala con <code>Ctrl+Shift+Delete</code> y reinicia el navegador.</li>
+          <li><strong>Extensiones del navegador:</strong> desactiva temporalmente adblockers, VPNs o gestores de contraseñas para descartar que interfieran.</li>
+          <li><strong>Dispositivo antiguo:</strong> equipos con más de 8 años y 2 GB de RAM o menos rendirán mal en cualquier app web moderna.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <section id="faq">
+    <h2>❓ 9. Preguntas frecuentes</h2>
+
+    <details>
+      <summary>¿Funciona sin internet?</summary>
+      <div class="body"><p>Sí. Puedes seguir viendo, creando y editando registros y registrando pagos sin conexión. Lo único que no puedes hacer offline es sincronizar con la nube o ver cambios de otros usuarios en tiempo real. En cuanto vuelve el internet, todo se sincroniza automáticamente.</p></div>
+    </details>
+    <details>
+      <summary>¿Puedo trabajar desde mi teléfono?</summary>
+      <div class="body"><p>Sí, en iPhone y Android. Para consultar información es cómodo desde el celular; para crear registros extensos (contratos, altas de inventario) se recomienda usar computadora por comodidad de pantalla.</p></div>
+    </details>
+    <details>
+      <summary>¿Dónde se guardan mis datos?</summary>
+      <div class="body"><p>En el Google Drive de tu propio negocio, cifrado y con respaldo automático. Omnia Technology no tiene acceso a ese Drive: solo tú y las personas que autorices.</p></div>
+    </details>
+    <details>
+      <summary>¿Puedo usar dos dispositivos al mismo tiempo?</summary>
+      <div class="body"><p>Sí, pero usa siempre un dispositivo "principal" para crear registros y los demás solo para consultar. Crear el mismo tipo de registro en dos dispositivos a la vez, sin sincronizar entre pasos, puede generar duplicados.</p></div>
+    </details>
+    <details>
+      <summary>¿Qué hago si sospecho que alguien más entró con mi cuenta o me robaron la contraseña?</summary>
+      <div class="body">
+        <ol>
+          <li>Cierra tu sesión de inmediato y cambia tu contraseña de correo si la reutilizaste.</li>
+          <li>Cambia tu PIN o contraseña dentro de la app en la siguiente hora.</li>
+          <li>Avisa a tu gerente para que revise el registro de accesos.</li>
+          <li>Si el incidente es grave, escribe a <a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a> con asunto "Posible compromiso de seguridad".</li>
+        </ol>
+      </div>
+    </details>
+    <details>
+      <summary>¿Es seguro guardar datos personales de mis clientes ahí?</summary>
+      <div class="body">
+        <p>Los datos viajan cifrados (HTTPS/TLS) y se almacenan cifrados, con acceso restringido y registro de quién entró. Aun así, cumplir con la ley de protección de datos aplicable (en México, la LFPDPPP) es responsabilidad de tu negocio: debes tener tu propio aviso de privacidad, obtener el consentimiento de tus clientes y notificar a Omnia dentro de 24 horas si detectas una brecha de seguridad.</p>
+      </div>
+    </details>
+    <details>
+      <summary>¿Hay versión de escritorio para descargar?</summary>
+      <div class="body"><p>No. Todas las apps son 100% web. Puedes crear un acceso directo en tu escritorio o "Agregar a pantalla de inicio" en el celular para que se sienta como una app instalada, y seguirá funcionando offline.</p></div>
+    </details>
+  </section>
+
+  <section id="clausulas-soporte">
+    <h2>💳 10. Política de Soporte y Tickets</h2>
+    <p class="lead">Estas condiciones rigen todo ticket de soporte abierto para cualquiera de las aplicaciones de Omnia Technology, ya sea desde el <a href="omnia-portal.html#soporte">Portal de Cliente</a> o por correo. Forman parte de las condiciones de servicio contratadas.</p>
+
+    <div class="clause">
+      <span class="num">Cláusula 1 — Soporte sin costo</span>
+      <h4>Cuándo no se cobra</h4>
+      <p>No tiene costo ningún ticket relacionado con:</p>
+      <ul>
+        <li>Un problema técnico real de la aplicación (falla o error del sistema).</li>
+        <li>Problemas de sincronización atribuibles a la plataforma.</li>
+        <li>Solicitudes de nuevas funcionalidades.</li>
+        <li>El primer reporte de cada tipo de incidencia.</li>
+      </ul>
+    </div>
+
+    <div class="clause">
+      <span class="num">Cláusula 2 — Soporte con costo</span>
+      <h4>Cuándo sí se cobra, y cuánto</h4>
+      <p>El primer caso de cada tipo se atiende siempre sin costo, como cortesía educativa. A partir de ahí:</p>
+      <table class="pill-table">
+        <tr><th>Situación</th><th>1ª vez</th><th>2ª vez</th><th>3ª vez o más</th></tr>
+        <tr><td>Problema ya explicado en este manual o en video de capacitación</td><td class="ok">Gratis</td><td>$500 MXN</td><td>$800 MXN</td></tr>
+        <tr><td>Mismo problema reportado de nuevo en menos de 30 días</td><td class="ok">Gratis</td><td>$800 MXN</td><td>$800 MXN</td></tr>
+        <tr><td>Consulta legal o contractual (no técnica) — te referimos a tu abogado</td><td class="ok">Gratis</td><td>$1,000 MXN</td><td>$1,000 MXN</td></tr>
+        <tr><td>Falla por negligencia del cliente (sin respaldo, PIN débil, credenciales compartidas)</td><td class="ok">Gratis</td><td>$1,200 MXN</td><td>$1,200 MXN</td></tr>
+        <tr><td>Visita presencial evitable por atención remota</td><td class="ok">Gratis</td><td>$2,000 MXN + traslado</td><td>$2,000 MXN + traslado</td></tr>
+      </table>
+      <p>Una solicitud de <strong>nueva funcionalidad</strong> (no un error) no es soporte técnico — se cotiza aparte con el equipo de ventas. El monto exacto siempre se informa y requiere tu aprobación antes de iniciar el trabajo; el problema técnico real de la plataforma nunca tiene costo.</p>
+    </div>
+
+    <div class="clause">
+      <span class="num">Cláusula 3 — Cómo evitar costos de soporte</span>
+      <p>Antes de abrir un ticket: lee la sección correspondiente de este manual, revisa los videos de capacitación y aplica la solución sugerida. La gran mayoría de los reportes se resuelven así, sin costo y sin esperar respuesta.</p>
+    </div>
+
+    <div class="clause">
+      <span class="num">Cláusula 4 — Niveles de prioridad y tiempos de respuesta</span>
+      <table class="pill-table">
+        <tr><th>Prioridad</th><th>Ejemplo</th><th>Respuesta esperada</th></tr>
+        <tr><td>🚨 Urgente</td><td>Sistema completamente caído, pérdida de datos, seguridad comprometida</td><td>1–2 horas</td></tr>
+        <tr><td>🔴 Alta</td><td>No puedes trabajar (sincronización, órdenes bloqueadas)</td><td>6 horas</td></tr>
+        <tr><td>🟡 Media</td><td>Lentitud, campos específicos con error</td><td>24 horas</td></tr>
+        <tr><td>🟢 Baja</td><td>Mejoras cosméticas, errores tipográficos</td><td>48 horas</td></tr>
+      </table>
+      <p>Los tiempos son de <em>primera respuesta</em>, no de resolución total del caso.</p>
+    </div>
+
+    <div class="clause">
+      <span class="num">Cláusula 5 — Proceso de escalación</span>
+      <ol>
+        <li>Consulta este manual (10–30 min).</li>
+        <li>Contacta a tu gerente/administrador para temas de usuarios y configuración local (misma jornada).</li>
+        <li>Abre un ticket desde el Portal de Cliente o por correo a <a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a> (respuesta en 24–48 horas).</li>
+        <li>Si el caso no se resuelve, se escala a soporte de nivel superior (48–72 horas adicionales).</li>
+        <li>Casos críticos con el sistema caído: línea telefónica de emergencia (ver sección de contacto).</li>
+        <li>Como último recurso para disputas contractuales: mediación ante la Cámara de Comercio correspondiente.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2>📞 11. Contacto y escalación</h2>
+    <table>
+      <tr><th>Nivel</th><th>Para qué</th><th>Contacto</th></tr>
+      <tr><td>1 · Autoservicio</td><td>Este manual, videos y base de conocimiento</td><td><code>soporte.omnia-tech.mx</code></td></tr>
+      <tr><td>2 · Tu gerente/administrador</td><td>PIN, permisos, configuración local</td><td>Contacto interno de tu negocio</td></tr>
+      <tr><td>3 · Soporte técnico Omnia</td><td>Bugs, sincronización, fallas reales</td><td><a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a> · respuesta máx. 48h</td></tr>
+      <tr><td>4 · Emergencia</td><td>Sistema caído / pérdida de datos / seguridad</td><td>Línea telefónica de emergencia (solicítala en tu contrato)</td></tr>
+    </table>
+
+    <h3>Cómo redactar tu ticket</h3>
+    <p>Escribe el asunto como <code>[PRIORIDAD] descripción corta</code>, por ejemplo <code>[ALTA] Error 403 en sincronización</code>, e incluye en el cuerpo:</p>
+    <ol>
+      <li>Descripción del problema, en tus palabras.</li>
+      <li>Cuándo empezó.</li>
+      <li>Qué intentaste ya.</li>
+      <li>Navegador, sistema operativo y tipo de conexión.</li>
+      <li>Captura de pantalla del error.</li>
+      <li>Número de folio/orden afectado, si aplica.</li>
+      <li>Tu nombre y el nombre de tu negocio.</li>
+    </ol>
+    <div class="box gray">Puedes abrir el ticket directamente desde el <a href="omnia-portal.html#soporte">Portal de Cliente</a> — queda registrado automáticamente con tus datos de cuenta.</div>
+  </section>
+
+  <section id="checklist">
+    <h2>📊 12. Checklist antes de reportar a soporte</h2>
+    <ul>
+      <li>☐ Reinicié el navegador (<code>Ctrl+F5</code>)</li>
+      <li>☐ Verifiqué mi velocidad de internet</li>
+      <li>☐ Limpié caché y cookies</li>
+      <li>☐ Probé en otro navegador</li>
+      <li>☐ Reinicié mi computadora o dispositivo</li>
+      <li>☐ Leí la sección correspondiente de este manual</li>
+      <li>☐ Verifiqué que los campos obligatorios estén completos</li>
+      <li>☐ Contacté a mi gerente/administrador primero</li>
+      <li>☐ Tengo una captura de pantalla y el mensaje de error exacto</li>
+      <li>☐ Sé el folio/número de registro afectado</li>
+    </ul>
+    <p>Si marcaste todo, tu caso se resolverá mucho más rápido — y con menor riesgo de que aplique un costo de soporte.</p>
+  </section>
+
+  <section id="resumen">
+    <h2>🎯 13. Resumen rápido</h2>
+    <table>
+      <tr><th>Problema</th><th>Solución rápida</th></tr>
+      <tr><td>No puedo entrar</td><td>Verifica PIN/contraseña; PIN de emergencia <code>0000</code> solo para administrador</td></tr>
+      <tr><td>Icono "Sin conexión"</td><td>Recarga la página, reinicia el módem, acércate al WiFi</td></tr>
+      <tr><td>Cambios pendientes altos</td><td>Administración → Sincronizar ahora</td></tr>
+      <tr><td>Documento/PDF vacío</td><td>Sincroniza antes de generarlo de nuevo</td></tr>
+      <tr><td>Sistema lento</td><td>Limpia caché, depura registros viejos</td></tr>
+      <tr><td>Datos desaparecieron</td><td>Revisa Google Drive, luego contacta a Omnia</td></tr>
+      <tr><td>Cualquier otra cosa</td><td>Abre ticket en el Portal de Cliente o escribe a soporte@omnia-tech.mx</td></tr>
+    </table>
+  </section>
+
+  <section id="recursos">
+    <h2>📚 14. Recursos adicionales</h2>
+    <ul>
+      <li>Portal de cliente: <a href="omnia-portal.html">omnia-portal.html</a></li>
+      <li>Base de conocimiento: <code>soporte.omnia-tech.mx</code></li>
+      <li>Correo de soporte: <a href="mailto:soporte@omnia-tech.mx">soporte@omnia-tech.mx</a></li>
+      <li>Correo comercial: <a href="mailto:ventas@omnia-technology.com">ventas@omnia-technology.com</a></li>
+    </ul>
+    <p class="lead">Este manual se actualiza periódicamente. Vuelve a esta página (o al botón "Manual" del Portal de Cliente) para consultar siempre la versión más reciente.</p>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <a href="index.html">Omnia Technology</a></span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="omnia-portal.html">Portal de cliente</a>
+      <a href="terminos-y-condiciones.html">Términos y condiciones</a>
+      <a href="aviso-de-privacidad.html">Aviso de privacidad</a>
+    </span>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Arriba</button>
+<script>
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('show', window.scrollY > 600);
+  });
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>
