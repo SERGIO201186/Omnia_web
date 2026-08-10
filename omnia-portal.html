@@ -89,6 +89,18 @@
   .badge{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; padding:4px 10px; border-radius:999px;}
   .badge.green{background:var(--green-soft); color:var(--green);}
   .badge.gold{background:var(--gold-soft); color:#4A3AC9;}
+  .badge.red{background:var(--red-soft); color:var(--red);}
+  .badge.gray{background:var(--paper); color:var(--muted); border:1px solid var(--border);}
+
+  .app-card{border:1px solid var(--border); border-radius:12px; padding:16px; margin-top:12px; background:#fff; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center;}
+  .app-card .name{font-weight:600; font-size:14.5px;}
+  .app-card .meta{font-size:12.5px; color:var(--muted); margin-top:3px;}
+  .app-card .actions{display:flex; gap:8px; flex-wrap:wrap;}
+  .btn-tiny{padding:8px 12px; border-radius:7px; font-size:12.5px; font-weight:600; border:none;}
+  .ticket-row{border-top:1px solid var(--border); padding:10px 0; font-size:13px;}
+  .ticket-row .subject{font-weight:500;}
+  .ticket-row .meta{font-size:11.5px; color:var(--muted); margin-top:2px; font-family:var(--mono);}
+  .portal-foot-link{background:none; border:none; color:var(--muted); font-size:12.5px; text-decoration:underline; cursor:pointer; padding:0; margin-top:10px;}
 
   .support{background:var(--paper);}
   .support-form{max-width:560px;}
@@ -167,18 +179,10 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow">Clientes actuales</div>
-      <h2>Portal de pago</h2>
-      <p>Consulta tu cuenta y paga tu ciclo sin tener que llamar o pasar por la oficina.</p>
+      <h2>Portal de cliente</h2>
+      <p>Entra con tu correo — te mandamos un enlace de acceso, sin contraseñas. Ahí ves tus apps, vencimientos y pagas tu ciclo.</p>
     </div>
-    <div class="portal-box">
-      <div class="field">
-        <label>Correo registrado</label>
-        <input type="email" id="portalEmail" placeholder="tucorreo@empresa.com" />
-      </div>
-      <button class="btn-submit" style="background:var(--gold); color:var(--navy);" onclick="lookupAccount()">Buscar mi cuenta</button>
-      <p class="note">Prueba con <strong>contacto@farmaciasanjose.com</strong> o <strong>hola@tacosbuensabor.com</strong> — cuentas de ejemplo precargadas.</p>
-      <div id="accountResult"></div>
-    </div>
+    <div class="portal-box" id="portalBox" style="max-width:640px;"></div>
   </div>
 </section>
 
@@ -393,20 +397,205 @@ async function goToStripe(){
   window.location.href = res.url; // redirección real a Stripe Checkout
 }
 
-async function lookupAccount(){
-  const email = document.getElementById('portalEmail').value.trim().toLowerCase();
-  const result = document.getElementById('accountResult');
-  if(requiereConexion(result)) return;
-  result.innerHTML = `<div class="account-card"><span style="font-size:13px; color:var(--muted);">Buscando tu cuenta…</span></div>`;
+/* =========================================================================
+   PORTAL DE CLIENTE — login por magic link (sin contraseñas)
+   ========================================================================= */
+const CLIENT_SESSION_KEY = 'omnia_client_session';
+let portalState = 'loggedOut'; // loggedOut | linkSent | loggedIn
+let portalError = '';
+let myAccount = null;
 
-  const res = await apiPost({ action:'createBillingPortalSession', email });
-  if(!res || res.error || !res.url){
-    result.innerHTML = `<div class="account-card"><span style="font-size:13px; color:var(--muted);">${res && res.error ? esc(res.error) : 'No encontramos una cuenta con ese correo.'}</span></div>`;
+function getClientSession(){
+  try{
+    const raw = localStorage.getItem(CLIENT_SESSION_KEY);
+    if(!raw) return null;
+    const s = JSON.parse(raw);
+    if(!s.sessionToken || !s.expiresAt || new Date(s.expiresAt).getTime() < Date.now()){
+      localStorage.removeItem(CLIENT_SESSION_KEY);
+      return null;
+    }
+    return s;
+  }catch(e){ return null; }
+}
+function setClientSession(s){ localStorage.setItem(CLIENT_SESSION_KEY, JSON.stringify(s)); }
+function clearClientSession(){ localStorage.removeItem(CLIENT_SESSION_KEY); myAccount = null; }
+
+async function initPortal(){
+  const params = new URLSearchParams(location.search);
+  const token = params.get('login');
+
+  if(token){
+    // Saca el token de la URL de inmediato (no debe quedar en el historial ni en logs).
+    params.delete('login');
+    const clean = location.pathname + (params.toString() ? '?' + params.toString() : '') + location.hash;
+    history.replaceState({}, '', clean);
+    await consumeMagicLink(token);
     return;
   }
-  result.innerHTML = `<div class="account-card"><span style="font-size:13px; color:var(--green);">Cuenta encontrada. Abriendo el portal de pago de Stripe…</span></div>`;
-  window.location.href = res.url; // redirección real al portal de facturación de Stripe
+
+  const session = getClientSession();
+  if(session){ portalState = 'loggedIn'; await loadMyAccount(); }
+  else renderPortalBox();
 }
+
+async function consumeMagicLink(token){
+  const box = document.getElementById('portalBox');
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Verificando tu enlace de acceso…</p>`;
+  if(!getApiUrl()){ portalError = ''; renderPortalBox(); return; }
+
+  const res = await apiPost({ action:'verifyMagicLink', token });
+  if(!res || res.error){
+    portalError = 'Ese enlace ya no es válido (expiró o ya se usó). Pide uno nuevo abajo.';
+    portalState = 'loggedOut';
+    renderPortalBox();
+    return;
+  }
+  setClientSession({ sessionToken: res.sessionToken, expiresAt: res.expiresAt, client: res.client });
+  portalState = 'loggedIn';
+  await loadMyAccount();
+}
+
+async function requestMagicLink(){
+  const input = document.getElementById('portalEmail');
+  const email = input.value.trim();
+  if(!email) return;
+  const box = document.getElementById('portalBox');
+  if(requiereConexion(box)) return;
+
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Enviando enlace…</p>`;
+  await apiPost({ action:'requestMagicLink', email });
+  // La respuesta del backend es siempre {ok:true} exista o no la cuenta (no revela nada) —
+  // por eso el mensaje aquí también es siempre el mismo, sin importar el resultado real.
+  portalError = '';
+  portalState = 'linkSent';
+  renderPortalBox();
+}
+
+async function loadMyAccount(){
+  const session = getClientSession();
+  if(!session){ portalState = 'loggedOut'; renderPortalBox(); return; }
+
+  const box = document.getElementById('portalBox');
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Cargando tu cuenta…</p>`;
+
+  const res = await apiPost({ action:'getMyAccount', sessionToken: session.sessionToken });
+  if(!res || res.error){
+    clearClientSession();
+    portalError = 'Tu sesión expiró. Vuelve a pedir tu enlace de acceso.';
+    portalState = 'loggedOut';
+    renderPortalBox();
+    return;
+  }
+  myAccount = res;
+  portalError = '';
+  renderPortalBox();
+}
+
+async function cerrarSesionCliente(){
+  const session = getClientSession();
+  if(session) apiPost({ action:'logout', sessionToken: session.sessionToken });
+  clearClientSession();
+  portalState = 'loggedOut';
+  portalError = '';
+  renderPortalBox();
+}
+
+async function pagarApp(licenseId, productId, type){
+  const session = getClientSession();
+  if(!session) return;
+  const card = document.getElementById('appActions_' + licenseId);
+  if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--muted);">Conectando con Stripe…</span>`;
+
+  const res = type === 'pro'
+    ? await apiPost({ action:'createBillingPortalSession', sessionToken: session.sessionToken })
+    : await apiPost({ action:'createCheckoutSession', productId, sessionToken: session.sessionToken });
+
+  if(!res || res.error || !res.url){
+    if(card) card.innerHTML = `<span style="font-size:12.5px; color:var(--red);">${res && res.error ? esc(res.error) : 'No se pudo abrir Stripe.'}</span>`;
+    return;
+  }
+  window.location.href = res.url;
+}
+
+function renderPortalBox(){
+  const box = document.getElementById('portalBox');
+
+  if(portalState === 'loggedIn' && myAccount){
+    renderAccountDashboard(box);
+    return;
+  }
+
+  const linkSentMsg = portalState === 'linkSent'
+    ? `<div class="account-card"><p style="margin:0; font-size:13.5px; color:var(--green);">Si ese correo está registrado, te acabamos de enviar un enlace de acceso. Revisa tu bandeja de entrada (y spam) — es válido por 12 minutos.</p></div>`
+    : '';
+  const errorMsg = portalError ? `<p class="note" style="color:var(--red); margin-top:12px;">${esc(portalError)}</p>` : '';
+
+  box.innerHTML = `
+    <div class="field">
+      <label>Correo registrado</label>
+      <input type="email" id="portalEmail" placeholder="tucorreo@empresa.com" onkeydown="if(event.key==='Enter') requestMagicLink()" />
+    </div>
+    <button class="btn-submit" style="background:var(--gold); color:var(--navy);" onclick="requestMagicLink()">Enviarme el enlace de acceso</button>
+    <p class="note">Sin contraseñas: te mandamos un enlace de un solo uso a tu correo para entrar a tu cuenta.</p>
+    ${errorMsg}
+    ${linkSentMsg}
+  `;
+}
+
+function renderAccountDashboard(box){
+  const c = myAccount.client || {};
+  const apps = myAccount.apps || [];
+  const tickets = myAccount.tickets || [];
+
+  const appsHtml = apps.length === 0
+    ? `<p style="font-size:13px; color:var(--muted); margin-top:12px;">Todavía no tienes apps activas.</p>`
+    : apps.map(a => {
+        const isPro = a.type === 'pro';
+        const statusBadge = a.status === 'active'
+          ? `<span class="badge green">activa</span>`
+          : a.status === 'expired'
+            ? `<span class="badge gray">expirada</span>`
+            : `<span class="badge red">bloqueada</span>`;
+        const typeBadge = isPro ? `<span class="badge gold">PRO</span>` : `<span class="badge gray">DEMO</span>`;
+        const vencimiento = a.expiresAt ? `vence ${formatDate(a.expiresAt)}` : 'sin vencimiento';
+        const monto = a.amount ? `${formatMoney(a.amount)} / ${cycleLabel(a.billingCycle)}` : '';
+        const actionBtn = isPro
+          ? `<button class="btn-tiny" style="background:var(--navy); color:#fff;" onclick="pagarApp('${a.licenseId}','${a.productId}','pro')">Gestionar pago</button>`
+          : `<button class="btn-tiny" style="background:var(--gold); color:var(--navy);" onclick="pagarApp('${a.licenseId}','${a.productId}','demo')">Comprar ahora</button>`;
+        return `
+          <div class="app-card">
+            <div>
+              <div class="name">${esc(a.productName)} ${typeBadge} ${statusBadge}</div>
+              <div class="meta">${monto ? monto + ' · ' : ''}${vencimiento}</div>
+            </div>
+            <div class="actions" id="appActions_${esc(a.licenseId)}">${actionBtn}</div>
+          </div>`;
+      }).join('');
+
+  const ticketsHtml = tickets.length === 0
+    ? `<p style="font-size:13px; color:var(--muted); margin-top:8px;">Sin tickets de soporte.</p>`
+    : tickets.map(t => `
+        <div class="ticket-row">
+          <div class="subject">${esc(t.subject)} <span class="badge ${t.status==='resuelto'?'green':'gold'}" style="margin-left:6px;">${esc(t.status)}</span></div>
+          <div class="meta">${formatDate(t.createdAt)} · prioridad ${esc(t.priority)}</div>
+        </div>`).join('');
+
+  box.innerHTML = `
+    <div class="account-row" style="border-bottom:1px solid var(--border); padding-bottom:14px; margin-bottom:4px;">
+      <div>
+        <div style="font-weight:600; font-size:15.5px;">${esc(c.company || c.name || c.email)}</div>
+        <div style="font-size:12.5px; color:var(--muted);">${esc(c.email)}</div>
+      </div>
+      <button class="portal-foot-link" onclick="cerrarSesionCliente()">Cerrar sesión</button>
+    </div>
+    <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:16px;">Tus apps</div>
+    ${appsHtml}
+    <div style="font-size:12.5px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:22px;">Soporte</div>
+    ${ticketsHtml}
+  `;
+}
+
+initPortal();
 
 function abrirConfigConexion(){
   const url = prompt('Pega la URL de tu Apps Script (termina en /exec):', getApiUrl());
