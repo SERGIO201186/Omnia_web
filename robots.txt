@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /omnia-portal.html
+
+Sitemap: https://www.omnia-technology.com/sitemap.xml
