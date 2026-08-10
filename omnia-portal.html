@@ -626,13 +626,24 @@ function renderAccountDashboard(box){
         const actionBtn = isPro
           ? `<button class="btn-tiny" style="background:var(--navy); color:#fff;" onclick="pagarApp('${a.licenseId}','${a.productId}','pro')">Gestionar pago</button>`
           : `<button class="btn-tiny" style="background:var(--gold); color:var(--navy);" onclick="pagarApp('${a.licenseId}','${a.productId}','demo')">Comprar ahora</button>`;
+        const reportarBtn = `<button class="btn-tiny btn-outline" onclick="abrirSoporteModal('${esc(a.productName)}')">Reportar problema</button>`;
         const guideUrl = guideUrlForProduct(a.productId);
         const guideLink = guideUrl
-          ? `<a href="${guideUrl}" target="_blank" rel="noopener" class="btn-tiny" style="background:#fff; color:var(--navy); border:1px solid var(--border); text-decoration:none; display:inline-flex; align-items:center;">📘 Guía de uso</a>`
+          ? `<a href="${guideUrl}" target="_blank" rel="noopener" class="btn-tiny btn-outline" style="text-decoration:none; display:inline-flex; align-items:center;">📘 Guía de uso</a>`
           : '';
         const clausesLink = (a.productId || '').startsWith('prod_f360')
-          ? `<a href="clausulas-personalizadas.html" target="_blank" rel="noopener" class="btn-tiny" style="background:#fff; color:var(--navy); border:1px solid var(--border); text-decoration:none; display:inline-flex; align-items:center;">⚖️ Cláusulas personalizadas</a>`
+          ? `<a href="clausulas-personalizadas.html" target="_blank" rel="noopener" class="btn-tiny btn-outline" style="text-decoration:none; display:inline-flex; align-items:center;">⚖️ Cláusulas personalizadas</a>`
           : '';
+
+        const links = [];
+        if(a.appUrl) links.push(`<a href="${esc(a.appUrl)}" target="_blank" rel="noopener">Abrir mi app →</a>`);
+        if(a.manualUrl) links.push(`<a href="${esc(a.manualUrl)}" target="_blank" rel="noopener">Ver manual</a>`);
+        const linksHtml = links.length ? `<div class="app-links">${links.join('')}</div>` : '';
+
+        const paymentsHtml = (a.payments && a.payments.length)
+          ? `<div class="payment-history"><div class="ph-label">Últimos pagos</div>${a.payments.slice(0,3).map(p => `<div class="row"><span>${formatDate(p.date)}</span><span>${formatMoney(p.amount)} · ${esc(p.status)}</span></div>`).join('')}</div>`
+          : '';
+
         return `
           <div class="app-card">
             <div class="top-row">
@@ -640,9 +651,10 @@ function renderAccountDashboard(box){
                 <div class="name">${esc(a.productName)} ${typeBadge} ${statusBadge}</div>
                 <div class="meta">${monto ? monto + ' · ' : ''}<span style="color:${vencimientoColor};">${vencimiento}</span></div>
               </div>
-              <div class="actions" id="appActions_${esc(a.licenseId)}">${actionBtn}${reportarBtn}</div>
+              <div class="actions" id="appActions_${esc(a.licenseId)}">${guideLink}${clausesLink}${actionBtn}${reportarBtn}</div>
             </div>
-            <div class="actions" id="appActions_${esc(a.licenseId)}">${guideLink}${clausesLink}${actionBtn}</div>
+            ${linksHtml}
+            ${paymentsHtml}
           </div>`;
       }).join('');
 
