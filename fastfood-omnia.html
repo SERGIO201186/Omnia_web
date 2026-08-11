@@ -1317,6 +1317,7 @@
         setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'), 500);
         setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de demo - '+restaurante)+'&body='+encodeURIComponent(msg)), 900);
       }
+      if (window.omniaTrackConversion) window.omniaTrackConversion();
 
       successMsg.classList.remove('hidden');
       demoCloseTimer = setTimeout(() => {

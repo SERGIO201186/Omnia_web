@@ -822,6 +822,7 @@
         }
 
         setStatus('success');
+        if (window.omniaTrackConversion) window.omniaTrackConversion();
         closeTimerRef.current = setTimeout(() => { onClose(); }, 4000);
       };
 
