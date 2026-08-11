@@ -9,6 +9,7 @@
 <link rel="canonical" href="https://www.omnia-technology.com/omnia-portal.html">
 <script src="analytics.js"></script>
 <script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -566,6 +567,44 @@ async function pagarApp(licenseId, productId, type){
   window.location.href = res.url;
 }
 
+/* ==================== LOGIN CON GOOGLE ====================
+   El token que Google entrega aquí (response.credential) es un JWT firmado
+   por Google — el navegador nunca decide por sí mismo que el usuario es
+   quien dice ser. Ese JWT se manda tal cual al backend en la acción
+   'verifyGoogleLogin', que es quien debe validar la firma contra las
+   llaves públicas de Google antes de confiar en el correo que contiene. */
+const GOOGLE_CLIENT_ID = "350502539689-nei4tepvjqcof7evcpedbv84e42qp6a7.apps.googleusercontent.com";
+
+async function handleGoogleCredentialResponse(response){
+  const box = document.getElementById('portalBox');
+  box.innerHTML = `<p style="font-size:13px; color:var(--muted);">Verificando tu cuenta de Google…</p>`;
+  if(!getApiUrl()){ portalError = ''; renderPortalBox(); return; }
+
+  const res = await apiPost({ action:'verifyGoogleLogin', credential: response.credential });
+  if(!res || res.error){
+    portalError = 'No se pudo iniciar sesión con Google. Intenta de nuevo o usa tu correo.';
+    portalState = 'loggedOut';
+    renderPortalBox();
+    return;
+  }
+  setClientSession({ sessionToken: res.sessionToken, expiresAt: res.expiresAt, client: res.client });
+  portalState = 'loggedIn';
+  await loadMyAccount();
+}
+
+function renderGoogleButton(retriesLeft){
+  if(retriesLeft === undefined) retriesLeft = 10;
+  const container = document.getElementById('googleSignInBtn');
+  if(!container) return; // ya no estamos en la pantalla de login (el usuario navegó a otra vista)
+  if(!window.google || !google.accounts || !google.accounts.id){
+    // El script de Google (async) puede tardar en cargar; reintenta un rato antes de rendirse.
+    if(retriesLeft > 0) setTimeout(() => renderGoogleButton(retriesLeft - 1), 200);
+    return;
+  }
+  google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredentialResponse });
+  google.accounts.id.renderButton(container, { theme:'outline', size:'large', shape:'pill', text:'continue_with', logo_alignment:'left', width:280 });
+}
+
 function renderPortalBox(){
   const box = document.getElementById('portalBox');
 
@@ -580,15 +619,20 @@ function renderPortalBox(){
   const errorMsg = portalError ? `<p class="note" style="color:var(--red); margin-top:12px;">${esc(portalError)}</p>` : '';
 
   box.innerHTML = `
+    <div id="googleSignInBtn" style="display:flex; justify-content:center; margin-bottom:16px;"></div>
+    <div style="display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--muted); font-size:12.5px;">
+      <span style="flex:1; height:1px; background:var(--border);"></span>o<span style="flex:1; height:1px; background:var(--border);"></span>
+    </div>
     <div class="field">
       <label>Correo registrado</label>
       <input type="email" id="portalEmail" placeholder="tucorreo@empresa.com" onkeydown="if(event.key==='Enter') requestMagicLink()" />
     </div>
-    <button class="btn-submit" style="background:var(--gold); color:var(--navy);" onclick="requestMagicLink()">Enviarme el enlace de acceso</button>
+    <button class="btn-submit" style="background:var(--gold); color:var(--navy);" onclick="requestMagicLink()">Continuar con correo electrónico</button>
     <p class="note">Sin contraseñas: te mandamos un enlace de un solo uso a tu correo para entrar a tu cuenta.</p>
     ${errorMsg}
     ${linkSentMsg}
   `;
+  renderGoogleButton();
 }
 
 function guideUrlForProduct(productId){
