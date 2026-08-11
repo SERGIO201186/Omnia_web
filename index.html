@@ -928,6 +928,7 @@ async function enviarDemo(){
       aviso.textContent = esLead
         ? '✓ Solicitud registrada. Te contactaremos en menos de 24 horas.'
         : '✓ Demo activada. Revisa tu correo (' + email + ') para tu clave de acceso.';
+      if(window.omniaTrackConversion) window.omniaTrackConversion();
     } else {
       aviso.className='aviso-modal aviso-error';
       aviso.textContent = 'No se pudo procesar automáticamente' + (res && res.error ? ': ' + res.error : '') + '. Te contactamos por WhatsApp.';
@@ -938,6 +939,7 @@ async function enviarDemo(){
 
   // Backend no configurado (o falta correo): conserva el flujo manual por WhatsApp/correo como respaldo.
   aviso.className='aviso-modal aviso-exito';aviso.textContent='✓ Solicitud enviada por WhatsApp y correo. Te contactaremos en menos de 24 horas.';
+  if(window.omniaTrackConversion) window.omniaTrackConversion();
   setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'),800);
   setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de demo - '+nombre)+'&body='+encodeURIComponent(msg)),1200);
 }
@@ -961,6 +963,7 @@ async function enviarContrato(){
     const res = await apiPost({ action:'leadRequest', businessName:nombre, contactName:contacto, whatsapp:wa, email, city:ciudad, productIds:[software] });
     if(res && !res.error){
       aviso.textContent='✓ Solicitud recibida. Te contactamos pronto.';
+      if(window.omniaTrackConversion) window.omniaTrackConversion();
     } else {
       aviso.className='aviso-modal aviso-error';
       aviso.textContent='No se pudo registrar automáticamente' + (res && res.error ? ': ' + res.error : '') + '. Te contactamos por WhatsApp.';
@@ -971,6 +974,7 @@ async function enviarContrato(){
 
   // Backend no configurado: conserva el flujo manual por WhatsApp/correo como respaldo.
   aviso.className='aviso-modal aviso-exito';aviso.textContent='✓ Solicitud recibida por WhatsApp y correo. Te contactamos pronto.';
+  if(window.omniaTrackConversion) window.omniaTrackConversion();
   setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'),800);
   setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de información - '+nombre)+'&body='+encodeURIComponent(msg)),1200);
 }

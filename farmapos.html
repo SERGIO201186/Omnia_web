@@ -697,6 +697,7 @@
         setTimeout(()=>window.open('https://wa.me/'+TU_WA+'?text='+encodeURIComponent(msg),'_blank'), 500);
         setTimeout(()=>window.open('mailto:'+TU_EMAIL+'?subject='+encodeURIComponent('Solicitud de demo - '+farmacia)+'&body='+encodeURIComponent(msg)), 900);
       }
+      if (window.omniaTrackConversion) window.omniaTrackConversion();
 
       document.getElementById('modal-form-container').classList.add('hidden');
       document.getElementById('modal-success').classList.remove('hidden');
