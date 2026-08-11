@@ -205,6 +205,12 @@ footer .nav-logo img{height:40px;}
 .module-title{font-size:14.5px;font-weight:600;}
 .module-sub{font-size:11px;color:var(--paper-dimmer);font-family:'IBM Plex Mono',monospace;}
 .module-status{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:var(--cyan);text-transform:uppercase;}
+.module-row.featured{background:linear-gradient(90deg,rgba(255,106,61,0.14),rgba(108,92,231,0.14));border-radius:10px;padding:13px 10px;margin:0 -6px 4px;border-top:none;background-size:200% 100%;animation:featuredShift 3.5s ease-in-out infinite;}
+@keyframes featuredShift{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+.led.new{background:var(--naranja);box-shadow:0 0 8px 1px var(--naranja);animation:pulse 1.3s ease-in-out infinite;}
+.module-badge-new{display:inline-flex;align-items:center;background:var(--naranja);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-left:8px;animation:badgePulse 1.6s ease-in-out infinite;}
+@keyframes badgePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.module-status.promo{color:var(--naranja);}
 .module-status.soon{color:var(--dorado-claro);}
 
 /* SECTION SHARED */
@@ -370,6 +376,13 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
       <div class="panel-board-head">
         <span>PANEL DE MÓDULOS</span>
         <span class="live">● SISTEMA EN LÍNEA</span>
+      </div>
+      <div class="module-row featured">
+        <div class="module-name">
+          <span class="led new"></span>
+          <div><div class="module-title">FastFood Omnia <span class="module-badge-new">Nuevo</span></div><div class="module-sub">agente de IA para restaurantes · demo gratis</div></div>
+        </div>
+        <span class="module-status promo">Oferta</span>
       </div>
       <div class="module-row">
         <div class="module-name">
