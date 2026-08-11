@@ -8,6 +8,7 @@
 <meta name="robots" content="noindex, follow">
 <link rel="canonical" href="https://www.omnia-technology.com/omnia-portal.html">
 <script src="analytics.js"></script>
+<script src="config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -228,9 +229,6 @@
       <a href="farmapos.html" style="color:#B9C0CE; text-decoration:none;">Farma POS</a>
       <a href="novapos.html" style="color:#B9C0CE; text-decoration:none;">NovaPOS Pro</a>
       <a href="fastfood-omnia.html" style="color:#B9C0CE; text-decoration:none;">FastFood Omnia</a>
-    </span>
-    <span style="font-family:var(--mono); font-size:12px; color:#6C7690;">
-      <span id="connStatus"></span> · <button onclick="abrirConfigConexion()" style="background:none; border:none; color:#8B93A1; text-decoration:underline; cursor:pointer; font-family:var(--mono); font-size:12px;">Conectar backend</button>
     </span>
   </div>
 </footer>
@@ -738,7 +736,6 @@ function abrirConfigConexion(){
   setApiUrl(url.trim());
   location.reload();
 }
-document.getElementById('connStatus').textContent = getApiUrl() ? 'Conectado al backend' : 'Backend no configurado';
 
 async function submitTicket(e){
   e.preventDefault();
