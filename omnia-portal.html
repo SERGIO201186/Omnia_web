@@ -333,6 +333,8 @@ async function cargarProductos(){
     PRODUCTS = FALLBACK_PRODUCTS;
   }
   renderProducts();
+  renderOrbit(); // se movió aquí: antes se llamaba al cargar la página, antes de que
+                  // PRODUCTS tuviera datos reales del backend (quedaba vacío).
 }
 
 function renderProducts(){
@@ -821,7 +823,6 @@ function renderOrbit(){
     </text>
   `).join('');
 }
-renderOrbit();
 </script>
 <script src="cookie-consent.js"></script>
 </body>
