@@ -836,7 +836,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
     <div class="modal-sub">Te enviamos tu acceso en menos de 24 horas.</div>
     <div class="campo-modal"><label>Nombre de tu negocio</label><input type="text" id="demoNombre" placeholder="Ej. Farmacia San José"></div>
     <div class="campo-modal"><label>Software de interés</label>
-      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS Pro</option><option>Omnia Store</option><option>FastFood Omnia</option><option>No estoy seguro / quiero asesoría</option></select>
+      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS</option><option>Omnia Store</option><option>FastFood Omnia</option><option>No estoy seguro / quiero asesoría</option></select>
     </div>
     <div class="campo-modal"><label>Tu nombre</label><input type="text" id="demoContacto" placeholder="¿Con quién hablamos?"></div>
     <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="demoWA" placeholder="2281234567"></div>
@@ -870,12 +870,15 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
 const TU_WA = "525547894225";
 const TU_EMAIL = "ventas@omnia-technology.com";
 
-// Mapa de la opción del <select> del modal al productId real en el Sheet "Products"
-// del Apps Script maestro. Ajusta estos IDs si en tu Sheet los llamaste distinto.
+// Mapa de la opción del <select> del modal de demo (#demoSoftware) al productId real en
+// el Sheet "Products" del Apps Script maestro. La opción dice "NovaPOS" (no "NovaPOS Pro")
+// para no confundir en un modal de demo gratuita — el modal de "Contratar" (#contSoftware)
+// sí dice "NovaPOS Pro" porque ahí tiene sentido, pero ese <select> no usa este mapa.
+// Ajusta estos IDs si en tu Sheet los llamaste distinto.
 const PRODUCT_ID_MAP = {
   "Funeral 360": "prod_f360_paquete",
   "Farma POS": "prod_farmapos",
-  "NovaPOS Pro": "prod_novapos_v1", // el catálogo ya no tiene un "prod_novapos" genérico, solo las versiones con precio
+  "NovaPOS": "prod_novapos_v1", // el catálogo ya no tiene un "prod_novapos" genérico, solo las versiones con precio
   "Omnia Store": null, // aún no disponible: siempre se trata como lead, nunca como demo
   "FastFood Omnia": "prod_fastfood_omnia",
 };
