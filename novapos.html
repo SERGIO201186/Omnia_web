@@ -768,7 +768,10 @@
       const TU_WA = "525547894225";
       const TU_EMAIL = "ventas@omnia-technology.com";
       const PRODUCT_NAME = "NovaPOS Pro";
-      const PRODUCT_ID = "prod_novapos";
+      // El catálogo de Products ya no tiene un "prod_novapos" genérico, solo las versiones
+      // con precio. La demo gratuita por defecto usa la Versión 1 (incluye appUrl/manualUrl
+      // ya configurados en el Sheet); si el cliente pide Versión 2 se le da esa.
+      const PRODUCT_ID = "prod_novapos_v1";
 
       /* Traduce el título mostrado en el modal a la versión real publicada en la
          sección de precios (#precios), para que Control Omnia sepa si es una
@@ -804,22 +807,42 @@
         const email = form.email.value.trim();
 
         const msg = `🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: ${negocio} (${giro})\n🖥️ Software: ${PRODUCT_NAME}\n👤 Contacto: ${nombre}\n📱 WhatsApp: ${telefono}\n📧 Email: ${email}\n📌 Interés: ${activeModal}`;
-        const { requestType, version, productId } = inferPurchaseInfo(activeModal);
+        const { requestType, productId } = inferPurchaseInfo(activeModal);
+        const fallback = () => {
+          setSuccessMsg('Un asesor especialista de Omnia Technology te contactará en breve.');
+          setTimeout(() => window.open(`https://wa.me/${TU_WA}?text=${encodeURIComponent(msg)}`, '_blank'), 500);
+          setTimeout(() => window.open(`mailto:${TU_EMAIL}?subject=${encodeURIComponent('Solicitud de demo - ' + negocio)}&body=${encodeURIComponent(msg)}`), 900);
+        };
+
+        // "Elegir Versión 1/2" es una compra real: se cobra por Stripe (createCheckoutSession),
+        // no se activa como si fuera una demo gratuita. El correo con la clave de licencia lo
+        // manda el backend cuando Stripe confirme el pago (checkout.session.completed).
+        if (requestType === 'compra') {
+          if (getApiUrl()) {
+            const res = await apiPost({ action: 'createCheckoutSession', productId, email, clientName: negocio });
+            if (res && res.url) {
+              if (window.omniaTrackConversion) window.omniaTrackConversion();
+              window.location.href = res.url;
+              return;
+            }
+          }
+          fallback();
+          setStatus('success');
+          if (window.omniaTrackConversion) window.omniaTrackConversion();
+          closeTimerRef.current = setTimeout(() => { onClose(); }, 4000);
+          return;
+        }
 
         let sentOk = false;
         if (getApiUrl()) {
-          const res = await apiPost({ action: 'demoRequest', productId, requestType, version, name: nombre, email, company: negocio });
+          const res = await apiPost({ action: 'demoRequest', productId, name: nombre, email, company: negocio });
           if (res && !res.error) {
             setSuccessMsg(`✓ Demo activada. Revisa tu correo (${email}) para tu clave de acceso.`);
             sentOk = true;
           }
         }
 
-        if (!sentOk) {
-          setSuccessMsg('Un asesor especialista de Omnia Technology te contactará en breve.');
-          setTimeout(() => window.open(`https://wa.me/${TU_WA}?text=${encodeURIComponent(msg)}`, '_blank'), 500);
-          setTimeout(() => window.open(`mailto:${TU_EMAIL}?subject=${encodeURIComponent('Solicitud de demo - ' + negocio)}&body=${encodeURIComponent(msg)}`), 900);
-        }
+        if (!sentOk) fallback();
 
         setStatus('success');
         if (window.omniaTrackConversion) window.omniaTrackConversion();
