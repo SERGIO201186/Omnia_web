@@ -748,11 +748,15 @@
     const DemoModal = ({ activeModal, onClose }) => {
       const [status, setStatus] = useState('form');
       const [successMsg, setSuccessMsg] = useState('');
+      // Versión elegida cuando la solicitud es una demo (no aplica a "compra",
+      // que ya trae su versión fija en el título del botón, ej. "— Versión 2").
+      const [demoVersion, setDemoVersion] = useState('v1');
       const closeTimerRef = useRef(null);
 
       useEffect(() => {
         if (activeModal) {
           setStatus('form');
+          setDemoVersion('v1');
           if (closeTimerRef.current) { clearTimeout(closeTimerRef.current); closeTimerRef.current = null; }
         }
       }, [activeModal]);
@@ -806,8 +810,16 @@
         const telefono = form.telefono.value.trim();
         const email = form.email.value.trim();
 
-        const msg = `🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: ${negocio} (${giro})\n🖥️ Software: ${PRODUCT_NAME}\n👤 Contacto: ${nombre}\n📱 WhatsApp: ${telefono}\n📧 Email: ${email}\n📌 Interés: ${activeModal}`;
-        const { requestType, productId } = inferPurchaseInfo(activeModal);
+        const { requestType, productId: productIdInferido } = inferPurchaseInfo(activeModal);
+        // Para una demo (no una compra ya fijada a una versión por el título del
+        // botón), la versión la elige el cliente en el propio formulario — antes
+        // siempre se mandaba Versión 1 sin preguntar.
+        const productId = requestType === 'demo'
+          ? (demoVersion === 'v2' ? 'prod_novapos_v2' : 'prod_novapos_v1')
+          : productIdInferido;
+        const versionTxt = requestType === 'demo' ? (demoVersion === 'v2' ? 'Versión 2 (Recargas + Vendedores)' : 'Versión 1 (Básica)') : '';
+
+        const msg = `🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: ${negocio} (${giro})\n🖥️ Software: ${PRODUCT_NAME}${versionTxt ? ' — ' + versionTxt : ''}\n👤 Contacto: ${nombre}\n📱 WhatsApp: ${telefono}\n📧 Email: ${email}\n📌 Interés: ${activeModal}`;
         const fallback = () => {
           setSuccessMsg('Un asesor especialista de Omnia Technology te contactará en breve.');
           setTimeout(() => window.open(`https://wa.me/${TU_WA}?text=${encodeURIComponent(msg)}`, '_blank'), 500);
@@ -849,6 +861,8 @@
         closeTimerRef.current = setTimeout(() => { onClose(); }, 4000);
       };
 
+      const { requestType: modalRequestType } = inferPurchaseInfo(activeModal);
+
       return (
         <div className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative border border-neutral-200">
@@ -889,6 +903,30 @@
 
                   <input name="telefono" type="tel" placeholder="Teléfono / WhatsApp" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
                   <input name="email" type="email" placeholder="Correo electrónico" required className="w-full p-3 rounded-xl border border-neutral-300 text-xs text-black outline-none focus:border-black" />
+
+                  {modalRequestType === 'demo' && (
+                    <div>
+                      <p className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wide mb-1.5">¿Qué versión quieres probar?</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setDemoVersion('v1')}
+                          className={`p-3 rounded-xl border text-left transition-colors cursor-pointer ${demoVersion === 'v1' ? 'border-black bg-black text-white' : 'border-neutral-300 text-black hover:border-black'}`}
+                        >
+                          <span className="block text-xs font-bold">Versión 1</span>
+                          <span className={`block text-[10px] mt-0.5 ${demoVersion === 'v1' ? 'text-neutral-300' : 'text-neutral-500'}`}>Básica</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDemoVersion('v2')}
+                          className={`p-3 rounded-xl border text-left transition-colors cursor-pointer ${demoVersion === 'v2' ? 'border-black bg-black text-white' : 'border-neutral-300 text-black hover:border-black'}`}
+                        >
+                          <span className="block text-xs font-bold">Versión 2</span>
+                          <span className={`block text-[10px] mt-0.5 ${demoVersion === 'v2' ? 'text-neutral-300' : 'text-neutral-500'}`}>Recargas + Vendedores</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   <button type="submit" className="w-full py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-colors cursor-pointer shadow-lg mt-2">
                     Confirmar Solicitud
