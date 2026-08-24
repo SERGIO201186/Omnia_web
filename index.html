@@ -836,7 +836,11 @@ footer{border-top:1px solid var(--line);padding:40px 0 110px;}
     <div class="modal-sub">Te enviamos tu acceso en menos de 24 horas.</div>
     <div class="campo-modal"><label>Nombre de tu negocio</label><input type="text" id="demoNombre" placeholder="Ej. Farmacia San José"></div>
     <div class="campo-modal"><label>Software de interés</label>
-      <select id="demoSoftware"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS</option><option>Omnia Store</option><option>FastFood Omnia</option><option>No estoy seguro / quiero asesoría</option></select>
+      <select id="demoSoftware" onchange="actualizarCampoVersionDemo()"><option>Funeral 360</option><option>Farma POS</option><option>NovaPOS</option><option>Omnia Store</option><option>FastFood Omnia</option><option>No estoy seguro / quiero asesoría</option></select>
+    </div>
+    <div class="campo-modal" id="demoVersionField" style="display:none">
+      <label>¿Qué versión de NovaPOS quieres probar?</label>
+      <select id="demoVersion"><option value="v1">Versión 1 (Básica)</option><option value="v2">Versión 2 (Recargas + Vendedores)</option></select>
     </div>
     <div class="campo-modal"><label>Tu nombre</label><input type="text" id="demoContacto" placeholder="¿Con quién hablamos?"></div>
     <div class="campo-modal"><label>WhatsApp</label><input type="tel" id="demoWA" placeholder="2281234567"></div>
@@ -892,8 +896,15 @@ async function apiPost(body){
     return await r.json();
   }catch(e){ console.error('Error de conexión con Apps Script', e); return null; }
 }
+// Solo NovaPOS tiene dos versiones activas en el catálogo (v1/v2) — el resto
+// de los productos sigue con un único productId fijo en PRODUCT_ID_MAP.
+function actualizarCampoVersionDemo(){
+  const campo = document.getElementById('demoVersionField');
+  campo.style.display = document.getElementById('demoSoftware').value === 'NovaPOS' ? '' : 'none';
+}
 function abrirModalDemo(pre){
   if(pre){document.getElementById('demoSoftware').value=pre;}
+  actualizarCampoVersionDemo();
   document.getElementById('modalDemo').classList.add('abierto');document.body.style.overflow='hidden';
 }
 function abrirModalContratar(pre){
@@ -913,11 +924,15 @@ async function enviarDemo(){
   const aviso=document.getElementById('avisoDemo');
   if(!nombre||!wa){aviso.className='aviso-modal aviso-error';aviso.textContent='Ingresa el nombre de tu negocio y tu WhatsApp.';return;}
 
-  const msg='🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+nombre+'\n🖥️ Software: '+software+'\n👤 Contacto: '+contacto+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
+  // Para NovaPOS, el productId ya no es fijo: depende de la versión elegida
+  // en #demoVersion (antes siempre se mandaba Versión 1 sin preguntar).
+  const versionNovaPOS = software === 'NovaPOS' ? document.getElementById('demoVersion').value : null;
+  const versionTxt = versionNovaPOS ? (versionNovaPOS === 'v2' ? ' — Versión 2 (Recargas + Vendedores)' : ' — Versión 1 (Básica)') : '';
+  const msg='🆕 SOLICITUD DE DEMO OMNIA TECHNOLOGY\n\n📋 Negocio: '+nombre+'\n🖥️ Software: '+software+versionTxt+'\n👤 Contacto: '+contacto+'\n📱 WhatsApp: '+wa+'\n📧 Email: '+email;
 
   // "No estoy seguro" y "Omnia Store" (aún no disponible) no tienen producto real que activar:
   // se registran como lead para que le des seguimiento, no como demo automática.
-  const productId = PRODUCT_ID_MAP[software];
+  const productId = versionNovaPOS === 'v2' ? 'prod_novapos_v2' : PRODUCT_ID_MAP[software];
   const esLead = !productId;
 
   if(getApiUrl() && email){
